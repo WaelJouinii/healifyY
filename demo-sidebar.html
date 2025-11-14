@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Healify - Sidebar Demo</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Demo page specific styles */
+        .demo-container {
+            margin-top: 80px;
+            padding: 40px 20px;
+            text-align: center;
+        }
+
+        .demo-title {
+            font-size: 36px;
+            color: var(--primary-color);
+            margin-bottom: 20px;
+        }
+
+        .demo-instructions {
+            font-size: 18px;
+            color: var(--text-color);
+            margin-bottom: 40px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            line-height: 1.8;
+        }
+
+        .demo-button {
+            background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            font-size: 18px;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: var(--transition);
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .demo-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(37, 99, 235, 0.3);
+        }
+
+        .feature-box {
+            background-color: var(--header-bg);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: var(--shadow);
+            margin: 20px auto;
+            max-width: 600px;
+            text-align: left;
+        }
+
+        .feature-box h3 {
+            color: var(--primary-color);
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .feature-box ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .feature-box li {
+            padding: 10px 0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .feature-box li i {
+            color: var(--success-color);
+        }
+
+        .highlight {
+            background-color: #fef3c7;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-weight: bold;
+            color: #92400e;
+        }
+
+        [data-theme="dark"] .highlight {
+            background-color: #451a03;
+            color: #fcd34d;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <div id="headerPlaceholder"></div>
+                        </button>
+                    </li>
+                    <li class="nav-item">
+                        <button class="icon-btn" id="profileBtn" title="Profile">
+                            <i class="fas fa-user"></i>
+                        </button>
+                    </li>
+                    <li class="nav-item">
+                        <button class="icon-btn" id="menuBtn" title="Menu">
+                            <i class="fas fa-bars"></i>
+                        </button>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+
+        <div class="search-bar" id="searchBar">
+            <div class="search-container">
+                <input type="text" id="searchInput" placeholder="Search doctors, specialties, symptoms..." autocomplete="off">
+                <button class="search-submit-btn" id="searchSubmitBtn">
+                    <i class="fas fa-search"></i>
+                </button>
+                <button class="search-close-btn" id="searchCloseBtn">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="search-results" id="searchResults"></div>
+        </div>
+    </header>
+
+    <!-- Sidebar -->
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <div class="sidebar-logo">
+                <i class="fas fa-heartbeat"></i>
+                <span>Healify</span>
+            </div>
+            <button class="sidebar-close" id="sidebarClose">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+
+        <nav class="sidebar-nav">
+            <ul class="sidebar-menu">
+                <li class="sidebar-item">
+                    <a href="index.html" class="sidebar-link">
+                        <i class="fas fa-home"></i>
+                        <span>Home</span>
+                    </a>
+                </li>
+                <li class="sidebar-item">
+                    <a href="about.html" class="sidebar-link">
+                        <i class="fas fa-info-circle"></i>
+                        <span>About Us</span>
+                    </a>
+                </li>
+                <li class="sidebar-item">
+                    <a href="doctors.html" class="sidebar-link">
+                        <i class="fas fa-user-md"></i>
+                        <span>Find Doctors</span>
+                    </a>
+                </li>
+                <li class="sidebar-item">
+                    <a href="consultation.html" class="sidebar-link">
+                        <i class="fas fa-video"></i>
+                        <span>Consultations</span>
+                    </a>
+                </li>
+                <li class="sidebar-item auth-required">
+                    <a href="reservation.html" class="sidebar-link">
+                        <i class="fas fa-calendar-check"></i>
+                        <span>My Reservations</span>
+                    </a>
+                </li>
+                <li class="sidebar-item auth-required">
+                    <a href="dashboard-clien.html" class="sidebar-link">
+                        <i class="fas fa-chart-line"></i>
+                        <span>Dashboard</span>
+                    </a>
+                </li>
+                <li class="sidebar-item">
+                    <a href="contact.html" class="sidebar-link">
+                        <i class="fas fa-envelope"></i>
+                        <span>Contact</span>
+                    </a>
+                </li>
+            </ul>
+
+            <div class="sidebar-divider"></div>
+
+            <ul class="sidebar-menu">
+                <li class="sidebar-item auth-not-required">
+                    <a href="login.html" class="sidebar-link">
+                        <i class="fas fa-sign-in-alt"></i>
+                        <span>Login</span>
+                    </a>
+                </li>
+                <li class="sidebar-item auth-not-required">
+                    <a href="register.html" class="sidebar-link">
+                        <i class="fas fa-user-plus"></i>
+                        <span>Register</span>
+                    </a>
+                </li>
+                <li class="sidebar-item auth-required">
+                    <a href="profil.html" class="sidebar-link">
+                        <i class="fas fa-user-circle"></i>
+                        <span>Profile</span>
+                    </a>
+                </li>
+                <li class="sidebar-item auth-required">
+                    <a href="#" class="sidebar-link" id="logoutBtn">
+                        <i class="fas fa-sign-out-alt"></i>
+                        <span>Logout</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </aside>
+
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+    <!-- Main Content -->
+    <main class="demo-container">
+        <h1 class="demo-title">
+            <i class="fas fa-bars"></i> Sidebar Demo
+        </h1>
+        
+        <p class="demo-instructions">
+            Click the <span class="highlight">Menu Icon (☰)</span> in the top-right corner of the header to open the sidebar. 
+            The sidebar will slide in from the left side of the screen!
+        </p>
+
+        <button class="demo-button" onclick="toggleSidebar()">
+            <i class="fas fa-bars"></i>
+            Click Here to Open Sidebar
+        </button>
+
+        <div class="feature-box">
+            <h3>
+                <i class="fas fa-lightbulb"></i>
+                How It Works
+            </h3>
+            <ul>
+                <li>
+                    <i class="fas fa-check-circle"></i>
+                    <strong>Hidden by Default:</strong> The sidebar is positioned off-screen (left: -320px)
+                </li>
+                <li>
+                    <i class="fas fa-check-circle"></i>
+                    <strong>Smooth Animation:</strong> Slides in when you click the menu button
+                </li>
+                <li>
+                    <i class="fas fa-check-circle"></i>
+                    <strong>Dark Overlay:</strong> Background darkens to focus on the sidebar
+                </li>
+                <li>
+                    <i class="fas fa-check-circle"></i>
+                    <strong>Easy to Close:</strong> Click X button, overlay, or press Esc
+                </li>
+                <li>
+                    <i class="fas fa-check-circle"></i>
+                    <strong>Responsive:</strong> Works perfectly on mobile and desktop
+                </li>
+            </ul>
+        </div>
+
+        <div class="feature-box">
+            <h3>
+                <i class="fas fa-user-lock"></i>
+                Authentication Features
+            </h3>
+            <ul>
+                <li>
+                    <i class="fas fa-info-circle"></i>
+                    Some menu items are hidden when not logged in
+                </li>
+                <li>
+                    <i class="fas fa-info-circle"></i>
+                    Login/Register links appear for guests
+                </li>
+                <li>
+                    <i class="fas fa-info-circle"></i>
+                    Profile/Dashboard links appear for logged-in users
+                </li>
+            </ul>
+            
+            <button class="demo-button" style="margin-top: 20px; font-size: 14px;" onclick="simulateLogin()">
+                <i class="fas fa-sign-in-alt"></i>
+                Simulate Login (Test Feature)
+            </button>
+        </div>
+    </main>
+
+    <script src="js/ui.js"></script>
+    <script>
+        // Additional sidebar functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const sidebarClose = document.getElementById('sidebarClose');
+            const sidebarOverlay = document.getElementById('sidebarOverlay');
+            const logoutBtn = document.getElementById('logoutBtn');
+            
+            if (sidebarClose) {
+                sidebarClose.addEventListener('click', toggleSidebar);
+            }
+            
+            if (sidebarOverlay) {
+                sidebarOverlay.addEventListener('click', toggleSidebar);
+            }
+            
+            if (logoutBtn) {
+                logoutBtn.addEventListener('click', handleLogout);
+            }
+            
+            // Update sidebar based on auth status
+            updateSidebarAuth();
+
+            // Close sidebar with Esc key
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape') {
+                    const sidebar = document.getElementById('sidebar');
+                    if (sidebar && sidebar.classList.contains('active')) {
+                        toggleSidebar();
+                    }
+                }
+            });
+        });
+
+        function updateSidebarAuth() {
+            const isLoggedIn = localStorage.getItem('healify-user-token');
+            const body = document.body;
+            
+            if (isLoggedIn) {
+                body.classList.add('logged-in');
+            } else {
+                body.classList.remove('logged-in');
+            }
+        }
+
+        function handleLogout(e) {
+            e.preventDefault();
+            
+            if (confirm('Are you sure you want to logout?')) {
+                localStorage.removeItem('healify-user-token');
+                localStorage.removeItem('healify-user-role');
+                localStorage.removeItem('healify-user-data');
+                
+                updateSidebarAuth();
+                alert('Logged out successfully! The menu items have been updated.');
+            }
+        }
+
+        function simulateLogin() {
+            const isLoggedIn = localStorage.getItem('healify-user-token');
+            
+            if (isLoggedIn) {
+                // Logout
+                localStorage.removeItem('healify-user-token');
+                localStorage.removeItem('healify-user-role');
+                alert('Logged out! Open the sidebar to see the updated menu.');
+            } else {
+                // Login
+                localStorage.setItem('healify-user-token', 'demo-token-12345');
+                localStorage.setItem('healify-user-role', 'client');
+                alert('Logged in! Open the sidebar to see the updated menu with Profile, Dashboard, and Reservations.');
+            }
+            
+            updateSidebarAuth();
+        }
+    </script>
+    <script src="js/ui.js"></script>
+    <script>
+        // Load header
+        loadComponent('headerPlaceholder', 'components/header.html');
+    </script>
+</body>
+</html>

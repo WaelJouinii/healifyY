@@ -1,0 +1,2623 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Doctor Dashboard - Healify</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/dashboard.css">
+    <style>
+        /* Doctor Dashboard Specific Styles */
+        .doctor-dashboard {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+
+        .dashboard-main {
+            padding-top: 80px;
+        }
+
+        .welcome-section {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .welcome-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 2rem;
+        }
+
+        .welcome-text h1 {
+            color: white;
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .welcome-text p {
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        .welcome-actions {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        /* Stats Cards */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            transition: all 0.3s;
+            border: 2px solid transparent;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            border-color: white;
+        }
+
+        .stat-icon {
+            width: 70px;
+            height: 70px;
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            color: white;
+        }
+
+        /* Dashboard Grid */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .dashboard-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 1.5rem;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid #e5e7eb;
+        }
+
+        .card-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--text-color);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .card-link {
+            color: var(--primary-color);
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+
+        .card-link:hover {
+            color: var(--secondary-color);
+        }
+
+        /* Appointment Card */
+        .appointment-card {
+            background: #f9fafb;
+            border-radius: 15px;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            border: 2px solid #e5e7eb;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+
+        .appointment-card:hover {
+            border-color: var(--primary-color);
+            transform: translateX(5px);
+        }
+
+        .appointment-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: start;
+            margin-bottom: 1rem;
+        }
+
+        .patient-info {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .patient-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 700;
+            font-size: 1.2rem;
+        }
+
+        .patient-details h4 {
+            margin: 0 0 0.25rem 0;
+            color: var(--text-color);
+        }
+
+        .patient-details p {
+            margin: 0;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        .appointment-time {
+            text-align: right;
+        }
+
+        .time {
+            display: block;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin-bottom: 0.25rem;
+        }
+
+        .date {
+            display: block;
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+
+        .appointment-footer {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .btn-appointment {
+            flex: 1;
+            padding: 0.5rem 1rem;
+            border-radius: 10px;
+            border: none;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            font-size: 0.9rem;
+        }
+
+        .btn-accept {
+            background: #10b981;
+            color: white;
+        }
+
+        .btn-accept:hover {
+            background: #059669;
+        }
+
+        .btn-view {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        .btn-view:hover {
+            background: var(--secondary-color);
+        }
+
+        .btn-cancel {
+            background: #ef4444;
+            color: white;
+        }
+
+        .btn-cancel:hover {
+            background: #dc2626;
+        }
+
+        /* Patient Card */
+        .patient-card {
+            background: #f9fafb;
+            border-radius: 15px;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            border: 2px solid #e5e7eb;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+
+        .patient-card:hover {
+            border-color: var(--primary-color);
+            transform: translateY(-3px);
+        }
+
+        .patient-card-content {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .patient-card-details {
+            flex: 1;
+        }
+
+        .patient-card-details h4 {
+            margin: 0 0 0.25rem 0;
+        }
+
+        .patient-card-details p {
+            margin: 0;
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+        }
+
+        .patient-card-action {
+            color: var(--primary-color);
+        }
+
+        /* Quick Action */
+        .quick-actions {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 1rem;
+        }
+
+        .quick-action-btn {
+            background: linear-gradient(135deg, #f9fafb, white);
+            border: 2px solid #e5e7eb;
+            border-radius: 15px;
+            padding: 1.5rem 1rem;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .quick-action-btn:hover {
+            border-color: var(--primary-color);
+            transform: translateY(-5px);
+            box-shadow: 0 5px 20px rgba(102, 126, 234, 0.2);
+        }
+
+        .quick-action-btn i {
+            font-size: 2rem;
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+            display: block;
+        }
+
+        .quick-action-btn span {
+            display: block;
+            font-weight: 600;
+            color: var(--text-color);
+            font-size: 0.9rem;
+        }
+
+        /* Schedule */
+        .schedule-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem;
+            background: #f9fafb;
+            border-radius: 12px;
+            margin-bottom: 0.75rem;
+            border: 2px solid #e5e7eb;
+        }
+
+        .schedule-time {
+            font-weight: 700;
+            color: var(--primary-color);
+            min-width: 80px;
+        }
+
+        .schedule-details {
+            flex: 1;
+        }
+
+        .schedule-details h5 {
+            margin: 0 0 0.25rem 0;
+            color: var(--text-color);
+        }
+
+        .schedule-details p {
+            margin: 0;
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+        }
+
+        .schedule-badge {
+            padding: 0.35rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .badge-confirmed {
+            background: rgba(16, 185, 129, 0.1);
+            color: #10b981;
+        }
+
+        .badge-pending {
+            background: rgba(245, 158, 11, 0.1);
+            color: #f59e0b;
+        }
+
+        .badge-completed {
+            background: rgba(59, 130, 246, 0.1);
+            color: #3b82f6;
+        }
+
+        /* Empty State */
+        .empty-state {
+            text-align: center;
+            padding: 3rem 1rem;
+            color: var(--text-secondary);
+        }
+
+        .empty-state i {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            opacity: 0.5;
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .dashboard-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .welcome-content {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .quick-actions {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 480px) {
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .appointment-header {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .appointment-time {
+                text-align: left;
+            }
+        }
+    </style>
+</head>
+<body class="doctor-dashboard">
+    <!-- Header -->
+    <div id="headerPlaceholder"></div>
+
+    <!-- Main Content -->
+    <main class="dashboard-main">
+        <div class="dashboard-container">
+            <!-- Welcome Section -->
+            <section class="welcome-section">
+                <div class="welcome-content">
+                    <div class="welcome-text">
+                        <h1>Welcome back, Dr. <span id="doctorName">Smith</span>! 👨‍⚕️</h1>
+                        <p>You have <span id="todayAppointments">5</span> appointments today</p>
+                    </div>
+                    <div class="welcome-actions">
+                        <a href="consultation.html" class="btn-primary">
+                            <i class="fas fa-video"></i>
+                            Start Consultation
+                        </a>
+                        <button class="btn-secondary" onclick="viewSchedule()">
+                            <i class="fas fa-calendar"></i>
+                            View Schedule
+                        </button>
+                        <button class="btn-secondary" onclick="logout()" style="background: #ef4444;">
+                            <i class="fas fa-sign-out-alt"></i>
+                            Logout
+                        </button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Stats Cards -->
+            <section class="stats-section">
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-icon" style="background: linear-gradient(135deg, #3b82f6, #8b5cf6);">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <div class="stat-details">
+                            <div class="stat-label">Total Patients</div>
+                            <div class="stat-value" id="totalPatients">0</div>
+                        </div>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-icon" style="background: linear-gradient(135deg, #10b981, #059669);">
+                            <i class="fas fa-calendar-check"></i>
+                        </div>
+                        <div class="stat-details">
+                            <div class="stat-label">Today's Appointments</div>
+                            <div class="stat-value" id="todayAppointmentsCount">0</div>
+                        </div>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-icon" style="background: linear-gradient(135deg, #f59e0b, #d97706);">
+                            <i class="fas fa-clock"></i>
+                        </div>
+                        <div class="stat-details">
+                            <div class="stat-label">Pending Requests</div>
+                            <div class="stat-value" id="pendingRequests">0</div>
+                        </div>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-icon" style="background: linear-gradient(135deg, #ef4444, #dc2626);">
+                            <i class="fas fa-star"></i>
+                        </div>
+                        <div class="stat-details">
+                            <div class="stat-label">Rating</div>
+                            <div class="stat-value">4.8 <i class="fas fa-star" style="font-size: 0.8rem; color: #f59e0b;"></i></div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Main Dashboard Grid -->
+            <div class="dashboard-grid">
+                <!-- Left Column -->
+                <div class="dashboard-left">
+                    <!-- Pending Appointments -->
+                    <section class="dashboard-card">
+                        <div class="card-header">
+                            <h2 class="card-title">
+                                <i class="fas fa-clock"></i>
+                                Pending Appointments
+                            </h2>
+                            <a href="#" class="card-link" onclick="viewAllAppointments(); return false;">View All</a>
+                        </div>
+                        <div class="card-body">
+                            <div id="pendingAppointmentsList">
+                                <!-- Sample Pending Appointment -->
+                                <div class="appointment-card">
+                                    <div class="appointment-header">
+                                        <div class="patient-info">
+                                            <div class="patient-avatar">JD</div>
+                                            <div class="patient-details">
+                                                <h4>John Doe</h4>
+                                                <p>General Checkup</p>
+                                            </div>
+                                        </div>
+                                        <div class="appointment-time">
+                                            <span class="time">10:00 AM</span>
+                                            <span class="date">Today</span>
+                                        </div>
+                                    </div>
+                                    <div class="appointment-footer">
+                                        <button class="btn-appointment btn-accept" onclick="acceptAppointment(1)">
+                                            <i class="fas fa-check"></i>
+                                            Accept
+                                        </button>
+                                        <button class="btn-appointment btn-view" onclick="viewPatient(1)">
+                                            <i class="fas fa-eye"></i>
+                                            View
+                                        </button>
+                                        <button class="btn-appointment btn-cancel" onclick="cancelAppointment(1)">
+                                            <i class="fas fa-times"></i>
+                                            Decline
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Today's Schedule -->
+                    <section class="dashboard-card">
+                        <div class="card-header">
+                            <h2 class="card-title">
+                                <i class="fas fa-calendar-day"></i>
+                                Today's Schedule
+                            </h2>
+                        </div>
+                        <div class="card-body">
+                            <div id="todayScheduleList">
+                                <div class="schedule-item">
+                                    <div class="schedule-time">09:00 AM</div>
+                                    <div class="schedule-details">
+                                        <h5>Sarah Johnson</h5>
+                                        <p>Follow-up consultation</p>
+                                    </div>
+                                    <span class="schedule-badge badge-confirmed">Confirmed</span>
+                                </div>
+
+                                <div class="schedule-item">
+                                    <div class="schedule-time">11:00 AM</div>
+                                    <div class="schedule-details">
+                                        <h5>Michael Brown</h5>
+                                        <p>Initial consultation</p>
+                                    </div>
+                                    <span class="schedule-badge badge-confirmed">Confirmed</span>
+                                </div>
+
+                                <div class="schedule-item">
+                                    <div class="schedule-time">02:00 PM</div>
+                                    <div class="schedule-details">
+                                        <h5>Emily Davis</h5>
+                                        <p>Cardiology checkup</p>
+                                    </div>
+                                    <span class="schedule-badge badge-pending">Pending</span>
+                                </div>
+
+                                <div class="schedule-item">
+                                    <div class="schedule-time">04:00 PM</div>
+                                    <div class="schedule-details">
+                                        <h5>Robert Wilson</h5>
+                                        <p>Post-surgery review</p>
+                                    </div>
+                                    <span class="schedule-badge badge-confirmed">Confirmed</span>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Recent Patients -->
+                    <section class="dashboard-card">
+                        <div class="card-header">
+                            <h2 class="card-title">
+                                <i class="fas fa-user-friends"></i>
+                                Recent Patients
+                            </h2>
+                            <a href="#" class="card-link" onclick="viewAllPatients(); return false;">View All</a>
+                        </div>
+                        <div class="card-body">
+                            <div id="recentPatientsList">
+                                <div class="patient-card" onclick="viewPatient(1)">
+                                    <div class="patient-card-content">
+                                        <div class="patient-avatar">JD</div>
+                                        <div class="patient-card-details">
+                                            <h4>John Doe</h4>
+                                            <p>Last visit: 2 days ago • Age: 35</p>
+                                        </div>
+                                        <div class="patient-card-action">
+                                            <i class="fas fa-chevron-right"></i>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="patient-card" onclick="viewPatient(2)">
+                                    <div class="patient-card-content">
+                                        <div class="patient-avatar">SJ</div>
+                                        <div class="patient-card-details">
+                                            <h4>Sarah Johnson</h4>
+                                            <p>Last visit: 1 week ago • Age: 28</p>
+                                        </div>
+                                        <div class="patient-card-action">
+                                            <i class="fas fa-chevron-right"></i>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="patient-card" onclick="viewPatient(3)">
+                                    <div class="patient-card-content">
+                                        <div class="patient-avatar">MB</div>
+                                        <div class="patient-card-details">
+                                            <h4>Michael Brown</h4>
+                                            <p>Last visit: 3 days ago • Age: 42</p>
+                                        </div>
+                                        <div class="patient-card-action">
+                                            <i class="fas fa-chevron-right"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+
+                <!-- Right Column -->
+                <div class="dashboard-right">
+                    <!-- Quick Actions -->
+                    <section class="dashboard-card">
+                        <div class="card-header">
+                            <h2 class="card-title">
+                                <i class="fas fa-bolt"></i>
+                                Quick Actions
+                            </h2>
+                        </div>
+                        <div class="card-body">
+                            <div class="quick-actions">
+                                <button class="quick-action-btn" onclick="window.location.href='consultation.html'">
+                                    <i class="fas fa-video"></i>
+                                    <span>Start Consultation</span>
+                                </button>
+                                <button class="quick-action-btn" onclick="writePrescription()">
+                                    <i class="fas fa-prescription"></i>
+                                    <span>Write Prescription</span>
+                                </button>
+                                <button class="quick-action-btn" onclick="viewPatients()">
+                                    <i class="fas fa-users"></i>
+                                    <span>View Patients</span>
+                                </button>
+                                <button class="quick-action-btn" onclick="viewSchedule()">
+                                    <i class="fas fa-calendar-alt"></i>
+                                    <span>My Schedule</span>
+                                </button>
+                                <button class="quick-action-btn" onclick="viewMedicalRecords()">
+                                    <i class="fas fa-file-medical"></i>
+                                    <span>Medical Records</span>
+                                </button>
+                                <button class="quick-action-btn" onclick="window.location.href='profil.html'">
+                                    <i class="fas fa-user-cog"></i>
+                                    <span>Settings</span>
+                                </button>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Statistics -->
+                    <section class="dashboard-card">
+                        <div class="card-header">
+                            <h2 class="card-title">
+                                <i class="fas fa-chart-line"></i>
+                                This Week
+                            </h2>
+                        </div>
+                        <div class="card-body">
+                            <div class="schedule-item">
+                                <div class="schedule-time">
+                                    <i class="fas fa-users" style="color: var(--primary-color);"></i>
+                                </div>
+                                <div class="schedule-details">
+                                    <h5>35 Consultations</h5>
+                                    <p>+8 from last week</p>
+                                </div>
+                            </div>
+
+                            <div class="schedule-item">
+                                <div class="schedule-time">
+                                    <i class="fas fa-clock" style="color: #10b981;"></i>
+                                </div>
+                                <div class="schedule-details">
+                                    <h5>28 Hours</h5>
+                                    <p>Total consultation time</p>
+                                </div>
+                            </div>
+
+                            <div class="schedule-item">
+                                <div class="schedule-time">
+                                    <i class="fas fa-prescription" style="color: #f59e0b;"></i>
+                                </div>
+                                <div class="schedule-details">
+                                    <h5>42 Prescriptions</h5>
+                                    <p>Written this week</p>
+                                </div>
+                            </div>
+
+                            <div class="schedule-item">
+                                <div class="schedule-time">
+                                    <i class="fas fa-star" style="color: #ef4444;"></i>
+                                </div>
+                                <div class="schedule-details">
+                                    <h5>4.8 Rating</h5>
+                                    <p>Based on 127 reviews</p>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Notifications -->
+                    <section class="dashboard-card">
+                        <div class="card-header">
+                            <h2 class="card-title">
+                                <i class="fas fa-bell"></i>
+                                Notifications
+                            </h2>
+                            <button class="card-link" onclick="markAllRead()">Mark all read</button>
+                        </div>
+                        <div class="card-body">
+                            <div id="notificationsList">
+                                <div class="schedule-item" style="cursor: pointer;" onclick="viewNotification(1)">
+                                    <div class="schedule-time">
+                                        <i class="fas fa-user-plus" style="color: var(--primary-color);"></i>
+                                    </div>
+                                    <div class="schedule-details">
+                                        <h5>New patient registered</h5>
+                                        <p>Jane Smith booked an appointment</p>
+                                    </div>
+                                </div>
+
+                                <div class="schedule-item" style="cursor: pointer;" onclick="viewNotification(2)">
+                                    <div class="schedule-time">
+                                        <i class="fas fa-calendar" style="color: #10b981;"></i>
+                                    </div>
+                                    <div class="schedule-details">
+                                        <h5>Appointment reminder</h5>
+                                        <p>Consultation in 30 minutes</p>
+                                    </div>
+                                </div>
+
+                                <div class="schedule-item" style="cursor: pointer;" onclick="viewNotification(3)">
+                                    <div class="schedule-time">
+                                        <i class="fas fa-star" style="color: #f59e0b;"></i>
+                                    </div>
+                                    <div class="schedule-details">
+                                        <h5>New review received</h5>
+                                        <p>Michael rated 5 stars</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <div id="footerPlaceholder"></div>
+
+    <!-- Write Prescription Modal -->
+    <div id="prescriptionModal" class="modal" style="display: none;">
+        <div class="modal-overlay" onclick="closePrescriptionModal()"></div>
+        <div class="modal-content" style="max-width: 800px;">
+            <div class="modal-header">
+                <h2><i class="fas fa-prescription"></i> Write Prescription</h2>
+                <button class="modal-close" onclick="closePrescriptionModal()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="prescriptionForm">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="prescriptionPatient">Patient Name *</label>
+                            <input type="text" id="prescriptionPatient" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="prescriptionDate">Date *</label>
+                            <input type="date" id="prescriptionDate" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="diagnosis">Diagnosis *</label>
+                        <textarea id="diagnosis" rows="3" required placeholder="Enter diagnosis"></textarea>
+                    </div>
+
+                    <div class="medicines-section">
+                        <div class="section-header">
+                            <h3>Medicines</h3>
+                            <button type="button" class="btn-add" onclick="addMedicineField()">
+                                <i class="fas fa-plus"></i> Add Medicine
+                            </button>
+                        </div>
+                        <div id="medicinesList">
+                            <div class="medicine-item">
+                                <div class="form-row">
+                                    <div class="form-group" style="flex: 2;">
+                                        <label>Medicine Name *</label>
+                                        <input type="text" class="medicine-name" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Type *</label>
+                                        <select class="medicine-type" required>
+                                            <option value="">Select</option>
+                                            <option value="Tablet">Tablet</option>
+                                            <option value="Capsule">Capsule</option>
+                                            <option value="Syrup">Syrup</option>
+                                            <option value="Injection">Injection</option>
+                                            <option value="Drops">Drops</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Dosage *</label>
+                                        <input type="text" class="medicine-dosage" required placeholder="e.g., 500mg">
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label>Frequency *</label>
+                                        <select class="medicine-frequency" required>
+                                            <option value="">Select</option>
+                                            <option value="Once daily">Once daily</option>
+                                            <option value="Twice daily">Twice daily</option>
+                                            <option value="Three times daily">Three times daily</option>
+                                            <option value="Four times daily">Four times daily</option>
+                                            <option value="As needed">As needed</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Duration *</label>
+                                        <input type="text" class="medicine-duration" required placeholder="e.g., 7 days">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Timing</label>
+                                        <select class="medicine-timing">
+                                            <option value="After meal">After meal</option>
+                                            <option value="Before meal">Before meal</option>
+                                            <option value="With meal">With meal</option>
+                                            <option value="Anytime">Anytime</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label>Instructions</label>
+                                    <input type="text" class="medicine-instructions" placeholder="Special instructions">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="prescriptionNotes">Additional Notes</label>
+                        <textarea id="prescriptionNotes" rows="3" placeholder="Any additional instructions or notes"></textarea>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn-secondary" onclick="closePrescriptionModal()">Cancel</button>
+                        <button type="submit" class="btn-primary">
+                            <i class="fas fa-save"></i> Save Prescription
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Patient Details Modal -->
+    <div id="patientModal" class="modal" style="display: none;">
+        <div class="modal-overlay" onclick="closePatientModal()"></div>
+        <div class="modal-content" style="max-width: 900px;">
+            <div class="modal-header">
+                <h2><i class="fas fa-user"></i> Patient Details</h2>
+                <button class="modal-close" onclick="closePatientModal()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div id="patientDetailsContent">
+                    <!-- Patient details will be loaded here -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Schedule Modal -->
+    <div id="scheduleModal" class="modal" style="display: none;">
+        <div class="modal-overlay" onclick="closeScheduleModal()"></div>
+        <div class="modal-content" style="max-width: 1000px;">
+            <div class="modal-header">
+                <h2><i class="fas fa-calendar-alt"></i> My Schedule</h2>
+                <button class="modal-close" onclick="closeScheduleModal()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="schedule-filters">
+                    <button class="filter-btn active" onclick="filterSchedule('all')">All</button>
+                    <button class="filter-btn" onclick="filterSchedule('today')">Today</button>
+                    <button class="filter-btn" onclick="filterSchedule('week')">This Week</button>
+                    <button class="filter-btn" onclick="filterSchedule('month')">This Month</button>
+                </div>
+                <div id="fullScheduleContent">
+                    <!-- Full schedule will be loaded here -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Medical Records Modal -->
+    <div id="medicalRecordsModal" class="modal" style="display: none;">
+        <div class="modal-overlay" onclick="closeMedicalRecordsModal()"></div>
+        <div class="modal-content" style="max-width: 1200px;">
+            <div class="modal-header">
+                <h2><i class="fas fa-file-medical"></i> Medical Records</h2>
+                <button class="modal-close" onclick="closeMedicalRecordsModal()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <!-- Search and Filter -->
+                <div class="records-toolbar">
+                    <div class="search-box">
+                        <i class="fas fa-search"></i>
+                        <input type="text" id="recordSearch" placeholder="Search patient name, ID, or diagnosis..." onkeyup="filterRecords()">
+                    </div>
+                    <div class="filter-buttons">
+                        <select id="recordTypeFilter" onchange="filterRecords()" class="filter-select">
+                            <option value="all">All Types</option>
+                            <option value="lab">Lab Results</option>
+                            <option value="imaging">Imaging</option>
+                            <option value="prescription">Prescriptions</option>
+                            <option value="consultation">Consultations</option>
+                            <option value="surgery">Surgery Reports</option>
+                        </select>
+                        <select id="recordDateFilter" onchange="filterRecords()" class="filter-select">
+                            <option value="all">All Dates</option>
+                            <option value="today">Today</option>
+                            <option value="week">This Week</option>
+                            <option value="month">This Month</option>
+                            <option value="year">This Year</option>
+                        </select>
+                        <button class="btn-add" onclick="uploadNewRecord()">
+                            <i class="fas fa-upload"></i> Upload Record
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Records List -->
+                <div id="medicalRecordsList" class="records-list">
+                    <!-- Records will be loaded here -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Record Detail Modal -->
+    <div id="recordDetailModal" class="modal" style="display: none;">
+        <div class="modal-overlay" onclick="closeRecordDetailModal()"></div>
+        <div class="modal-content" style="max-width: 900px;">
+            <div class="modal-header">
+                <h2><i class="fas fa-file-medical-alt"></i> Record Details</h2>
+                <button class="modal-close" onclick="closeRecordDetailModal()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div id="recordDetailContent">
+                    <!-- Record details will be loaded here -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <style>
+        /* Modal Styles */
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 10000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            animation: fadeIn 0.3s ease-out;
+        }
+
+        .modal-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(5px);
+        }
+
+        .modal-content {
+            position: relative;
+            background: white;
+            border-radius: 20px;
+            max-height: 90vh;
+            overflow-y: auto;
+            width: 90%;
+            max-width: 600px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            animation: slideUp 0.3s ease-out;
+        }
+
+        .modal-header {
+            padding: 2rem;
+            border-bottom: 2px solid #e5e7eb;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            background: white;
+            z-index: 10;
+            border-radius: 20px 20px 0 0;
+        }
+
+        .modal-header h2 {
+            margin: 0;
+            color: var(--text-color);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .modal-close {
+            background: #f3f4f6;
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+        }
+
+        .modal-close:hover {
+            background: #ef4444;
+            color: white;
+        }
+
+        .modal-body {
+            padding: 2rem;
+        }
+
+        .modal-footer {
+            display: flex;
+            gap: 1rem;
+            justify-content: flex-end;
+            padding-top: 1.5rem;
+            margin-top: 1.5rem;
+            border-top: 2px solid #e5e7eb;
+        }
+
+        /* Form Styles */
+        .form-row {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-group label {
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--text-color);
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            padding: 0.75rem;
+            border: 2px solid #e5e7eb;
+            border-radius: 10px;
+            font-size: 1rem;
+            transition: all 0.3s;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--primary-color);
+        }
+
+        /* Medicines Section */
+        .medicines-section {
+            margin: 2rem 0;
+            padding: 1.5rem;
+            background: #f9fafb;
+            border-radius: 15px;
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .section-header h3 {
+            margin: 0;
+            color: var(--text-color);
+        }
+
+        .btn-add {
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.3s;
+        }
+
+        .btn-add:hover {
+            background: var(--secondary-color);
+            transform: translateY(-2px);
+        }
+
+        .medicine-item {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 12px;
+            margin-bottom: 1rem;
+            border: 2px solid #e5e7eb;
+            position: relative;
+        }
+
+        .btn-remove-medicine {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: #ef4444;
+            color: white;
+            border: none;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+        }
+
+        .btn-remove-medicine:hover {
+            background: #dc2626;
+        }
+
+        /* Schedule Filters */
+        .schedule-filters {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            padding: 0.75rem 1.5rem;
+            border: 2px solid #e5e7eb;
+            background: white;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .filter-btn:hover,
+        .filter-btn.active {
+            background: var(--primary-color);
+            color: white;
+            border-color: var(--primary-color);
+        }
+
+        /* Patient Details */
+        .patient-details-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .detail-card {
+            background: #f9fafb;
+            padding: 1.5rem;
+            border-radius: 12px;
+            border: 2px solid #e5e7eb;
+        }
+
+        .detail-card h4 {
+            margin: 0 0 0.5rem 0;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .detail-card p {
+            margin: 0;
+            color: var(--text-color);
+            font-size: 1.1rem;
+            font-weight: 600;
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes slideUp {
+            from {
+                transform: translateY(50px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        /* Medical Records Toolbar */
+        .records-toolbar {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
+        .search-box {
+            flex: 1;
+            min-width: 250px;
+            position: relative;
+        }
+
+        .search-box i {
+            position: absolute;
+            left: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-secondary);
+        }
+
+        .search-box input {
+            width: 100%;
+            padding: 0.75rem 1rem 0.75rem 2.5rem;
+            border: 2px solid #e5e7eb;
+            border-radius: 10px;
+            font-size: 1rem;
+        }
+
+        .search-box input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+        }
+
+        .filter-buttons {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        .filter-select {
+            padding: 0.75rem 1rem;
+            border: 2px solid #e5e7eb;
+            border-radius: 10px;
+            background: white;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .filter-select:focus {
+            outline: none;
+            border-color: var(--primary-color);
+        }
+
+        /* Records List */
+        .records-list {
+            max-height: 60vh;
+            overflow-y: auto;
+        }
+
+        .record-card {
+            background: #f9fafb;
+            border-radius: 15px;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            border: 2px solid #e5e7eb;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+
+        .record-card:hover {
+            border-color: var(--primary-color);
+            transform: translateX(5px);
+        }
+
+        .record-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: start;
+            margin-bottom: 1rem;
+        }
+
+        .record-info {
+            flex: 1;
+        }
+
+        .record-info h4 {
+            margin: 0 0 0.5rem 0;
+            color: var(--text-color);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .record-type-badge {
+            padding: 0.25rem 0.75rem;
+            border-radius: 15px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .badge-lab {
+            background: rgba(59, 130, 246, 0.1);
+            color: #3b82f6;
+        }
+
+        .badge-imaging {
+            background: rgba(168, 85, 247, 0.1);
+            color: #a855f7;
+        }
+
+        .badge-prescription {
+            background: rgba(16, 185, 129, 0.1);
+            color: #10b981;
+        }
+
+        .badge-consultation {
+            background: rgba(245, 158, 11, 0.1);
+            color: #f59e0b;
+        }
+
+        .badge-surgery {
+            background: rgba(239, 68, 68, 0.1);
+            color: #ef4444;
+        }
+
+        .record-meta {
+            display: flex;
+            gap: 1.5rem;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        .record-meta span {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .record-actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .btn-icon {
+            width: 35px;
+            height: 35px;
+            border-radius: 8px;
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+            background: white;
+            color: var(--text-color);
+        }
+
+        .btn-icon:hover {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        /* Record Detail View */
+        .record-detail-header {
+            text-align: center;
+            padding: 2rem;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            border-radius: 15px;
+            margin-bottom: 2rem;
+            color: white;
+        }
+
+        .record-detail-header h3 {
+            margin: 0 0 0.5rem 0;
+        }
+
+        .record-detail-header p {
+            margin: 0;
+            opacity: 0.9;
+        }
+
+        .record-section {
+            margin-bottom: 2rem;
+        }
+
+        .record-section h4 {
+            margin: 0 0 1rem 0;
+            color: var(--text-color);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding-bottom: 0.75rem;
+            border-bottom: 2px solid #e5e7eb;
+        }
+
+        .record-data-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+        }
+
+        .record-data-item {
+            background: #f9fafb;
+            padding: 1rem;
+            border-radius: 10px;
+            border: 2px solid #e5e7eb;
+        }
+
+        .record-data-item strong {
+            display: block;
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+            margin-bottom: 0.25rem;
+        }
+
+        .record-data-item span {
+            color: var(--text-color);
+            font-weight: 600;
+        }
+
+        .record-notes {
+            background: #f9fafb;
+            padding: 1rem;
+            border-radius: 10px;
+            border: 2px solid #e5e7eb;
+            line-height: 1.6;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .modal-content {
+                width: 95%;
+                max-height: 95vh;
+            }
+
+            .modal-header,
+            .modal-body {
+                padding: 1.5rem;
+            }
+
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+
+            .records-toolbar {
+                flex-direction: column;
+            }
+
+            .search-box {
+                width: 100%;
+            }
+
+            .filter-buttons {
+                width: 100%;
+            }
+
+            .filter-select {
+                flex: 1;
+            }
+
+            .record-meta {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+        }
+    </style>
+
+    <!-- Scripts -->
+    <script src="js/ui.js"></script>
+    <script>
+        // Load header and footer
+        loadComponent('headerPlaceholder', 'components/header.html');
+        loadComponent('footerPlaceholder', 'components/footer.html');
+
+        // Check authentication and role
+        checkDoctorAuth();
+
+        // Load dashboard data
+        loadDoctorDashboard();
+
+        function checkDoctorAuth() {
+            const token = localStorage.getItem('healify-user-token');
+            const role = localStorage.getItem('healify-user-role');
+            
+            if (!token) {
+                window.location.href = 'login.html?redirect=dashboard-doctor.html';
+                return;
+            }
+
+            if (role !== 'doctor') {
+                alert('Access denied. This page is for doctors only.');
+                window.location.href = 'index.html';
+                return;
+            }
+        }
+
+        function loadDoctorDashboard() {
+            const userData = JSON.parse(localStorage.getItem('healify-user-data') || '{}');
+            const doctorName = userData.lastName || userData.name || 'Doctor';
+            
+            document.getElementById('doctorName').textContent = doctorName;
+
+            // Load stats (in production, fetch from backend)
+            const stats = {
+                totalPatients: 156,
+                todayAppointments: 5,
+                pendingRequests: 3,
+                rating: 4.8
+            };
+
+            document.getElementById('totalPatients').textContent = stats.totalPatients;
+            document.getElementById('todayAppointmentsCount').textContent = stats.todayAppointments;
+            document.getElementById('todayAppointments').textContent = stats.todayAppointments;
+            document.getElementById('pendingRequests').textContent = stats.pendingRequests;
+        }
+
+        // Quick Actions
+        function writePrescription() {
+            document.getElementById('prescriptionModal').style.display = 'flex';
+            document.getElementById('prescriptionDate').value = new Date().toISOString().split('T')[0];
+        }
+
+        function closePrescriptionModal() {
+            document.getElementById('prescriptionModal').style.display = 'none';
+            document.getElementById('prescriptionForm').reset();
+        }
+
+        function addMedicineField() {
+            const medicinesList = document.getElementById('medicinesList');
+            const medicineItem = document.createElement('div');
+            medicineItem.className = 'medicine-item';
+            medicineItem.innerHTML = `
+                <button type="button" class="btn-remove-medicine" onclick="this.parentElement.remove()">
+                    <i class="fas fa-times"></i>
+                </button>
+                <div class="form-row">
+                    <div class="form-group" style="flex: 2;">
+                        <label>Medicine Name *</label>
+                        <input type="text" class="medicine-name" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Type *</label>
+                        <select class="medicine-type" required>
+                            <option value="">Select</option>
+                            <option value="Tablet">Tablet</option>
+                            <option value="Capsule">Capsule</option>
+                            <option value="Syrup">Syrup</option>
+                            <option value="Injection">Injection</option>
+                            <option value="Drops">Drops</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Dosage *</label>
+                        <input type="text" class="medicine-dosage" required placeholder="e.g., 500mg">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Frequency *</label>
+                        <select class="medicine-frequency" required>
+                            <option value="">Select</option>
+                            <option value="Once daily">Once daily</option>
+                            <option value="Twice daily">Twice daily</option>
+                            <option value="Three times daily">Three times daily</option>
+                            <option value="Four times daily">Four times daily</option>
+                            <option value="As needed">As needed</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Duration *</label>
+                        <input type="text" class="medicine-duration" required placeholder="e.g., 7 days">
+                    </div>
+                    <div class="form-group">
+                        <label>Timing</label>
+                        <select class="medicine-timing">
+                            <option value="After meal">After meal</option>
+                            <option value="Before meal">Before meal</option>
+                            <option value="With meal">With meal</option>
+                            <option value="Anytime">Anytime</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Instructions</label>
+                    <input type="text" class="medicine-instructions" placeholder="Special instructions">
+                </div>
+            `;
+            medicinesList.appendChild(medicineItem);
+        }
+
+        // Handle prescription form submission
+        document.addEventListener('DOMContentLoaded', function() {
+            const prescriptionForm = document.getElementById('prescriptionForm');
+            if (prescriptionForm) {
+                prescriptionForm.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    
+                    // Collect medicines data
+                    const medicines = [];
+                    document.querySelectorAll('.medicine-item').forEach(item => {
+                        medicines.push({
+                            name: item.querySelector('.medicine-name').value,
+                            type: item.querySelector('.medicine-type').value,
+                            dosage: item.querySelector('.medicine-dosage').value,
+                            frequency: item.querySelector('.medicine-frequency').value,
+                            duration: item.querySelector('.medicine-duration').value,
+                            timing: item.querySelector('.medicine-timing').value,
+                            instructions: item.querySelector('.medicine-instructions').value
+                        });
+                    });
+
+                    const prescriptionData = {
+                        id: Date.now(),
+                        patientName: document.getElementById('prescriptionPatient').value,
+                        date: document.getElementById('prescriptionDate').value,
+                        diagnosis: document.getElementById('diagnosis').value,
+                        medicines: medicines,
+                        notes: document.getElementById('prescriptionNotes').value,
+                        doctor: document.getElementById('doctorName').textContent,
+                        status: 'active'
+                    };
+
+                    // Save to localStorage
+                    const prescriptions = JSON.parse(localStorage.getItem('healify-prescriptions') || '[]');
+                    prescriptions.push(prescriptionData);
+                    localStorage.setItem('healify-prescriptions', JSON.stringify(prescriptions));
+
+                    showNotification('Prescription saved successfully!', 'success');
+                    closePrescriptionModal();
+                });
+            }
+        });
+
+        function viewPatients() {
+            // Load all patients
+            const patientsData = [
+                { id: 1, name: 'John Doe', age: 35, lastVisit: '2 days ago', gender: 'Male', phone: '+1 234 567 890', email: 'john@example.com' },
+                { id: 2, name: 'Sarah Johnson', age: 28, lastVisit: '1 week ago', gender: 'Female', phone: '+1 234 567 891', email: 'sarah@example.com' },
+                { id: 3, name: 'Michael Brown', age: 42, lastVisit: '3 days ago', gender: 'Male', phone: '+1 234 567 892', email: 'michael@example.com' },
+                { id: 4, name: 'Emily Davis', age: 31, lastVisit: '5 days ago', gender: 'Female', phone: '+1 234 567 893', email: 'emily@example.com' },
+                { id: 5, name: 'Robert Wilson', age: 55, lastVisit: '1 day ago', gender: 'Male', phone: '+1 234 567 894', email: 'robert@example.com' }
+            ];
+
+            let patientsHTML = '<div class="patient-details-grid">';
+            patientsData.forEach(patient => {
+                patientsHTML += `
+                    <div class="patient-card" onclick="viewPatient(${patient.id})">
+                        <div class="patient-card-content">
+                            <div class="patient-avatar">${patient.name.split(' ').map(n => n[0]).join('')}</div>
+                            <div class="patient-card-details">
+                                <h4>${patient.name}</h4>
+                                <p>Age: ${patient.age} • ${patient.gender}</p>
+                                <p>Last visit: ${patient.lastVisit}</p>
+                            </div>
+                            <div class="patient-card-action">
+                                <i class="fas fa-chevron-right"></i>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            });
+            patientsHTML += '</div>';
+
+            document.getElementById('patientDetailsContent').innerHTML = patientsHTML;
+            document.getElementById('patientModal').style.display = 'flex';
+        }
+
+        function viewSchedule() {
+            loadFullSchedule();
+            document.getElementById('scheduleModal').style.display = 'flex';
+        }
+
+        function closeScheduleModal() {
+            document.getElementById('scheduleModal').style.display = 'none';
+        }
+
+        function loadFullSchedule() {
+            const scheduleData = [
+                { time: '09:00 AM', patient: 'Sarah Johnson', type: 'Follow-up consultation', status: 'confirmed', date: 'Today' },
+                { time: '10:00 AM', patient: 'John Doe', type: 'General Checkup', status: 'pending', date: 'Today' },
+                { time: '11:00 AM', patient: 'Michael Brown', type: 'Initial consultation', status: 'confirmed', date: 'Today' },
+                { time: '02:00 PM', patient: 'Emily Davis', type: 'Cardiology checkup', status: 'pending', date: 'Today' },
+                { time: '04:00 PM', patient: 'Robert Wilson', type: 'Post-surgery review', status: 'confirmed', date: 'Today' },
+                { time: '09:30 AM', patient: 'Lisa Anderson', type: 'Diabetes consultation', status: 'confirmed', date: 'Tomorrow' },
+                { time: '11:30 AM', patient: 'David Martinez', type: 'Blood pressure check', status: 'confirmed', date: 'Tomorrow' },
+                { time: '03:00 PM', patient: 'Jennifer Taylor', type: 'Allergy consultation', status: 'pending', date: 'Tomorrow' }
+            ];
+
+            let scheduleHTML = '';
+            scheduleData.forEach(appointment => {
+                const badgeClass = appointment.status === 'confirmed' ? 'badge-confirmed' : 
+                                   appointment.status === 'pending' ? 'badge-pending' : 'badge-completed';
+                scheduleHTML += `
+                    <div class="schedule-item">
+                        <div class="schedule-time">${appointment.time}</div>
+                        <div class="schedule-details">
+                            <h5>${appointment.patient}</h5>
+                            <p>${appointment.type} • ${appointment.date}</p>
+                        </div>
+                        <span class="schedule-badge ${badgeClass}">${appointment.status}</span>
+                    </div>
+                `;
+            });
+
+            document.getElementById('fullScheduleContent').innerHTML = scheduleHTML;
+        }
+
+        function filterSchedule(filter) {
+            // Update active button
+            document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+            
+            // In production, filter schedule data based on the filter
+            showNotification(`Showing ${filter} appointments`, 'success');
+        }
+
+        function viewMedicalRecords() {
+            loadMedicalRecords();
+            document.getElementById('medicalRecordsModal').style.display = 'flex';
+        }
+
+        function closeMedicalRecordsModal() {
+            document.getElementById('medicalRecordsModal').style.display = 'none';
+        }
+
+        function closeRecordDetailModal() {
+            document.getElementById('recordDetailModal').style.display = 'none';
+        }
+
+        function loadMedicalRecords() {
+            // Sample medical records data (in production, fetch from backend)
+            window.medicalRecordsData = [
+                {
+                    id: 1,
+                    patientName: 'John Doe',
+                    patientId: 'P001',
+                    type: 'lab',
+                    title: 'Complete Blood Count (CBC)',
+                    date: '2025-11-12',
+                    diagnosis: 'Routine checkup',
+                    results: {
+                        'Hemoglobin': '14.5 g/dL',
+                        'WBC Count': '7,500/µL',
+                        'Platelet Count': '250,000/µL',
+                        'RBC Count': '5.0 million/µL'
+                    },
+                    notes: 'All values within normal range. Patient is healthy. Follow-up in 6 months.',
+                    status: 'completed'
+                },
+                {
+                    id: 2,
+                    patientName: 'Sarah Johnson',
+                    patientId: 'P002',
+                    type: 'imaging',
+                    title: 'Chest X-Ray',
+                    date: '2025-11-10',
+                    diagnosis: 'Respiratory infection',
+                    findings: 'Mild bronchial thickening noted. No signs of pneumonia. Lungs otherwise clear.',
+                    recommendation: 'Continue antibiotic treatment for 7 days. Repeat X-ray if symptoms persist.',
+                    notes: 'Patient responding well to treatment.',
+                    status: 'completed'
+                },
+                {
+                    id: 3,
+                    patientName: 'Michael Brown',
+                    patientId: 'P003',
+                    type: 'prescription',
+                    title: 'Hypertension Management',
+                    date: '2025-11-08',
+                    diagnosis: 'Essential Hypertension',
+                    medicines: [
+                        { name: 'Lisinopril', dosage: '10mg', frequency: 'Once daily', duration: '30 days' },
+                        { name: 'Amlodipine', dosage: '5mg', frequency: 'Once daily', duration: '30 days' }
+                    ],
+                    notes: 'Monitor blood pressure daily. Return for follow-up in 2 weeks.',
+                    status: 'active'
+                },
+                {
+                    id: 4,
+                    patientName: 'Emily Davis',
+                    patientId: 'P004',
+                    type: 'consultation',
+                    title: 'Cardiology Consultation',
+                    date: '2025-11-05',
+                    diagnosis: 'Atrial Fibrillation',
+                    findings: 'Irregular heart rhythm detected. EKG shows AF pattern.',
+                    treatment: 'Started on anticoagulation therapy. Referred to electrophysiologist.',
+                    notes: 'Patient educated about AF management and stroke prevention. Lifestyle modifications discussed.',
+                    status: 'completed'
+                },
+                {
+                    id: 5,
+                    patientName: 'Robert Wilson',
+                    patientId: 'P005',
+                    type: 'surgery',
+                    title: 'Appendectomy Report',
+                    date: '2025-11-01',
+                    diagnosis: 'Acute Appendicitis',
+                    procedure: 'Laparoscopic appendectomy performed successfully',
+                    findings: 'Inflamed appendix removed without complications. No peritonitis.',
+                    postOp: 'Patient recovering well. Minimal pain. Incision healing properly.',
+                    notes: 'Discharge planned for tomorrow. Follow-up in 1 week for suture removal.',
+                    status: 'completed'
+                },
+                {
+                    id: 6,
+                    patientName: 'Jane Smith',
+                    patientId: 'P006',
+                    type: 'lab',
+                    title: 'Lipid Profile',
+                    date: '2025-11-14',
+                    diagnosis: 'Hyperlipidemia screening',
+                    results: {
+                        'Total Cholesterol': '245 mg/dL (High)',
+                        'LDL Cholesterol': '160 mg/dL (High)',
+                        'HDL Cholesterol': '45 mg/dL (Low)',
+                        'Triglycerides': '200 mg/dL (High)'
+                    },
+                    notes: 'Elevated lipid levels. Recommend statin therapy and lifestyle modifications.',
+                    status: 'pending'
+                }
+            ];
+
+            displayRecords(window.medicalRecordsData);
+        }
+
+        function displayRecords(records) {
+            const recordsList = document.getElementById('medicalRecordsList');
+            
+            if (records.length === 0) {
+                recordsList.innerHTML = `
+                    <div class="empty-state">
+                        <i class="fas fa-file-medical"></i>
+                        <p>No medical records found</p>
+                    </div>
+                `;
+                return;
+            }
+
+            recordsList.innerHTML = records.map(record => {
+                const typeIcons = {
+                    lab: 'flask',
+                    imaging: 'x-ray',
+                    prescription: 'prescription',
+                    consultation: 'stethoscope',
+                    surgery: 'procedures'
+                };
+
+                return `
+                    <div class="record-card" onclick="viewRecordDetail(${record.id})">
+                        <div class="record-header">
+                            <div class="record-info">
+                                <h4>
+                                    <i class="fas fa-${typeIcons[record.type]}"></i>
+                                    ${record.title}
+                                    <span class="record-type-badge badge-${record.type}">${record.type}</span>
+                                </h4>
+                                <div class="record-meta">
+                                    <span><i class="fas fa-user"></i> ${record.patientName}</span>
+                                    <span><i class="fas fa-id-badge"></i> ${record.patientId}</span>
+                                    <span><i class="fas fa-calendar"></i> ${formatDate(record.date)}</span>
+                                    <span><i class="fas fa-heartbeat"></i> ${record.diagnosis}</span>
+                                </div>
+                            </div>
+                            <div class="record-actions">
+                                <button class="btn-icon" onclick="event.stopPropagation(); downloadRecord(${record.id})" title="Download">
+                                    <i class="fas fa-download"></i>
+                                </button>
+                                <button class="btn-icon" onclick="event.stopPropagation(); shareRecord(${record.id})" title="Share">
+                                    <i class="fas fa-share"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function viewRecordDetail(recordId) {
+            const record = window.medicalRecordsData.find(r => r.id === recordId);
+            if (!record) return;
+
+            let detailHTML = `
+                <div class="record-detail-header">
+                    <h3>${record.title}</h3>
+                    <p>${record.patientName} (${record.patientId}) • ${formatDate(record.date)}</p>
+                </div>
+
+                <div class="record-section">
+                    <h4><i class="fas fa-info-circle"></i> Basic Information</h4>
+                    <div class="record-data-grid">
+                        <div class="record-data-item">
+                            <strong>Patient Name</strong>
+                            <span>${record.patientName}</span>
+                        </div>
+                        <div class="record-data-item">
+                            <strong>Patient ID</strong>
+                            <span>${record.patientId}</span>
+                        </div>
+                        <div class="record-data-item">
+                            <strong>Record Type</strong>
+                            <span style="text-transform: capitalize;">${record.type}</span>
+                        </div>
+                        <div class="record-data-item">
+                            <strong>Date</strong>
+                            <span>${formatDate(record.date)}</span>
+                        </div>
+                        <div class="record-data-item">
+                            <strong>Diagnosis</strong>
+                            <span>${record.diagnosis}</span>
+                        </div>
+                        <div class="record-data-item">
+                            <strong>Status</strong>
+                            <span style="text-transform: capitalize;">${record.status}</span>
+                        </div>
+                    </div>
+                </div>
+            `;
+
+            // Add type-specific sections
+            if (record.results) {
+                detailHTML += `
+                    <div class="record-section">
+                        <h4><i class="fas fa-vial"></i> Test Results</h4>
+                        <div class="record-data-grid">
+                            ${Object.entries(record.results).map(([key, value]) => `
+                                <div class="record-data-item">
+                                    <strong>${key}</strong>
+                                    <span>${value}</span>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+                `;
+            }
+
+            if (record.medicines) {
+                detailHTML += `
+                    <div class="record-section">
+                        <h4><i class="fas fa-pills"></i> Prescribed Medicines</h4>
+                        ${record.medicines.map(med => `
+                            <div class="record-data-item" style="margin-bottom: 0.5rem;">
+                                <strong>${med.name}</strong>
+                                <span>${med.dosage} - ${med.frequency} for ${med.duration}</span>
+                            </div>
+                        `).join('')}
+                    </div>
+                `;
+            }
+
+            if (record.findings) {
+                detailHTML += `
+                    <div class="record-section">
+                        <h4><i class="fas fa-clipboard-list"></i> Findings</h4>
+                        <div class="record-notes">${record.findings}</div>
+                    </div>
+                `;
+            }
+
+            if (record.treatment) {
+                detailHTML += `
+                    <div class="record-section">
+                        <h4><i class="fas fa-procedures"></i> Treatment Plan</h4>
+                        <div class="record-notes">${record.treatment}</div>
+                    </div>
+                `;
+            }
+
+            if (record.procedure) {
+                detailHTML += `
+                    <div class="record-section">
+                        <h4><i class="fas fa-surgical"></i> Procedure</h4>
+                        <div class="record-notes">${record.procedure}</div>
+                    </div>
+                `;
+            }
+
+            if (record.postOp) {
+                detailHTML += `
+                    <div class="record-section">
+                        <h4><i class="fas fa-heart-rate"></i> Post-Operative Status</h4>
+                        <div class="record-notes">${record.postOp}</div>
+                    </div>
+                `;
+            }
+
+            if (record.recommendation) {
+                detailHTML += `
+                    <div class="record-section">
+                        <h4><i class="fas fa-lightbulb"></i> Recommendations</h4>
+                        <div class="record-notes">${record.recommendation}</div>
+                    </div>
+                `;
+            }
+
+            if (record.notes) {
+                detailHTML += `
+                    <div class="record-section">
+                        <h4><i class="fas fa-notes-medical"></i> Doctor's Notes</h4>
+                        <div class="record-notes">${record.notes}</div>
+                    </div>
+                `;
+            }
+
+            detailHTML += `
+                <div style="display: flex; gap: 1rem; margin-top: 2rem; padding-top: 1.5rem; border-top: 2px solid #e5e7eb;">
+                    <button class="btn-primary" style="flex: 1;" onclick="downloadRecord(${record.id})">
+                        <i class="fas fa-download"></i> Download Record
+                    </button>
+                    <button class="btn-secondary" style="flex: 1;" onclick="shareRecord(${record.id})">
+                        <i class="fas fa-share"></i> Share with Patient
+                    </button>
+                </div>
+            `;
+
+            document.getElementById('recordDetailContent').innerHTML = detailHTML;
+            document.getElementById('recordDetailModal').style.display = 'flex';
+        }
+
+        function filterRecords() {
+            const searchTerm = document.getElementById('recordSearch').value.toLowerCase();
+            const typeFilter = document.getElementById('recordTypeFilter').value;
+            const dateFilter = document.getElementById('recordDateFilter').value;
+
+            let filtered = window.medicalRecordsData;
+
+            // Search filter
+            if (searchTerm) {
+                filtered = filtered.filter(record => 
+                    record.patientName.toLowerCase().includes(searchTerm) ||
+                    record.patientId.toLowerCase().includes(searchTerm) ||
+                    record.title.toLowerCase().includes(searchTerm) ||
+                    record.diagnosis.toLowerCase().includes(searchTerm)
+                );
+            }
+
+            // Type filter
+            if (typeFilter !== 'all') {
+                filtered = filtered.filter(record => record.type === typeFilter);
+            }
+
+            // Date filter (simplified - in production, use proper date comparison)
+            if (dateFilter !== 'all') {
+                const today = new Date();
+                filtered = filtered.filter(record => {
+                    const recordDate = new Date(record.date);
+                    switch(dateFilter) {
+                        case 'today':
+                            return recordDate.toDateString() === today.toDateString();
+                        case 'week':
+                            const weekAgo = new Date(today.getTime() - 7 * 24 * 60 * 60 * 1000);
+                            return recordDate >= weekAgo;
+                        case 'month':
+                            return recordDate.getMonth() === today.getMonth() && 
+                                   recordDate.getFullYear() === today.getFullYear();
+                        case 'year':
+                            return recordDate.getFullYear() === today.getFullYear();
+                        default:
+                            return true;
+                    }
+                });
+            }
+
+            displayRecords(filtered);
+        }
+
+        function downloadRecord(recordId) {
+            const record = window.medicalRecordsData.find(r => r.id === recordId);
+            if (record) {
+                showNotification(`Downloading ${record.title} for ${record.patientName}...`, 'success');
+                // In production, generate and download PDF
+            }
+        }
+
+        function shareRecord(recordId) {
+            const record = window.medicalRecordsData.find(r => r.id === recordId);
+            if (record) {
+                if (confirm(`Share ${record.title} with ${record.patientName}?\n\nThe patient will receive a secure link to view this record.`)) {
+                    showNotification(`Record shared with ${record.patientName} successfully!`, 'success');
+                    // In production, send secure link to patient
+                }
+            }
+        }
+
+        function uploadNewRecord() {
+            alert('Upload New Record:\n\nThis feature allows you to:\n• Upload lab results (PDF, images)\n• Upload imaging reports (X-rays, CT scans, MRIs)\n• Attach medical documents\n• Add consultation notes\n\nFiles will be securely stored and encrypted.');
+            // In production, show upload interface
+        }
+
+        function formatDate(dateString) {
+            const date = new Date(dateString);
+            const options = { year: 'numeric', month: 'short', day: 'numeric' };
+            return date.toLocaleDateString('en-US', options);
+        }
+
+        // Logout function
+        function logout() {
+            if (confirm('Are you sure you want to logout?')) {
+                // Clear all user data
+                localStorage.removeItem('healify-user-token');
+                localStorage.removeItem('healify-user-role');
+                localStorage.removeItem('healify-user-data');
+                
+                showNotification('Logged out successfully!', 'success');
+                
+                // Redirect to login page after short delay
+                setTimeout(() => {
+                    window.location.href = 'login.html';
+                }, 1000);
+            }
+        }
+
+        // Appointment Actions
+        function acceptAppointment(id) {
+            if (confirm('Accept this appointment request?')) {
+                // Update UI
+                const appointmentCard = event.target.closest('.appointment-card');
+                const footer = appointmentCard.querySelector('.appointment-footer');
+                footer.innerHTML = `
+                    <button class="btn-appointment btn-view" onclick="viewPatient(${id})" style="flex: 2;">
+                        <i class="fas fa-eye"></i>
+                        View Patient
+                    </button>
+                    <button class="btn-appointment" style="background: #10b981; color: white;" onclick="window.location.href='consultation.html'">
+                        <i class="fas fa-video"></i>
+                        Start Consultation
+                    </button>
+                `;
+                
+                // Update pending count
+                const pendingCount = document.getElementById('pendingRequests');
+                pendingCount.textContent = Math.max(0, parseInt(pendingCount.textContent) - 1);
+                
+                showNotification('Appointment accepted! Patient has been notified.', 'success');
+                
+                // In production, update appointment status in backend
+            }
+        }
+
+        function cancelAppointment(id) {
+            const reason = prompt('Please provide a reason for declining this appointment:');
+            if (reason) {
+                // Remove appointment card with animation
+                const appointmentCard = event.target.closest('.appointment-card');
+                appointmentCard.style.animation = 'slideOutRight 0.3s ease-out';
+                
+                setTimeout(() => {
+                    appointmentCard.remove();
+                    
+                    // Update pending count
+                    const pendingCount = document.getElementById('pendingRequests');
+                    pendingCount.textContent = Math.max(0, parseInt(pendingCount.textContent) - 1);
+                    
+                    // Check if no more pending appointments
+                    const pendingList = document.getElementById('pendingAppointmentsList');
+                    if (pendingList.children.length === 0) {
+                        pendingList.innerHTML = `
+                            <div class="empty-state">
+                                <i class="fas fa-check-circle"></i>
+                                <p>No pending appointments</p>
+                            </div>
+                        `;
+                    }
+                }, 300);
+                
+                showNotification('Appointment declined. Patient has been notified with reason: ' + reason, 'success');
+                
+                // In production, update appointment status in backend
+            }
+        }
+
+        // Add slideOutRight animation
+        const slideOutStyle = document.createElement('style');
+        slideOutStyle.textContent = `
+            @keyframes slideOutRight {
+                from {
+                    transform: translateX(0);
+                    opacity: 1;
+                }
+                to {
+                    transform: translateX(100%);
+                    opacity: 0;
+                }
+            }
+        `;
+        document.head.appendChild(slideOutStyle);
+
+        function closePatientModal() {
+            document.getElementById('patientModal').style.display = 'none';
+        }
+
+        function viewPatient(id) {
+            // Sample patient data (in production, fetch from backend)
+            const patientsData = {
+                1: {
+                    name: 'John Doe',
+                    age: 35,
+                    gender: 'Male',
+                    phone: '+1 234 567 890',
+                    email: 'john@example.com',
+                    address: '123 Main St, New York, NY 10001',
+                    bloodType: 'O+',
+                    allergies: 'Penicillin',
+                    lastVisit: '2 days ago',
+                    upcomingAppointment: 'Tomorrow, 10:00 AM',
+                    medicalHistory: [
+                        'Hypertension (2020)',
+                        'Type 2 Diabetes (2019)',
+                        'Appendectomy (2015)'
+                    ],
+                    recentPrescriptions: [
+                        { date: '2025-11-10', medicine: 'Metformin 500mg', status: 'Active' },
+                        { date: '2025-11-01', medicine: 'Lisinopril 10mg', status: 'Active' }
+                    ]
+                },
+                2: {
+                    name: 'Sarah Johnson',
+                    age: 28,
+                    gender: 'Female',
+                    phone: '+1 234 567 891',
+                    email: 'sarah@example.com',
+                    address: '456 Oak Ave, New York, NY 10002',
+                    bloodType: 'A+',
+                    allergies: 'None',
+                    lastVisit: '1 week ago',
+                    upcomingAppointment: 'Next week',
+                    medicalHistory: [
+                        'Asthma (2018)',
+                        'Seasonal allergies'
+                    ],
+                    recentPrescriptions: [
+                        { date: '2025-11-05', medicine: 'Albuterol inhaler', status: 'Active' }
+                    ]
+                },
+                3: {
+                    name: 'Michael Brown',
+                    age: 42,
+                    gender: 'Male',
+                    phone: '+1 234 567 892',
+                    email: 'michael@example.com',
+                    address: '789 Pine St, New York, NY 10003',
+                    bloodType: 'B+',
+                    allergies: 'Shellfish',
+                    lastVisit: '3 days ago',
+                    upcomingAppointment: 'No upcoming appointments',
+                    medicalHistory: [
+                        'High cholesterol (2021)',
+                        'Back pain (2022)'
+                    ],
+                    recentPrescriptions: [
+                        { date: '2025-11-08', medicine: 'Atorvastatin 20mg', status: 'Active' }
+                    ]
+                }
+            };
+
+            const patient = patientsData[id] || patientsData[1];
+
+            let patientHTML = `
+                <div class="patient-profile-header" style="text-align: center; padding: 2rem; background: linear-gradient(135deg, var(--primary-color), var(--secondary-color)); border-radius: 15px; margin-bottom: 2rem;">
+                    <div class="patient-avatar" style="width: 100px; height: 100px; margin: 0 auto 1rem; font-size: 2.5rem; background: white; color: var(--primary-color);">
+                        ${patient.name.split(' ').map(n => n[0]).join('')}
+                    </div>
+                    <h2 style="color: white; margin: 0 0 0.5rem 0;">${patient.name}</h2>
+                    <p style="color: rgba(255, 255, 255, 0.9); margin: 0;">${patient.age} years • ${patient.gender}</p>
+                </div>
+
+                <div class="patient-details-grid">
+                    <div class="detail-card">
+                        <h4><i class="fas fa-phone"></i> Phone</h4>
+                        <p>${patient.phone}</p>
+                    </div>
+                    <div class="detail-card">
+                        <h4><i class="fas fa-envelope"></i> Email</h4>
+                        <p style="font-size: 0.9rem;">${patient.email}</p>
+                    </div>
+                    <div class="detail-card">
+                        <h4><i class="fas fa-tint"></i> Blood Type</h4>
+                        <p>${patient.bloodType}</p>
+                    </div>
+                    <div class="detail-card">
+                        <h4><i class="fas fa-exclamation-triangle"></i> Allergies</h4>
+                        <p>${patient.allergies}</p>
+                    </div>
+                </div>
+
+                <div class="detail-card" style="margin-bottom: 1rem;">
+                    <h4><i class="fas fa-map-marker-alt"></i> Address</h4>
+                    <p style="font-size: 0.95rem;">${patient.address}</p>
+                </div>
+
+                <div class="detail-card" style="margin-bottom: 1rem;">
+                    <h4><i class="fas fa-history"></i> Medical History</h4>
+                    <ul style="margin: 0.5rem 0 0 0; padding-left: 1.5rem;">
+                        ${patient.medicalHistory.map(item => `<li style="margin-bottom: 0.5rem; color: var(--text-color);">${item}</li>`).join('')}
+                    </ul>
+                </div>
+
+                <div class="detail-card">
+                    <h4><i class="fas fa-prescription"></i> Recent Prescriptions</h4>
+                    ${patient.recentPrescriptions.map(rx => `
+                        <div style="display: flex; justify-content: space-between; align-items: center; padding: 0.75rem; background: white; border-radius: 8px; margin-top: 0.5rem; border: 1px solid #e5e7eb;">
+                            <div>
+                                <p style="margin: 0; font-weight: 600; color: var(--text-color);">${rx.medicine}</p>
+                                <p style="margin: 0; font-size: 0.85rem; color: var(--text-secondary);">${rx.date}</p>
+                            </div>
+                            <span class="schedule-badge badge-${rx.status === 'Active' ? 'confirmed' : 'completed'}">${rx.status}</span>
+                        </div>
+                    `).join('')}
+                </div>
+
+                <div style="display: flex; gap: 1rem; margin-top: 2rem; padding-top: 1.5rem; border-top: 2px solid #e5e7eb;">
+                    <button class="btn-primary" style="flex: 1;" onclick="closePatientModal(); writePrescription();">
+                        <i class="fas fa-prescription"></i> Write Prescription
+                    </button>
+                    <button class="btn-secondary" style="flex: 1;" onclick="alert('Starting video consultation...');">
+                        <i class="fas fa-video"></i> Start Consultation
+                    </button>
+                </div>
+            `;
+
+            document.getElementById('patientDetailsContent').innerHTML = patientHTML;
+            document.getElementById('patientModal').style.display = 'flex';
+        }
+
+        function viewAllAppointments() {
+            viewSchedule(); // Reuse schedule modal for all appointments
+        }
+
+        function viewAllPatients() {
+            viewPatients(); // Open patients modal
+        }
+
+        // Notifications
+        function viewNotification(id) {
+            const notifications = {
+                1: {
+                    title: 'New patient registered',
+                    message: 'Jane Smith has registered and booked an appointment with you for tomorrow at 2:00 PM. Please review her medical history before the consultation.',
+                    type: 'info',
+                    action: () => viewPatient(1)
+                },
+                2: {
+                    title: 'Appointment reminder',
+                    message: 'You have a consultation with John Doe in 30 minutes. The patient has arrived and is waiting in the virtual waiting room.',
+                    type: 'warning',
+                    action: () => window.location.href = 'consultation.html'
+                },
+                3: {
+                    title: 'New review received',
+                    message: 'Michael Brown has left a 5-star review: "Excellent doctor! Very thorough and caring. Highly recommend!"',
+                    type: 'success',
+                    action: () => alert('View all reviews')
+                }
+            };
+
+            const notification = notifications[id];
+            if (notification) {
+                if (confirm(`${notification.title}\n\n${notification.message}\n\nWould you like to take action?`)) {
+                    notification.action();
+                }
+            }
+        }
+
+        function markAllRead() {
+            if (confirm('Mark all notifications as read?')) {
+                // Add visual feedback
+                document.querySelectorAll('#notificationsList .schedule-item').forEach(item => {
+                    item.style.opacity = '0.5';
+                });
+                
+                showNotification('All notifications marked as read', 'success');
+                
+                // In production, update notification status in backend
+                setTimeout(() => {
+                    document.querySelectorAll('#notificationsList .schedule-item').forEach(item => {
+                        item.style.opacity = '1';
+                    });
+                }, 1000);
+            }
+        }
+
+        // Close modals with ESC key
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                closePrescriptionModal();
+                closePatientModal();
+                closeScheduleModal();
+                closeMedicalRecordsModal();
+                closeRecordDetailModal();
+            }
+        });
+
+        // Load pending appointments dynamically
+        function loadPendingAppointments() {
+            const pendingAppointments = [
+                {
+                    id: 1,
+                    patientName: 'John Doe',
+                    patientInitials: 'JD',
+                    type: 'General Checkup',
+                    time: '10:00 AM',
+                    date: 'Today'
+                },
+                {
+                    id: 2,
+                    patientName: 'Jane Smith',
+                    patientInitials: 'JS',
+                    type: 'Follow-up',
+                    time: '02:00 PM',
+                    date: 'Today'
+                },
+                {
+                    id: 3,
+                    patientName: 'Bob Johnson',
+                    patientInitials: 'BJ',
+                    type: 'Initial Consultation',
+                    time: '03:30 PM',
+                    date: 'Tomorrow'
+                }
+            ];
+
+            const pendingList = document.getElementById('pendingAppointmentsList');
+            if (pendingAppointments.length === 0) {
+                pendingList.innerHTML = `
+                    <div class="empty-state">
+                        <i class="fas fa-check-circle"></i>
+                        <p>No pending appointments</p>
+                    </div>
+                `;
+                return;
+            }
+
+            pendingList.innerHTML = pendingAppointments.map(apt => `
+                <div class="appointment-card">
+                    <div class="appointment-header">
+                        <div class="patient-info">
+                            <div class="patient-avatar">${apt.patientInitials}</div>
+                            <div class="patient-details">
+                                <h4>${apt.patientName}</h4>
+                                <p>${apt.type}</p>
+                            </div>
+                        </div>
+                        <div class="appointment-time">
+                            <span class="time">${apt.time}</span>
+                            <span class="date">${apt.date}</span>
+                        </div>
+                    </div>
+                    <div class="appointment-footer">
+                        <button class="btn-appointment btn-accept" onclick="acceptAppointment(${apt.id})">
+                            <i class="fas fa-check"></i>
+                            Accept
+                        </button>
+                        <button class="btn-appointment btn-view" onclick="viewPatient(${apt.id})">
+                            <i class="fas fa-eye"></i>
+                            View
+                        </button>
+                        <button class="btn-appointment btn-cancel" onclick="cancelAppointment(${apt.id})">
+                            <i class="fas fa-times"></i>
+                            Decline
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Initialize dashboard on load
+        document.addEventListener('DOMContentLoaded', function() {
+            loadPendingAppointments();
+        });
+
+        // Show notification function
+        function showNotification(message, type = 'success') {
+            const notification = document.createElement('div');
+            notification.style.cssText = `
+                position: fixed;
+                top: 100px;
+                right: 20px;
+                background: ${type === 'success' ? '#10b981' : '#ef4444'};
+                color: white;
+                padding: 1rem 1.5rem;
+                border-radius: 12px;
+                box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+                z-index: 10001;
+                animation: slideInRight 0.3s ease-out;
+                font-weight: 600;
+                display: flex;
+                align-items: center;
+                gap: 0.5rem;
+            `;
+            notification.innerHTML = `
+                <i class="fas fa-${type === 'success' ? 'check-circle' : 'exclamation-circle'}"></i>
+                ${message}
+            `;
+
+            document.body.appendChild(notification);
+
+            setTimeout(() => {
+                notification.style.animation = 'slideOutRight 0.3s ease-out';
+                setTimeout(() => {
+                    document.body.removeChild(notification);
+                }, 300);
+            }, 3000);
+        }
+
+        // Add CSS animation
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes slideInRight {
+                from {
+                    transform: translateX(400px);
+                    opacity: 0;
+                }
+                to {
+                    transform: translateX(0);
+                    opacity: 1;
+                }
+            }
+            @keyframes slideOutRight {
+                from {
+                    transform: translateX(0);
+                    opacity: 1;
+                }
+                to {
+                    transform: translateX(400px);
+                    opacity: 0;
+                }
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+</body>
+</html>

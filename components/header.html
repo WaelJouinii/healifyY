@@ -1,0 +1,72 @@
+<header class="header">
+    <div class="header-container">
+        <!-- Logo -->
+        <div class="logo">
+            <a href="index.html">
+                <i class="fas fa-heartbeat"></i>
+                <span class="logo-text">Healify</span>
+            </a>
+        </div>
+
+        <!-- Navigation Icons -->
+        <nav class="navbar">
+            <ul class="nav-icons">
+                <!-- Search Icon -->
+                <li class="nav-item">
+                    <button class="icon-btn" id="searchBtn" title="Search">
+                        <i class="fas fa-search"></i>
+                    </button>
+                </li>
+
+                <!-- Calendar Icon (Reservation) -->
+                <li class="nav-item" id="calendarItem">
+                    <a href="reservation.html" class="icon-btn" title="Reservations">
+                        <i class="fas fa-calendar-alt"></i>
+                    </a>
+                </li>
+
+                <!-- Dashboard Icon -->
+                <li class="nav-item" id="dashboardItem">
+                    <a href="dashboard-clien.html" class="icon-btn" title="Dashboard">
+                        <i class="fas fa-chart-line"></i>
+                    </a>
+                </li>
+
+                <!-- Theme Toggle Icon -->
+                <li class="nav-item">
+                    <button class="icon-btn" id="themeToggle" title="Toggle Theme">
+                        <i class="fas fa-moon" id="themeIcon"></i>
+                    </button>
+                </li>
+
+                <!-- Profile Icon -->
+                <li class="nav-item">
+                    <button class="icon-btn" id="profileBtn" title="Profile">
+                        <i class="fas fa-user"></i>
+                    </button>
+                </li>
+
+                <!-- Menu Icon (Sidebar Toggle) -->
+                <li class="nav-item">
+                    <button class="icon-btn" id="menuBtn" title="Menu">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                </li>
+            </ul>
+        </nav>
+    </div>
+
+    <!-- Search Bar (Hidden by default) -->
+    <div class="search-bar" id="searchBar">
+        <div class="search-container">
+            <input type="text" id="searchInput" placeholder="Search doctors, specialties, symptoms..." autocomplete="off">
+            <button class="search-submit-btn" id="searchSubmitBtn">
+                <i class="fas fa-search"></i>
+            </button>
+            <button class="search-close-btn" id="searchCloseBtn">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        <div class="search-results" id="searchResults"></div>
+    </div>
+</header>

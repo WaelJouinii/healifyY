@@ -1,0 +1,987 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Patient Dashboard - Healify</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/dashboard.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header" id="header">
+        <div class="header-container">
+            <div class="logo">
+                <a href="index.html">
+                    <i class="fas fa-heartbeat"></i>
+                    <span class="logo-text">Healify</span>
+                </a>
+            </div>
+
+            <nav class="navbar">
+                <ul class="nav-icons">
+                    <li class="nav-item">
+                        <button class="icon-btn" id="searchBtn" title="Search" aria-label="Search">
+                            <i class="fas fa-search"></i>
+                        </button>
+                    </li>
+                    <li class="nav-item">
+                        <a href="reservation.html" class="icon-btn" title="Reservations" aria-label="Reservations">
+                            <i class="fas fa-calendar-alt"></i>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="dashboard-clien.html" class="icon-btn active" title="Dashboard" aria-label="Dashboard">
+                            <i class="fas fa-th-large"></i>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <button class="icon-btn" id="themeToggle" title="Toggle Theme" aria-label="Toggle Theme">
+                            <i class="fas fa-moon" id="themeIcon"></i>
+                        </button>
+                    </li>
+                    <li class="nav-item">
+                        <a href="profil.html" class="icon-btn" id="profileBtn" title="Profile" aria-label="Profile">
+                            <i class="fas fa-user"></i>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <button class="icon-btn" id="menuBtn" title="Menu" aria-label="Menu">
+                            <i class="fas fa-bars"></i>
+                        </button>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+
+        <!-- Search Bar -->
+        <div class="search-bar" id="searchBar">
+            <div class="search-container">
+                <input type="text" id="searchInput" placeholder="Search for doctors, specialties, or symptoms..." />
+                <button class="search-submit-btn" aria-label="Submit Search">
+                    <i class="fas fa-search"></i>
+                </button>
+                <button class="search-close-btn" id="searchCloseBtn" aria-label="Close Search">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="search-results" id="searchResults"></div>
+        </div>
+    </header>
+
+    <!-- Sidebar -->
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <div class="sidebar-logo">
+                <i class="fas fa-heartbeat"></i>
+                <span>Healify</span>
+            </div>
+            <button class="sidebar-close" id="sidebarClose" aria-label="Close Sidebar">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+
+        <nav class="sidebar-nav">
+            <ul class="sidebar-menu">
+                <li class="sidebar-item">
+                    <a href="index.html" class="sidebar-link">
+                        <i class="fas fa-home"></i>
+                        <span>Home</span>
+                    </a>
+                </li>
+                <li class="sidebar-item">
+                    <a href="about.html" class="sidebar-link">
+                        <i class="fas fa-info-circle"></i>
+                        <span>About Us</span>
+                    </a>
+                </li>
+                <li class="sidebar-item">
+                    <a href="doctors.html" class="sidebar-link">
+                        <i class="fas fa-user-md"></i>
+                        <span>Find Doctors</span>
+                    </a>
+                </li>
+                <li class="sidebar-item">
+                    <a href="consultation.html" class="sidebar-link">
+                        <i class="fas fa-video"></i>
+                        <span>Consultations</span>
+                    </a>
+                </li>
+                <li class="sidebar-item">
+                    <a href="contact.html" class="sidebar-link">
+                        <i class="fas fa-envelope"></i>
+                        <span>Contact</span>
+                    </a>
+                </li>
+                
+                <div class="sidebar-divider"></div>
+                
+                <li class="sidebar-item auth-not-required">
+                    <a href="login.html" class="sidebar-link">
+                        <i class="fas fa-sign-in-alt"></i>
+                        <span>Login</span>
+                    </a>
+                </li>
+                <li class="sidebar-item auth-not-required">
+                    <a href="register.html" class="sidebar-link">
+                        <i class="fas fa-user-plus"></i>
+                        <span>Register</span>
+                    </a>
+                </li>
+                
+                <li class="sidebar-item auth-required">
+                    <a href="profil.html" class="sidebar-link">
+                        <i class="fas fa-user-circle"></i>
+                        <span>My Profile</span>
+                    </a>
+                </li>
+                <li class="sidebar-item auth-required">
+                    <a href="reservation.html" class="sidebar-link">
+                        <i class="fas fa-calendar-check"></i>
+                        <span>My Appointments</span>
+                    </a>
+                </li>
+                <li class="sidebar-item auth-required">
+                    <a href="dashboard-clien.html" class="sidebar-link active">
+                        <i class="fas fa-tachometer-alt"></i>
+                        <span>Dashboard</span>
+                    </a>
+                </li>
+                <li class="sidebar-item auth-required">
+                    <a href="#" class="sidebar-link" id="logoutBtn">
+                        <i class="fas fa-sign-out-alt"></i>
+                        <span>Logout</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="dashboard-main">
+        <div class="dashboard-container">
+            <!-- Welcome Section -->
+            <section class="welcome-section">
+                <div class="welcome-content">
+                    <div class="welcome-text">
+                        <h1 class="welcome-title">Welcome back, <span id="userName">John</span>! 👋</h1>
+                        <p class="welcome-subtitle">Here's what's happening with your health today</p>
+                    </div>
+                    <div class="welcome-actions">
+                        <a href="reservation.html" class="btn-primary">
+                            <i class="fas fa-calendar-plus"></i>
+                            Book Appointment
+                        </a>
+                        <a href="doctors.html" class="btn-secondary">
+                            <i class="fas fa-search"></i>
+                            Find Doctor
+                        </a>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Stats Cards -->
+            <section class="stats-section">
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-icon" style="background: linear-gradient(135deg, #3b82f6, #8b5cf6);">
+                            <i class="fas fa-calendar-check"></i>
+                        </div>
+                        <div class="stat-details">
+                            <div class="stat-label">Total Appointments</div>
+                            <div class="stat-value" id="totalAppointments">0</div>
+                        </div>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-icon" style="background: linear-gradient(135deg, #10b981, #059669);">
+                            <i class="fas fa-clock"></i>
+                        </div>
+                        <div class="stat-details">
+                            <div class="stat-label">Upcoming</div>
+                            <div class="stat-value" id="upcomingAppointments">0</div>
+                        </div>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-icon" style="background: linear-gradient(135deg, #f59e0b, #d97706);">
+                            <i class="fas fa-user-md"></i>
+                        </div>
+                        <div class="stat-details">
+                            <div class="stat-label">Doctors Consulted</div>
+                            <div class="stat-value" id="doctorsConsulted">0</div>
+                        </div>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-icon" style="background: linear-gradient(135deg, #ef4444, #dc2626);">
+                            <i class="fas fa-file-medical"></i>
+                        </div>
+                        <div class="stat-details">
+                            <div class="stat-label">Prescriptions</div>
+                            <div class="stat-value" id="totalPrescriptions">0</div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Main Dashboard Grid -->
+            <div class="dashboard-grid">
+                <!-- Left Column -->
+                <div class="dashboard-left">
+                    <!-- Upcoming Appointments -->
+                    <section class="dashboard-card">
+                        <div class="card-header">
+                            <h2 class="card-title">
+                                <i class="fas fa-calendar-alt"></i>
+                                Upcoming Appointments
+                            </h2>
+                            <a href="reservation.html" class="card-link">View All</a>
+                        </div>
+                        <div class="card-body">
+                            <div id="upcomingAppointmentsList" class="appointments-list">
+                                <!-- Appointments will be loaded dynamically -->
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Recent Activity -->
+                    <section class="dashboard-card">
+                        <div class="card-header">
+                            <h2 class="card-title">
+                                <i class="fas fa-history"></i>
+                                Recent Activity
+                            </h2>
+                        </div>
+                        <div class="card-body">
+                            <div id="recentActivityList" class="activity-list">
+                                <!-- Activity will be loaded dynamically -->
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Health Records -->
+                    <section class="dashboard-card">
+                        <div class="card-header">
+                            <h2 class="card-title">
+                                <i class="fas fa-file-medical-alt"></i>
+                                Health Records
+                            </h2>
+                            <button class="card-link" onclick="uploadRecord()">
+                                <i class="fas fa-upload"></i>
+                                Upload
+                            </button>
+                        </div>
+                        <div class="card-body">
+                            <div id="healthRecordsList" class="records-list">
+                                <!-- Records will be loaded dynamically -->
+                            </div>
+                        </div>
+                    </section>
+                </div>
+
+                <!-- Right Column -->
+                <div class="dashboard-right">
+                    <!-- Quick Actions -->
+                    <section class="dashboard-card">
+                        <div class="card-header">
+                            <h2 class="card-title">
+                                <i class="fas fa-bolt"></i>
+                                Quick Actions
+                            </h2>
+                        </div>
+                        <div class="card-body">
+                            <div class="quick-actions">
+                                <button class="quick-action-btn" onclick="window.location.href='reservation.html'">
+                                    <i class="fas fa-calendar-plus"></i>
+                                    <span>Book Appointment</span>
+                                </button>
+                                <button class="quick-action-btn" onclick="window.location.href='doctors.html'">
+                                    <i class="fas fa-search"></i>
+                                    <span>Find Doctor</span>
+                                </button>
+                                <button class="quick-action-btn" onclick="startVideoCall()">
+                                    <i class="fas fa-video"></i>
+                                    <span>Video Consultation</span>
+                                </button>
+                                <button class="quick-action-btn" onclick="viewPrescriptions()">
+                                    <i class="fas fa-prescription"></i>
+                                    <span>Prescriptions</span>
+                                </button>
+                                <button class="quick-action-btn" onclick="viewLabReports()">
+                                    <i class="fas fa-flask"></i>
+                                    <span>Lab Reports</span>
+                                </button>
+                                <button class="quick-action-btn" onclick="window.location.href='contact.html'">
+                                    <i class="fas fa-life-ring"></i>
+                                    <span>Get Support</span>
+                                </button>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Health Metrics -->
+                    <section class="dashboard-card">
+                        <div class="card-header">
+                            <h2 class="card-title">
+                                <i class="fas fa-heartbeat"></i>
+                                Health Metrics
+                            </h2>
+                            <button class="card-link" onclick="updateMetrics()">
+                                <i class="fas fa-plus"></i>
+                                Update
+                            </button>
+                        </div>
+                        <div class="card-body">
+                            <div class="health-metrics">
+                                <div class="metric-item">
+                                    <div class="metric-icon">
+                                        <i class="fas fa-heart"></i>
+                                    </div>
+                                    <div class="metric-info">
+                                        <div class="metric-label">Heart Rate</div>
+                                        <div class="metric-value">72 <span>bpm</span></div>
+                                    </div>
+                                </div>
+
+                                <div class="metric-item">
+                                    <div class="metric-icon">
+                                        <i class="fas fa-tint"></i>
+                                    </div>
+                                    <div class="metric-info">
+                                        <div class="metric-label">Blood Pressure</div>
+                                        <div class="metric-value">120/80 <span>mmHg</span></div>
+                                    </div>
+                                </div>
+
+                                <div class="metric-item">
+                                    <div class="metric-icon">
+                                        <i class="fas fa-temperature-high"></i>
+                                    </div>
+                                    <div class="metric-info">
+                                        <div class="metric-label">Temperature</div>
+                                        <div class="metric-value">98.6 <span>°F</span></div>
+                                    </div>
+                                </div>
+
+                                <div class="metric-item">
+                                    <div class="metric-icon">
+                                        <i class="fas fa-weight"></i>
+                                    </div>
+                                    <div class="metric-info">
+                                        <div class="metric-label">Weight</div>
+                                        <div class="metric-value">70 <span>kg</span></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Notifications -->
+                    <section class="dashboard-card">
+                        <div class="card-header">
+                            <h2 class="card-title">
+                                <i class="fas fa-bell"></i>
+                                Notifications
+                            </h2>
+                            <button class="card-link" onclick="markAllRead()">Mark all read</button>
+                        </div>
+                        <div class="card-body">
+                            <div id="notificationsList" class="notifications-list">
+                                <!-- Notifications will be loaded dynamically -->
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Favorite Doctors -->
+                    <section class="dashboard-card">
+                        <div class="card-header">
+                            <h2 class="card-title">
+                                <i class="fas fa-star"></i>
+                                Favorite Doctors
+                            </h2>
+                        </div>
+                        <div class="card-body">
+                            <div id="favoriteDoctorsList" class="favorite-doctors-list">
+                                <!-- Favorite doctors will be loaded dynamically -->
+                            </div>
+                        </div>
+                    </section>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-top">
+                <div class="footer-column footer-brand">
+                    <div class="footer-logo">
+                        <i class="fas fa-heartbeat"></i>
+                        <span>Healify</span>
+                    </div>
+                    <p class="footer-description">
+                        Your trusted platform for online medical consultations. 
+                        Connect with qualified doctors anytime, anywhere.
+                    </p>
+                    <div class="footer-social">
+                        <a href="#" class="social-link" title="Facebook" aria-label="Facebook">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="#" class="social-link" title="Twitter" aria-label="Twitter">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="#" class="social-link" title="Instagram" aria-label="Instagram">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="#" class="social-link" title="LinkedIn" aria-label="LinkedIn">
+                            <i class="fab fa-linkedin-in"></i>
+                        </a>
+                        <a href="#" class="social-link" title="YouTube" aria-label="YouTube">
+                            <i class="fab fa-youtube"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="footer-column">
+                    <h3 class="footer-title">Quick Links</h3>
+                    <ul class="footer-links">
+                        <li><a href="index.html"><i class="fas fa-chevron-right"></i> Home</a></li>
+                        <li><a href="about.html"><i class="fas fa-chevron-right"></i> About Us</a></li>
+                        <li><a href="doctors.html"><i class="fas fa-chevron-right"></i> Find Doctors</a></li>
+                        <li><a href="consultation.html"><i class="fas fa-chevron-right"></i> Consultations</a></li>
+                        <li><a href="contact.html"><i class="fas fa-chevron-right"></i> Contact</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-column">
+                    <h3 class="footer-title">Our Services</h3>
+                    <ul class="footer-links">
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> Video Consultation</a></li>
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> Online Prescription</a></li>
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> Health Records</a></li>
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> Lab Reports</a></li>
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> Medicine Delivery</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-column">
+                    <h3 class="footer-title">Contact Us</h3>
+                    <ul class="footer-contact">
+                        <li>
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>123 Health Street<br>Medical City, MC 12345</span>
+                        </li>
+                        <li>
+                            <i class="fas fa-phone-alt"></i>
+                            <span>+1 (555) 123-4567</span>
+                        </li>
+                        <li>
+                            <i class="fas fa-envelope"></i>
+                            <span>support@healify.com</span>
+                        </li>
+                        <li>
+                            <i class="fas fa-clock"></i>
+                            <span>24/7 Support Available</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="footer-divider"></div>
+
+            <div class="footer-bottom">
+                <div class="footer-copyright">
+                    <p>&copy; 2025 <strong>Healify</strong>. All rights reserved.</p>
+                </div>
+                <div class="footer-legal">
+                    <a href="#">Privacy Policy</a>
+                    <span class="separator">•</span>
+                    <a href="#">Terms of Service</a>
+                    <span class="separator">•</span>
+                    <a href="#">Cookie Policy</a>
+                </div>
+            </div>
+        </div>
+
+        <button class="back-to-top" id="backToTop" title="Back to top" aria-label="Back to top">
+            <i class="fas fa-arrow-up"></i>
+        </button>
+    </footer>
+
+    <!-- Prescription Viewer Modal -->
+    <div id="prescriptionModal" class="modal">
+        <div class="modal-content prescription-modal">
+            <div class="modal-header">
+                <h2 class="modal-title">
+                    <i class="fas fa-prescription"></i>
+                    My Prescriptions
+                </h2>
+                <button class="modal-close" onclick="closePrescriptionModal()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <!-- Prescriptions List -->
+                <div id="prescriptionsListModal" class="prescriptions-container">
+                    <!-- Prescriptions will be loaded dynamically -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Prescription Detail Modal -->
+    <div id="prescriptionDetailModal" class="modal">
+        <div class="modal-content prescription-detail-modal">
+            <div class="modal-header">
+                <h2 class="modal-title">
+                    <i class="fas fa-file-prescription"></i>
+                    Prescription Details
+                </h2>
+                <button class="modal-close" onclick="closePrescriptionDetailModal()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div id="prescriptionDetailContent" class="prescription-detail">
+                    <!-- Prescription details will be loaded dynamically -->
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn-secondary" onclick="downloadPrescription()">
+                    <i class="fas fa-download"></i>
+                    Download PDF
+                </button>
+                <button class="btn-primary" onclick="printPrescription()">
+                    <i class="fas fa-print"></i>
+                    Print
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <style>
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(5px);
+            z-index: 10000;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+            overflow-y: auto;
+        }
+
+        .modal.show {
+            display: flex;
+        }
+
+        .modal-content {
+            background: white;
+            border-radius: 20px;
+            max-width: 900px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+            position: relative;
+            animation: slideUp 0.3s ease-out;
+        }
+
+        .prescription-detail-modal {
+            max-width: 700px;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 2rem;
+            border-bottom: 2px solid #f3f4f6;
+        }
+
+        .modal-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .modal-close {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            color: #6b7280;
+            cursor: pointer;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            transition: all 0.3s;
+        }
+
+        .modal-close:hover {
+            background: #f3f4f6;
+            color: #1f2937;
+        }
+
+        .modal-body {
+            padding: 2rem;
+        }
+
+        .modal-footer {
+            display: flex;
+            gap: 1rem;
+            padding: 1.5rem 2rem;
+            border-top: 2px solid #f3f4f6;
+            justify-content: flex-end;
+        }
+
+        /* Prescriptions Container */
+        .prescriptions-container {
+            display: grid;
+            gap: 1.5rem;
+        }
+
+        .prescription-card {
+            background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+            border-radius: 15px;
+            padding: 1.5rem;
+            border: 2px solid #e2e8f0;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+
+        .prescription-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            border-color: var(--primary-color);
+        }
+
+        .prescription-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 1rem;
+        }
+
+        .prescription-date {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: #6b7280;
+            font-size: 0.9rem;
+        }
+
+        .prescription-status {
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        .status-active {
+            background: rgba(16, 185, 129, 0.1);
+            color: #10b981;
+            border: 1px solid rgba(16, 185, 129, 0.3);
+        }
+
+        .status-completed {
+            background: rgba(59, 130, 246, 0.1);
+            color: #3b82f6;
+            border: 1px solid rgba(59, 130, 246, 0.3);
+        }
+
+        .status-expired {
+            background: rgba(239, 68, 68, 0.1);
+            color: #ef4444;
+            border: 1px solid rgba(239, 68, 68, 0.3);
+        }
+
+        .prescription-doctor {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .doctor-avatar-small {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 700;
+            font-size: 1.2rem;
+        }
+
+        .doctor-info-small h4 {
+            margin: 0 0 0.25rem 0;
+            color: #1f2937;
+            font-weight: 600;
+        }
+
+        .doctor-info-small p {
+            margin: 0;
+            color: #6b7280;
+            font-size: 0.9rem;
+        }
+
+        .prescription-medicines {
+            background: white;
+            border-radius: 10px;
+            padding: 1rem;
+            margin-top: 1rem;
+        }
+
+        .medicine-count {
+            color: #6b7280;
+            font-size: 0.9rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .medicine-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .medicine-tag {
+            background: white;
+            border: 1px solid #e5e7eb;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            color: #4b5563;
+        }
+
+        /* Prescription Detail */
+        .prescription-detail {
+            background: white;
+        }
+
+        .prescription-detail-header {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 2rem;
+            border-radius: 15px;
+            margin-bottom: 2rem;
+        }
+
+        .prescription-detail-header h3 {
+            margin: 0 0 0.5rem 0;
+            font-size: 1.25rem;
+        }
+
+        .prescription-detail-header p {
+            margin: 0;
+            opacity: 0.9;
+        }
+
+        .detail-section {
+            margin-bottom: 2rem;
+        }
+
+        .detail-section:last-child {
+            margin-bottom: 0;
+        }
+
+        .detail-section-title {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: #1f2937;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .detail-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .detail-item {
+            background: #f9fafb;
+            padding: 1rem;
+            border-radius: 10px;
+        }
+
+        .detail-label {
+            font-size: 0.85rem;
+            color: #6b7280;
+            margin-bottom: 0.5rem;
+        }
+
+        .detail-value {
+            font-weight: 600;
+            color: #1f2937;
+        }
+
+        .medicine-detail-card {
+            background: #f8fafc;
+            border: 2px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .medicine-detail-card:last-child {
+            margin-bottom: 0;
+        }
+
+        .medicine-detail-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: start;
+            margin-bottom: 1rem;
+        }
+
+        .medicine-name {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin: 0;
+        }
+
+        .medicine-type {
+            background: white;
+            padding: 0.25rem 0.75rem;
+            border-radius: 15px;
+            font-size: 0.85rem;
+            color: #6b7280;
+            border: 1px solid #e5e7eb;
+        }
+
+        .medicine-details {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1rem;
+        }
+
+        .medicine-detail-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .medicine-detail-item i {
+            color: var(--primary-color);
+        }
+
+        .medicine-detail-item span {
+            color: #4b5563;
+            font-size: 0.9rem;
+        }
+
+        .instructions-box {
+            background: #fef3c7;
+            border: 2px solid #fde047;
+            border-radius: 10px;
+            padding: 1rem;
+            margin-top: 1rem;
+        }
+
+        .instructions-box p {
+            margin: 0;
+            color: #92400e;
+            line-height: 1.6;
+        }
+
+        .notes-box {
+            background: #e0f2fe;
+            border: 2px solid #7dd3fc;
+            border-radius: 10px;
+            padding: 1rem;
+        }
+
+        .notes-box p {
+            margin: 0;
+            color: #0c4a6e;
+            line-height: 1.6;
+        }
+
+        /* Empty State */
+        .empty-prescriptions {
+            text-align: center;
+            padding: 3rem;
+            color: #9ca3af;
+        }
+
+        .empty-prescriptions i {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            opacity: 0.5;
+        }
+
+        .empty-prescriptions h3 {
+            color: #6b7280;
+            margin-bottom: 0.5rem;
+        }
+
+        .empty-prescriptions p {
+            color: #9ca3af;
+        }
+
+        @media (max-width: 768px) {
+            .modal-content {
+                max-width: 100%;
+                margin: 1rem;
+            }
+
+            .modal-header,
+            .modal-body,
+            .modal-footer {
+                padding: 1.5rem;
+            }
+
+            .detail-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .medicine-details {
+                grid-template-columns: 1fr;
+            }
+
+            .modal-footer {
+                flex-direction: column;
+            }
+
+            .modal-footer button {
+                width: 100%;
+            }
+        }
+    </style>
+
+    <script src="js/ui.js"></script>
+    <script src="js/dashboard.js"></script>
+</body>
+</html>

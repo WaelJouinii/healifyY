@@ -1,0 +1,1319 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book Appointment - Healify</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        /* Main Content Styles */
+        main {
+            margin-top: 72px;
+            min-height: calc(100vh - 72px);
+            background: var(--bg-color);
+        }
+
+        /* Page Header */
+        .page-header {
+            background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+            padding: 60px 24px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .page-header::before {
+            content: '';
+            position: absolute;
+            width: 400px;
+            height: 400px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            top: -200px;
+            left: -100px;
+            animation: float 8s ease-in-out infinite;
+        }
+
+        .page-header::after {
+            content: '';
+            position: absolute;
+            width: 300px;
+            height: 300px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            bottom: -150px;
+            right: -100px;
+            animation: float 8s ease-in-out infinite reverse;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-30px) rotate(180deg); }
+        }
+
+        .page-header-content {
+            position: relative;
+            z-index: 1;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .page-header h1 {
+            font-size: 48px;
+            font-weight: 800;
+            color: white;
+            margin-bottom: 16px;
+            letter-spacing: -1px;
+        }
+
+        .page-header p {
+            font-size: 20px;
+            color: rgba(255, 255, 255, 0.95);
+            line-height: 1.6;
+        }
+
+        /* Reservation Container */
+        .reservation-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 60px 24px;
+        }
+
+        .reservation-layout {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 32px;
+        }
+
+        /* Booking Form Section */
+        .booking-form-section {
+            background: var(--header-bg);
+            border: 2px solid var(--border-color);
+            border-radius: 24px;
+            padding: 40px;
+            box-shadow: var(--shadow);
+        }
+
+        .section-title {
+            font-size: 28px;
+            font-weight: 800;
+            color: var(--text-color);
+            margin-bottom: 8px;
+            letter-spacing: -0.5px;
+        }
+
+        .section-subtitle {
+            font-size: 15px;
+            color: var(--text-color);
+            opacity: 0.7;
+            margin-bottom: 32px;
+        }
+
+        /* Form Steps */
+        .form-steps {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 40px;
+            position: relative;
+        }
+
+        .form-steps::before {
+            content: '';
+            position: absolute;
+            top: 20px;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: var(--border-color);
+            z-index: 0;
+        }
+
+        .step {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        .step-number {
+            width: 40px;
+            height: 40px;
+            background: var(--bg-color);
+            border: 2px solid var(--border-color);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            color: var(--text-color);
+            opacity: 0.5;
+            transition: var(--transition);
+            margin-bottom: 8px;
+        }
+
+        .step.active .step-number {
+            background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+            border-color: var(--primary-color);
+            color: white;
+            opacity: 1;
+            box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
+        }
+
+        .step.completed .step-number {
+            background: var(--success-color);
+            border-color: var(--success-color);
+            color: white;
+            opacity: 1;
+        }
+
+        .step-label {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--text-color);
+            opacity: 0.5;
+            text-align: center;
+            transition: var(--transition);
+        }
+
+        .step.active .step-label,
+        .step.completed .step-label {
+            opacity: 1;
+        }
+
+        /* Form Content */
+        .form-content {
+            display: none;
+        }
+
+        .form-content.active {
+            display: block;
+            animation: fadeIn 0.4s ease;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Doctor Selection */
+        .doctor-selection {
+            display: grid;
+            gap: 16px;
+        }
+
+        .doctor-option {
+            background: var(--bg-color);
+            border: 2px solid var(--border-color);
+            border-radius: 16px;
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .doctor-option:hover {
+            border-color: var(--primary-color);
+            transform: translateX(4px);
+            box-shadow: 0 4px 12px rgba(37, 99, 235, 0.1);
+        }
+
+        .doctor-option.selected {
+            border-color: var(--primary-color);
+            background: rgba(37, 99, 235, 0.05);
+        }
+
+        .doctor-avatar {
+            width: 70px;
+            height: 70px;
+            background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            color: white;
+            font-weight: 700;
+            flex-shrink: 0;
+        }
+
+        .doctor-details {
+            flex: 1;
+        }
+
+        .doctor-name {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--text-color);
+            margin-bottom: 4px;
+        }
+
+        .doctor-specialty {
+            font-size: 14px;
+            color: var(--primary-color);
+            font-weight: 600;
+            margin-bottom: 6px;
+        }
+
+        .doctor-info-row {
+            display: flex;
+            gap: 16px;
+            font-size: 13px;
+            color: var(--text-color);
+            opacity: 0.7;
+        }
+
+        .doctor-info-row span {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        /* Date & Time Selection */
+        .datetime-selection {
+            display: grid;
+            gap: 28px;
+        }
+
+        .date-picker-wrapper {
+            background: var(--bg-color);
+            border: 2px solid var(--border-color);
+            border-radius: 16px;
+            padding: 24px;
+        }
+
+        .date-picker-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .current-month {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--text-color);
+        }
+
+        .month-nav {
+            display: flex;
+            gap: 8px;
+        }
+
+        .month-nav-btn {
+            width: 36px;
+            height: 36px;
+            background: var(--header-bg);
+            border: 2px solid var(--border-color);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: var(--transition);
+            color: var(--text-color);
+        }
+
+        .month-nav-btn:hover {
+            border-color: var(--primary-color);
+            color: var(--primary-color);
+        }
+
+        .calendar-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 8px;
+        }
+
+        .calendar-day-label {
+            text-align: center;
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--text-color);
+            opacity: 0.6;
+            padding: 8px;
+        }
+
+        .calendar-day {
+            aspect-ratio: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 10px;
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--text-color);
+            cursor: pointer;
+            transition: var(--transition);
+            border: 2px solid transparent;
+        }
+
+        .calendar-day:not(.disabled):hover {
+            background: rgba(37, 99, 235, 0.1);
+            border-color: var(--primary-color);
+        }
+
+        .calendar-day.disabled {
+            opacity: 0.3;
+            cursor: not-allowed;
+        }
+
+        .calendar-day.selected {
+            background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+            color: white;
+            border-color: var(--primary-color);
+        }
+
+        .calendar-day.today {
+            border-color: var(--primary-color);
+        }
+
+        /* Time Slots */
+        .time-slots-wrapper {
+            background: var(--bg-color);
+            border: 2px solid var(--border-color);
+            border-radius: 16px;
+            padding: 24px;
+        }
+
+        .time-slots-header {
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--text-color);
+            margin-bottom: 16px;
+        }
+
+        .time-slots-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+            gap: 12px;
+        }
+
+        .time-slot {
+            padding: 12px 16px;
+            background: var(--header-bg);
+            border: 2px solid var(--border-color);
+            border-radius: 10px;
+            text-align: center;
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--text-color);
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .time-slot:hover {
+            border-color: var(--primary-color);
+            background: rgba(37, 99, 235, 0.05);
+        }
+
+        .time-slot.selected {
+            background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+            border-color: var(--primary-color);
+            color: white;
+        }
+
+        .time-slot.disabled {
+            opacity: 0.3;
+            cursor: not-allowed;
+        }
+
+        /* Patient Details Form */
+        .patient-form {
+            display: grid;
+            gap: 20px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .form-label {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--text-color);
+        }
+
+        .form-label .required {
+            color: var(--danger-color);
+        }
+
+        .form-input,
+        .form-textarea,
+        .form-select {
+            padding: 12px 16px;
+            border: 2px solid var(--border-color);
+            border-radius: 12px;
+            font-size: 15px;
+            font-family: inherit;
+            color: var(--text-color);
+            background: var(--bg-color);
+            transition: var(--transition);
+        }
+
+        .form-input:focus,
+        .form-textarea:focus,
+        .form-select:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.1);
+        }
+
+        .form-textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+
+        /* Form Navigation */
+        .form-navigation {
+            display: flex;
+            justify-content: space-between;
+            gap: 16px;
+            margin-top: 32px;
+            padding-top: 32px;
+            border-top: 2px solid var(--border-color);
+        }
+
+        .btn-nav {
+            padding: 14px 32px;
+            border-radius: 12px;
+            font-size: 15px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            border: none;
+        }
+
+        .btn-back {
+            background: var(--bg-color);
+            border: 2px solid var(--border-color);
+            color: var(--text-color);
+        }
+
+        .btn-back:hover {
+            border-color: var(--primary-color);
+            transform: translateX(-4px);
+        }
+
+        .btn-next {
+            background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+            color: white;
+            box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
+            margin-left: auto;
+        }
+
+        .btn-next:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(37, 99, 235, 0.4);
+        }
+
+        .btn-next:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        /* Summary Sidebar */
+        .booking-summary {
+            background: var(--header-bg);
+            border: 2px solid var(--border-color);
+            border-radius: 24px;
+            padding: 32px;
+            box-shadow: var(--shadow);
+            height: fit-content;
+            position: sticky;
+            top: 90px;
+        }
+
+        .summary-title {
+            font-size: 24px;
+            font-weight: 800;
+            color: var(--text-color);
+            margin-bottom: 24px;
+            letter-spacing: -0.5px;
+        }
+
+        .summary-item {
+            padding: 16px 0;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .summary-item:last-child {
+            border-bottom: none;
+        }
+
+        .summary-label {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--text-color);
+            opacity: 0.6;
+            margin-bottom: 6px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .summary-value {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--text-color);
+        }
+
+        .summary-empty {
+            color: var(--text-color);
+            opacity: 0.4;
+            font-style: italic;
+        }
+
+        .summary-price {
+            margin-top: 24px;
+            padding: 20px;
+            background: rgba(37, 99, 235, 0.05);
+            border-radius: 12px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .price-label {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--text-color);
+        }
+
+        .price-value {
+            font-size: 32px;
+            font-weight: 800;
+            color: var(--primary-color);
+        }
+
+        /* Success Modal */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(4px);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 2000;
+        }
+
+        .modal-overlay.show {
+            display: flex;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .success-modal {
+            background: var(--sidebar-bg);
+            border-radius: 24px;
+            padding: 48px;
+            max-width: 500px;
+            width: 90%;
+            text-align: center;
+            animation: slideUp 0.4s ease;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .success-icon {
+            width: 80px;
+            height: 80px;
+            background: var(--success-color);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 24px;
+            animation: scaleIn 0.5s ease;
+        }
+
+        @keyframes scaleIn {
+            from {
+                transform: scale(0);
+            }
+            to {
+                transform: scale(1);
+            }
+        }
+
+        .success-icon i {
+            font-size: 40px;
+            color: white;
+        }
+
+        .success-modal h2 {
+            font-size: 32px;
+            font-weight: 800;
+            color: var(--text-color);
+            margin-bottom: 12px;
+        }
+
+        .success-modal p {
+            font-size: 16px;
+            color: var(--text-color);
+            opacity: 0.7;
+            margin-bottom: 32px;
+            line-height: 1.6;
+        }
+
+        .modal-actions {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+        }
+
+        .btn-modal {
+            padding: 14px 28px;
+            border-radius: 12px;
+            font-size: 15px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: var(--transition);
+            border: none;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-modal-primary {
+            background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+            color: white;
+        }
+
+        .btn-modal-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(37, 99, 235, 0.4);
+        }
+
+        .btn-modal-secondary {
+            background: var(--bg-color);
+            border: 2px solid var(--border-color);
+            color: var(--text-color);
+        }
+
+        .btn-modal-secondary:hover {
+            border-color: var(--primary-color);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1024px) {
+            .reservation-layout {
+                grid-template-columns: 1fr;
+            }
+
+            .booking-summary {
+                position: static;
+                order: -1;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .page-header h1 {
+                font-size: 36px;
+            }
+
+            .page-header p {
+                font-size: 18px;
+            }
+
+            .reservation-container {
+                padding: 40px 20px;
+            }
+
+            .booking-form-section,
+            .booking-summary {
+                padding: 28px 20px;
+            }
+
+            .form-steps {
+                overflow-x: auto;
+                padding-bottom: 10px;
+            }
+
+            .step-label {
+                font-size: 11px;
+            }
+
+            .time-slots-grid {
+                grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+            }
+
+            .form-navigation {
+                flex-direction: column-reverse;
+            }
+
+            .btn-nav {
+                width: 100%;
+                justify-content: center;
+            }
+
+            .btn-next {
+                margin-left: 0;
+            }
+
+            .success-modal {
+                padding: 36px 24px;
+            }
+
+            .modal-actions {
+                flex-direction: column;
+            }
+
+            .btn-modal {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .page-header h1 {
+                font-size: 28px;
+            }
+
+            .doctor-option {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .doctor-info-row {
+                flex-direction: column;
+                gap: 8px;
+            }
+
+            .calendar-grid {
+                gap: 4px;
+            }
+
+            .calendar-day {
+                font-size: 12px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header" id="header">
+        <div class="header-container">
+            <div class="logo">
+                <a href="index.html">
+                    <i class="fas fa-heartbeat"></i>
+                    <span class="logo-text">Healify</span>
+                </a>
+            </div>
+
+            <nav class="navbar">
+                <ul class="nav-icons">
+                    <li class="nav-item">
+                        <button class="icon-btn" id="searchBtn" title="Search" aria-label="Search">
+                            <i class="fas fa-search"></i>
+                        </button>
+                    </li>
+                    <li class="nav-item">
+                        <a href="reservation.html" class="icon-btn" title="Reservations" aria-label="Reservations">
+                            <i class="fas fa-calendar-alt"></i>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="dashboard-clien.html" class="icon-btn" title="Dashboard" aria-label="Dashboard">
+                            <i class="fas fa-th-large"></i>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <button class="icon-btn" id="themeToggle" title="Toggle Theme" aria-label="Toggle Theme">
+                            <i class="fas fa-moon" id="themeIcon"></i>
+                        </button>
+                    </li>
+                    <li class="nav-item">
+                        <a href="profil.html" class="icon-btn" id="profileBtn" title="Profile" aria-label="Profile">
+                            <i class="fas fa-user"></i>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <button class="icon-btn" id="menuBtn" title="Menu" aria-label="Menu">
+                            <i class="fas fa-bars"></i>
+                        </button>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+
+        <!-- Search Bar -->
+        <div class="search-bar" id="searchBar">
+            <div class="search-container">
+                <input type="text" id="searchInput" placeholder="Search for doctors, specialties, or symptoms..." />
+                <button class="search-submit-btn" aria-label="Submit Search">
+                    <i class="fas fa-search"></i>
+                </button>
+                <button class="search-close-btn" id="searchCloseBtn" aria-label="Close Search">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="search-results" id="searchResults"></div>
+        </div>
+    </header>
+
+    <!-- Sidebar -->
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <div class="sidebar-logo">
+                <i class="fas fa-heartbeat"></i>
+                <span>Healify</span>
+            </div>
+            <button class="sidebar-close" id="sidebarClose" aria-label="Close Sidebar">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+
+        <nav class="sidebar-nav">
+            <ul class="sidebar-menu">
+                <li class="sidebar-item">
+                    <a href="index.html" class="sidebar-link">
+                        <i class="fas fa-home"></i>
+                        <span>Home</span>
+                    </a>
+                </li>
+                <li class="sidebar-item">
+                    <a href="about.html" class="sidebar-link">
+                        <i class="fas fa-info-circle"></i>
+                        <span>About Us</span>
+                    </a>
+                </li>
+                <li class="sidebar-item">
+                    <a href="doctors.html" class="sidebar-link">
+                        <i class="fas fa-user-md"></i>
+                        <span>Find Doctors</span>
+                    </a>
+                </li>
+                <li class="sidebar-item">
+                    <a href="consultation.html" class="sidebar-link">
+                        <i class="fas fa-video"></i>
+                        <span>Consultations</span>
+                    </a>
+                </li>
+                <li class="sidebar-item">
+                    <a href="contact.html" class="sidebar-link">
+                        <i class="fas fa-envelope"></i>
+                        <span>Contact</span>
+                    </a>
+                </li>
+                
+                <div class="sidebar-divider"></div>
+                
+                <li class="sidebar-item auth-not-required">
+                    <a href="login.html" class="sidebar-link">
+                        <i class="fas fa-sign-in-alt"></i>
+                        <span>Login</span>
+                    </a>
+                </li>
+                <li class="sidebar-item auth-not-required">
+                    <a href="register.html" class="sidebar-link">
+                        <i class="fas fa-user-plus"></i>
+                        <span>Register</span>
+                    </a>
+                </li>
+                
+                <li class="sidebar-item auth-required">
+                    <a href="profil.html" class="sidebar-link">
+                        <i class="fas fa-user-circle"></i>
+                        <span>My Profile</span>
+                    </a>
+                </li>
+                <li class="sidebar-item auth-required">
+                    <a href="reservation.html" class="sidebar-link">
+                        <i class="fas fa-calendar-check"></i>
+                        <span>My Appointments</span>
+                    </a>
+                </li>
+                <li class="sidebar-item auth-required">
+                    <a href="dashboard-clien.html" class="sidebar-link">
+                        <i class="fas fa-tachometer-alt"></i>
+                        <span>Dashboard</span>
+                    </a>
+                </li>
+                <li class="sidebar-item auth-required">
+                    <a href="#" class="sidebar-link" id="logoutBtn">
+                        <i class="fas fa-sign-out-alt"></i>
+                        <span>Logout</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </aside>
+
+    <!-- Main Content -->
+    <main>
+        <!-- Page Header -->
+        <section class="page-header">
+            <div class="page-header-content">
+                <h1>Book Your Appointment</h1>
+                <p>Schedule a consultation with our expert doctors at your convenience</p>
+            </div>
+        </section>
+
+        <!-- Reservation Container -->
+        <div class="reservation-container">
+            <div class="reservation-layout">
+                <!-- Booking Form -->
+                <div class="booking-form-section">
+                    <h2 class="section-title">Schedule Consultation</h2>
+                    <p class="section-subtitle">Follow the steps below to book your appointment</p>
+
+                    <!-- Form Steps -->
+                    <div class="form-steps">
+                        <div class="step active" data-step="1">
+                            <div class="step-number">1</div>
+                            <div class="step-label">Select Doctor</div>
+                        </div>
+                        <div class="step" data-step="2">
+                            <div class="step-number">2</div>
+                            <div class="step-label">Date & Time</div>
+                        </div>
+                        <div class="step" data-step="3">
+                            <div class="step-number">3</div>
+                            <div class="step-label">Your Details</div>
+                        </div>
+                    </div>
+
+                    <!-- Step 1: Doctor Selection -->
+                    <div class="form-content active" id="step1">
+                        <div class="doctor-selection" id="doctorSelection">
+                            <!-- Doctors will be loaded dynamically -->
+                        </div>
+                    </div>
+
+                    <!-- Step 2: Date & Time Selection -->
+                    <div class="form-content" id="step2">
+                        <div class="datetime-selection">
+                            <!-- Date Picker -->
+                            <div class="date-picker-wrapper">
+                                <div class="date-picker-header">
+                                    <div class="current-month" id="currentMonth"></div>
+                                    <div class="month-nav">
+                                        <button class="month-nav-btn" id="prevMonth">
+                                            <i class="fas fa-chevron-left"></i>
+                                        </button>
+                                        <button class="month-nav-btn" id="nextMonth">
+                                            <i class="fas fa-chevron-right"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="calendar-grid" id="calendarGrid">
+                                    <!-- Calendar will be generated dynamically -->
+                                </div>
+                            </div>
+
+                            <!-- Time Slots -->
+                            <div class="time-slots-wrapper">
+                                <div class="time-slots-header">Select Time Slot</div>
+                                <div class="time-slots-grid" id="timeSlotsGrid">
+                                    <!-- Time slots will be generated dynamically -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Step 3: Patient Details -->
+                    <div class="form-content" id="step3">
+                        <form class="patient-form" id="patientForm">
+                            <div class="form-group">
+                                <label class="form-label">Full Name <span class="required">*</span></label>
+                                <input type="text" class="form-input" id="patientName" required placeholder="Enter your full name">
+                            </div>
+
+                            <div class="form-group">
+                                <label class="form-label">Email Address <span class="required">*</span></label>
+                                <input type="email" class="form-input" id="patientEmail" required placeholder="Enter your email">
+                            </div>
+
+                            <div class="form-group">
+                                <label class="form-label">Phone Number <span class="required">*</span></label>
+                                <input type="tel" class="form-input" id="patientPhone" required placeholder="+1 (555) 000-0000">
+                            </div>
+
+                            <div class="form-group">
+                                <label class="form-label">Reason for Visit <span class="required">*</span></label>
+                                <select class="form-select" id="visitReason" required>
+                                    <option value="">Select reason</option>
+                                    <option value="general">General Consultation</option>
+                                    <option value="followup">Follow-up Visit</option>
+                                    <option value="symptoms">Specific Symptoms</option>
+                                    <option value="prescription">Prescription Refill</option>
+                                    <option value="other">Other</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="form-label">Additional Notes</label>
+                                <textarea class="form-textarea" id="additionalNotes" placeholder="Any additional information you'd like to share..."></textarea>
+                            </div>
+                        </form>
+                    </div>
+
+                    <!-- Navigation Buttons -->
+                    <div class="form-navigation">
+                        <button class="btn-nav btn-back" id="btnBack" style="display: none;">
+                            <i class="fas fa-arrow-left"></i>
+                            Back
+                        </button>
+                        <button class="btn-nav btn-next" id="btnNext">
+                            Next
+                            <i class="fas fa-arrow-right"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Booking Summary -->
+                <div class="booking-summary">
+                    <h3 class="summary-title">Booking Summary</h3>
+                    
+                    <div class="summary-item">
+                        <div class="summary-label">Doctor</div>
+                        <div class="summary-value" id="summaryDoctor">
+                            <span class="summary-empty">Not selected</span>
+                        </div>
+                    </div>
+
+                    <div class="summary-item">
+                        <div class="summary-label">Specialty</div>
+                        <div class="summary-value" id="summarySpecialty">
+                            <span class="summary-empty">-</span>
+                        </div>
+                    </div>
+
+                    <div class="summary-item">
+                        <div class="summary-label">Date</div>
+                        <div class="summary-value" id="summaryDate">
+                            <span class="summary-empty">Not selected</span>
+                        </div>
+                    </div>
+
+                    <div class="summary-item">
+                        <div class="summary-label">Time</div>
+                        <div class="summary-value" id="summaryTime">
+                            <span class="summary-empty">Not selected</span>
+                        </div>
+                    </div>
+
+                    <div class="summary-price">
+                        <div class="price-label">Consultation Fee</div>
+                        <div class="price-value" id="summaryPrice">$0</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Success Modal -->
+    <div class="modal-overlay" id="successModal">
+        <div class="success-modal">
+            <div class="success-icon">
+                <i class="fas fa-check"></i>
+            </div>
+            <h2>Booking Confirmed!</h2>
+            <p>Your appointment has been successfully scheduled. You will receive a confirmation email shortly.</p>
+            <div class="modal-actions">
+                <a href="dashboard-clien.html" class="btn-modal btn-modal-primary">
+                    <i class="fas fa-th-large"></i>
+                    View Dashboard
+                </a>
+                <a href="doctors.html" class="btn-modal btn-modal-secondary">
+                    <i class="fas fa-search"></i>
+                    Book Another
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-top">
+                <div class="footer-column footer-brand">
+                    <div class="footer-logo">
+                        <i class="fas fa-heartbeat"></i>
+                        <span>Healify</span>
+                    </div>
+                    <p class="footer-description">
+                        Your trusted platform for online medical consultations. 
+                        Connect with qualified doctors anytime, anywhere.
+                    </p>
+                    <div class="footer-social">
+                        <a href="#" class="social-link" title="Facebook" aria-label="Facebook">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="#" class="social-link" title="Twitter" aria-label="Twitter">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="#" class="social-link" title="Instagram" aria-label="Instagram">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="#" class="social-link" title="LinkedIn" aria-label="LinkedIn">
+                            <i class="fab fa-linkedin-in"></i>
+                        </a>
+                        <a href="#" class="social-link" title="YouTube" aria-label="YouTube">
+                            <i class="fab fa-youtube"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="footer-column">
+                    <h3 class="footer-title">Quick Links</h3>
+                    <ul class="footer-links">
+                        <li><a href="index.html"><i class="fas fa-chevron-right"></i> Home</a></li>
+                        <li><a href="about.html"><i class="fas fa-chevron-right"></i> About Us</a></li>
+                        <li><a href="doctors.html"><i class="fas fa-chevron-right"></i> Find Doctors</a></li>
+                        <li><a href="consultation.html"><i class="fas fa-chevron-right"></i> Consultations</a></li>
+                        <li><a href="contact.html"><i class="fas fa-chevron-right"></i> Contact</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-column">
+                    <h3 class="footer-title">Our Services</h3>
+                    <ul class="footer-links">
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> Video Consultation</a></li>
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> Online Prescription</a></li>
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> Health Records</a></li>
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> Lab Reports</a></li>
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> Medicine Delivery</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-column">
+                    <h3 class="footer-title">Contact Us</h3>
+                    <ul class="footer-contact">
+                        <li>
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>123 Health Street<br>Medical City, MC 12345</span>
+                        </li>
+                        <li>
+                            <i class="fas fa-phone-alt"></i>
+                            <span>+1 (555) 123-4567</span>
+                        </li>
+                        <li>
+                            <i class="fas fa-envelope"></i>
+                            <span>support@healify.com</span>
+                        </li>
+                        <li>
+                            <i class="fas fa-clock"></i>
+                            <span>24/7 Support Available</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="footer-divider"></div>
+
+            <div class="footer-bottom">
+                <div class="footer-copyright">
+                    <p>&copy; 2025 <strong>Healify</strong>. All rights reserved.</p>
+                </div>
+                <div class="footer-legal">
+                    <a href="#">Privacy Policy</a>
+                    <span class="separator">•</span>
+                    <a href="#">Terms of Service</a>
+                    <span class="separator">•</span>
+                    <a href="#">Cookie Policy</a>
+                </div>
+            </div>
+        </div>
+
+        <button class="back-to-top" id="backToTop" title="Back to top" aria-label="Back to top">
+            <i class="fas fa-arrow-up"></i>
+        </button>
+    </footer>
+
+    <script src="js/ui.js"></script>
+    <script src="js/booking.js"></script>
+    <script>
+        // Enhanced functionality for reservation page
+        document.addEventListener('DOMContentLoaded', function() {
+            // Sidebar handlers
+            const sidebarClose = document.getElementById('sidebarClose');
+            const sidebarOverlay = document.getElementById('sidebarOverlay');
+            const logoutBtn = document.getElementById('logoutBtn');
+            
+            if (sidebarClose) {
+                sidebarClose.addEventListener('click', toggleSidebar);
+            }
+            
+            if (sidebarOverlay) {
+                sidebarOverlay.addEventListener('click', toggleSidebar);
+            }
+            
+            if (logoutBtn) {
+                logoutBtn.addEventListener('click', handleLogout);
+            }
+            
+            // ESC key to close sidebar/search
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape') {
+                    const sidebar = document.querySelector('.sidebar');
+                    const searchBar = document.querySelector('.search-bar');
+                    
+                    if (sidebar && sidebar.classList.contains('active')) {
+                        toggleSidebar();
+                    }
+                    if (searchBar && searchBar.classList.contains('active')) {
+                        closeSearchBar();
+                    }
+                }
+            });
+            
+            // Update sidebar based on auth status
+            updateSidebarAuth();
+        });
+
+        function updateSidebarAuth() {
+            const isLoggedIn = localStorage.getItem('healify-user-token');
+            const body = document.body;
+            
+            if (isLoggedIn) {
+                body.classList.add('logged-in');
+            } else {
+                body.classList.remove('logged-in');
+            }
+        }
+
+        function handleLogout(e) {
+            e.preventDefault();
+            
+            if (confirm('Are you sure you want to logout?')) {
+                localStorage.removeItem('healify-user-token');
+                localStorage.removeItem('healify-user-role');
+                localStorage.removeItem('healify-user-data');
+                
+                window.location.href = 'index.html';
+            }
+        }
+    </script>
+</body>
+</html>

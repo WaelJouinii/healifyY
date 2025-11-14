@@ -1,0 +1,1542 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Profile - Healify</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/dashboard.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .profile-page {
+            min-height: 100vh;
+            padding-top: 80px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            position: relative;
+        }
+
+        .profile-page::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg width="100" height="100" xmlns="http://www.w3.org/2000/svg"><defs><pattern id="grid" width="100" height="100" patternUnits="userSpaceOnUse"><path d="M 100 0 L 0 0 0 100" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="1"/></pattern></defs><rect width="100%" height="100%" fill="url(%23grid)"/></svg>');
+            opacity: 0.3;
+        }
+
+        .profile-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .profile-header {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+        }
+
+        .profile-top {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .profile-avatar {
+            position: relative;
+        }
+
+        .avatar-container {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 4rem;
+            color: white;
+            border: 5px solid rgba(255, 255, 255, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .avatar-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .avatar-upload {
+            position: absolute;
+            bottom: 5px;
+            right: 5px;
+            width: 40px;
+            height: 40px;
+            background: var(--primary-color);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: 3px solid white;
+        }
+
+        .avatar-upload:hover {
+            transform: scale(1.1);
+            background: var(--secondary-color);
+        }
+
+        .avatar-upload input {
+            display: none;
+        }
+
+        .profile-info {
+            flex: 1;
+        }
+
+        .profile-name {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: white;
+            margin-bottom: 0.5rem;
+        }
+
+        .profile-meta {
+            display: flex;
+            gap: 2rem;
+            flex-wrap: wrap;
+            margin-bottom: 1rem;
+        }
+
+        .meta-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        .meta-item i {
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .profile-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .stat-card {
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+            padding: 1rem;
+            border-radius: 15px;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .stat-value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: white;
+            margin-bottom: 0.25rem;
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        .profile-actions {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .btn-profile {
+            padding: 0.75rem 1.5rem;
+            border-radius: 12px;
+            border: none;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .btn-primary {
+            background: white;
+            color: var(--primary-color);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(255, 255, 255, 0.3);
+        }
+
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        .profile-content {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 2rem;
+        }
+
+        .profile-sidebar {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .profile-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 1.5rem;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+        }
+
+        .card-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: white;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .card-title i {
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .info-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .info-group:last-child {
+            margin-bottom: 0;
+        }
+
+        .info-label {
+            font-size: 0.85rem;
+            color: rgba(255, 255, 255, 0.7);
+            margin-bottom: 0.5rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .info-value {
+            color: white;
+            font-size: 1rem;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .edit-btn {
+            background: none;
+            border: none;
+            color: rgba(255, 255, 255, 0.7);
+            cursor: pointer;
+            padding: 0.25rem 0.5rem;
+            border-radius: 8px;
+            transition: all 0.3s;
+            margin-left: auto;
+        }
+
+        .edit-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+        }
+
+        .profile-tabs {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 1.5rem;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+        }
+
+        .tabs-nav {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            border-bottom: 2px solid rgba(255, 255, 255, 0.2);
+            padding-bottom: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .tab-btn {
+            background: none;
+            border: none;
+            color: rgba(255, 255, 255, 0.7);
+            padding: 0.75rem 1.5rem;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .tab-btn:hover {
+            color: white;
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .tab-btn.active {
+            color: white;
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+            animation: fadeIn 0.3s ease-in-out;
+        }
+
+        .appointment-item {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 1.5rem;
+            border-radius: 15px;
+            margin-bottom: 1rem;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.3s;
+        }
+
+        .appointment-item:hover {
+            background: rgba(255, 255, 255, 0.15);
+            transform: translateX(5px);
+        }
+
+        .appointment-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .doctor-info {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .doctor-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 700;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .doctor-details h4 {
+            color: white;
+            margin-bottom: 0.25rem;
+        }
+
+        .doctor-details p {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 0.9rem;
+        }
+
+        .appointment-status {
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        .status-upcoming {
+            background: rgba(52, 211, 153, 0.2);
+            color: #34d399;
+            border: 1px solid rgba(52, 211, 153, 0.3);
+        }
+
+        .status-completed {
+            background: rgba(147, 197, 253, 0.2);
+            color: #93c5fd;
+            border: 1px solid rgba(147, 197, 253, 0.3);
+        }
+
+        .status-cancelled {
+            background: rgba(248, 113, 113, 0.2);
+            color: #f87171;
+            border: 1px solid rgba(248, 113, 113, 0.3);
+        }
+
+        .appointment-details {
+            display: flex;
+            gap: 2rem;
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 0.9rem;
+        }
+
+        .detail-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .detail-item i {
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .medical-record {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 1.5rem;
+            border-radius: 15px;
+            margin-bottom: 1rem;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .record-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .record-date {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 0.9rem;
+        }
+
+        .record-title {
+            color: white;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .record-description {
+            color: rgba(255, 255, 255, 0.8);
+            line-height: 1.6;
+        }
+
+        .record-tags {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+            margin-top: 1rem;
+        }
+
+        .tag {
+            padding: 0.25rem 0.75rem;
+            border-radius: 15px;
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            font-size: 0.85rem;
+        }
+
+        .settings-section {
+            margin-bottom: 2rem;
+        }
+
+        .settings-section:last-child {
+            margin-bottom: 0;
+        }
+
+        .settings-title {
+            color: white;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+        }
+
+        .setting-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            margin-bottom: 0.75rem;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .setting-info h4 {
+            color: white;
+            margin-bottom: 0.25rem;
+        }
+
+        .setting-info p {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 0.9rem;
+        }
+
+        .toggle-switch {
+            width: 50px;
+            height: 26px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 13px;
+            position: relative;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .toggle-switch::before {
+            content: '';
+            position: absolute;
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            background: white;
+            top: 2px;
+            left: 2px;
+            transition: all 0.3s;
+        }
+
+        .toggle-switch.active {
+            background: var(--primary-color);
+        }
+
+        .toggle-switch.active::before {
+            transform: translateX(24px);
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-label {
+            display: block;
+            color: white;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 0.75rem;
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            font-size: 1rem;
+            transition: all 0.3s;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: rgba(255, 255, 255, 0.6);
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        .form-input::placeholder {
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        .form-textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        .btn-save {
+            background: white;
+            color: var(--primary-color);
+            padding: 0.75rem 2rem;
+            border-radius: 12px;
+            border: none;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .btn-save:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(255, 255, 255, 0.3);
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 3rem;
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .empty-state i {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            opacity: 0.5;
+        }
+
+        .empty-state h3 {
+            color: white;
+            margin-bottom: 0.5rem;
+        }
+
+        @media (max-width: 1024px) {
+            .profile-content {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .profile-top {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .profile-name {
+                font-size: 2rem;
+            }
+
+            .profile-meta {
+                justify-content: center;
+            }
+
+            .profile-actions {
+                justify-content: center;
+            }
+
+            .tabs-nav {
+                overflow-x: auto;
+                padding-bottom: 1rem;
+            }
+
+            .appointment-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 1rem;
+            }
+
+            .appointment-details {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .profile-container {
+                padding: 1rem;
+            }
+
+            .profile-header {
+                padding: 1.5rem;
+            }
+
+            .avatar-container {
+                width: 120px;
+                height: 120px;
+                font-size: 3rem;
+            }
+
+            .profile-stats {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(5px);
+            z-index: 10000;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+        }
+
+        .modal.show {
+            display: flex;
+        }
+
+        .modal-content {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 2rem;
+            max-width: 600px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+            position: relative;
+            animation: slideUp 0.3s ease-out;
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .modal-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary-color);
+        }
+
+        .modal-close {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            color: #666;
+            cursor: pointer;
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            transition: all 0.3s;
+        }
+
+        .modal-close:hover {
+            background: rgba(0, 0, 0, 0.1);
+            color: #333;
+        }
+
+        .modal-body {
+            color: #333;
+        }
+
+        .modal-body .form-label {
+            color: #333;
+        }
+
+        .modal-body .form-input {
+            background: white;
+            color: #333;
+            border: 2px solid #e5e7eb;
+        }
+
+        .modal-body .form-input:focus {
+            border-color: var(--primary-color);
+            background: white;
+        }
+
+        .modal-body select.form-input {
+            cursor: pointer;
+        }
+
+        .modal-body select.form-input option {
+            background: white;
+            color: #333;
+        }
+
+        @keyframes slideInRight {
+            from {
+                transform: translateX(400px);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        @keyframes slideOutRight {
+            from {
+                transform: translateX(0);
+                opacity: 1;
+            }
+            to {
+                transform: translateX(400px);
+                opacity: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <div id="headerPlaceholder"></div>
+
+    <!-- Profile Page -->
+    <div class="profile-page">
+        <div class="profile-container">
+            <!-- Profile Header -->
+            <div class="profile-header">
+                <div class="profile-top">
+                    <div class="profile-avatar">
+                        <div class="avatar-container" id="avatarDisplay">
+                            <span id="avatarInitials">JD</span>
+                            <img id="avatarImage" style="display: none;" alt="Profile">
+                        </div>
+                        <label class="avatar-upload">
+                            <i class="fas fa-camera"></i>
+                            <input type="file" accept="image/*" id="avatarInput">
+                        </label>
+                    </div>
+                    <div class="profile-info">
+                        <h1 class="profile-name" id="profileName">John Doe</h1>
+                        <div class="profile-meta">
+                            <div class="meta-item">
+                                <i class="fas fa-envelope"></i>
+                                <span id="profileEmail">john.doe@example.com</span>
+                            </div>
+                            <div class="meta-item">
+                                <i class="fas fa-phone"></i>
+                                <span id="profilePhone">+1 (555) 123-4567</span>
+                            </div>
+                            <div class="meta-item">
+                                <i class="fas fa-map-marker-alt"></i>
+                                <span id="profileLocation">New York, USA</span>
+                            </div>
+                            <div class="meta-item">
+                                <i class="fas fa-calendar"></i>
+                                <span id="profileJoinDate">Member since Jan 2024</span>
+                            </div>
+                        </div>
+                        <div class="profile-actions">
+                            <button class="btn-profile btn-primary" onclick="editProfile()">
+                                <i class="fas fa-edit"></i>
+                                Edit Profile
+                            </button>
+                            <button class="btn-profile btn-secondary" onclick="window.location.href='reservation.html'">
+                                <i class="fas fa-calendar-plus"></i>
+                                Book Appointment
+                            </button>
+                            <button class="btn-profile btn-secondary" onclick="window.location.href='dashboard-clien.html'">
+                                <i class="fas fa-chart-line"></i>
+                                Dashboard
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Profile Stats -->
+                <div class="profile-stats">
+                    <div class="stat-card">
+                        <div class="stat-value" id="totalAppointments">0</div>
+                        <div class="stat-label">Total Appointments</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value" id="upcomingAppointments">0</div>
+                        <div class="stat-label">Upcoming</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value" id="completedAppointments">0</div>
+                        <div class="stat-label">Completed</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value" id="medicalRecords">0</div>
+                        <div class="stat-label">Medical Records</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Profile Content -->
+            <div class="profile-content">
+                <!-- Sidebar -->
+                <div class="profile-sidebar">
+                    <!-- Personal Information -->
+                    <div class="profile-card">
+                        <h3 class="card-title">
+                            <i class="fas fa-user"></i>
+                            Personal Information
+                        </h3>
+                        <div class="info-group">
+                            <div class="info-label">Full Name</div>
+                            <div class="info-value">
+                                <span id="sidebarName">John Doe</span>
+                                <button class="edit-btn" onclick="editProfile()">
+                                    <i class="fas fa-edit"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="info-group">
+                            <div class="info-label">Date of Birth</div>
+                            <div class="info-value" id="sidebarDOB">January 15, 1990</div>
+                        </div>
+                        <div class="info-group">
+                            <div class="info-label">Gender</div>
+                            <div class="info-value" id="sidebarGender">Male</div>
+                        </div>
+                        <div class="info-group">
+                            <div class="info-label">Blood Type</div>
+                            <div class="info-value" id="sidebarBloodType">A+</div>
+                        </div>
+                    </div>
+
+                    <!-- Contact Information -->
+                    <div class="profile-card">
+                        <h3 class="card-title">
+                            <i class="fas fa-address-card"></i>
+                            Contact Information
+                        </h3>
+                        <div class="info-group">
+                            <div class="info-label">Email</div>
+                            <div class="info-value" id="sidebarEmail">john.doe@example.com</div>
+                        </div>
+                        <div class="info-group">
+                            <div class="info-label">Phone</div>
+                            <div class="info-value" id="sidebarPhone">+1 (555) 123-4567</div>
+                        </div>
+                        <div class="info-group">
+                            <div class="info-label">Address</div>
+                            <div class="info-value" id="sidebarAddress">123 Main St, New York, NY 10001</div>
+                        </div>
+                    </div>
+
+                    <!-- Emergency Contact -->
+                    <div class="profile-card">
+                        <h3 class="card-title">
+                            <i class="fas fa-exclamation-triangle"></i>
+                            Emergency Contact
+                        </h3>
+                        <div class="info-group">
+                            <div class="info-label">Name</div>
+                            <div class="info-value" id="emergencyName">Jane Doe</div>
+                        </div>
+                        <div class="info-group">
+                            <div class="info-label">Relationship</div>
+                            <div class="info-value" id="emergencyRelation">Spouse</div>
+                        </div>
+                        <div class="info-group">
+                            <div class="info-label">Phone</div>
+                            <div class="info-value" id="emergencyPhone">+1 (555) 987-6543</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Main Content with Tabs -->
+                <div class="profile-tabs">
+                    <div class="tabs-nav">
+                        <button class="tab-btn active" onclick="switchTab('appointments', this)">
+                            <i class="fas fa-calendar-check"></i>
+                            Appointments
+                        </button>
+                        <button class="tab-btn" onclick="switchTab('medical', this)">
+                            <i class="fas fa-file-medical"></i>
+                            Medical History
+                        </button>
+                        <button class="tab-btn" onclick="switchTab('prescriptions', this)">
+                            <i class="fas fa-prescription"></i>
+                            Prescriptions
+                        </button>
+                        <button class="tab-btn" onclick="switchTab('settings', this)">
+                            <i class="fas fa-cog"></i>
+                            Settings
+                        </button>
+                    </div>
+
+                    <!-- Appointments Tab -->
+                    <div id="appointmentsTab" class="tab-content active">
+                        <div id="appointmentsList">
+                            <!-- Sample Appointment -->
+                            <div class="appointment-item">
+                                <div class="appointment-header">
+                                    <div class="doctor-info">
+                                        <div class="doctor-avatar">DS</div>
+                                        <div class="doctor-details">
+                                            <h4>Dr. Sarah Smith</h4>
+                                            <p>Cardiologist</p>
+                                        </div>
+                                    </div>
+                                    <span class="appointment-status status-upcoming">Upcoming</span>
+                                </div>
+                                <div class="appointment-details">
+                                    <div class="detail-item">
+                                        <i class="fas fa-calendar"></i>
+                                        <span>Dec 15, 2024</span>
+                                    </div>
+                                    <div class="detail-item">
+                                        <i class="fas fa-clock"></i>
+                                        <span>10:00 AM</span>
+                                    </div>
+                                    <div class="detail-item">
+                                        <i class="fas fa-video"></i>
+                                        <span>Video Consultation</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="appointment-item">
+                                <div class="appointment-header">
+                                    <div class="doctor-info">
+                                        <div class="doctor-avatar">MJ</div>
+                                        <div class="doctor-details">
+                                            <h4>Dr. Michael Johnson</h4>
+                                            <p>General Physician</p>
+                                        </div>
+                                    </div>
+                                    <span class="appointment-status status-completed">Completed</span>
+                                </div>
+                                <div class="appointment-details">
+                                    <div class="detail-item">
+                                        <i class="fas fa-calendar"></i>
+                                        <span>Nov 20, 2024</span>
+                                    </div>
+                                    <div class="detail-item">
+                                        <i class="fas fa-clock"></i>
+                                        <span>2:30 PM</span>
+                                    </div>
+                                    <div class="detail-item">
+                                        <i class="fas fa-hospital"></i>
+                                        <span>In-person</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Medical History Tab -->
+                    <div id="medicalTab" class="tab-content">
+                        <div id="medicalRecordsList">
+                            <div class="medical-record">
+                                <div class="record-header">
+                                    <div class="record-date">
+                                        <i class="fas fa-calendar"></i> Nov 20, 2024
+                                    </div>
+                                </div>
+                                <div class="record-title">Annual Check-up</div>
+                                <div class="record-description">
+                                    Routine physical examination. Blood pressure: 120/80, Heart rate: 72 bpm. 
+                                    All vital signs normal. Patient is in good health.
+                                </div>
+                                <div class="record-tags">
+                                    <span class="tag">Check-up</span>
+                                    <span class="tag">Normal</span>
+                                </div>
+                            </div>
+
+                            <div class="medical-record">
+                                <div class="record-header">
+                                    <div class="record-date">
+                                        <i class="fas fa-calendar"></i> Oct 5, 2024
+                                    </div>
+                                </div>
+                                <div class="record-title">Blood Test Results</div>
+                                <div class="record-description">
+                                    Complete blood count performed. All values within normal range. 
+                                    Cholesterol levels slightly elevated - dietary changes recommended.
+                                </div>
+                                <div class="record-tags">
+                                    <span class="tag">Lab Test</span>
+                                    <span class="tag">Follow-up</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Prescriptions Tab -->
+                    <div id="prescriptionsTab" class="tab-content">
+                        <div id="prescriptionsList">
+                            <div class="medical-record">
+                                <div class="record-header">
+                                    <div class="record-date">
+                                        <i class="fas fa-calendar"></i> Nov 20, 2024
+                                    </div>
+                                </div>
+                                <div class="record-title">Vitamin D Supplements</div>
+                                <div class="record-description">
+                                    Vitamin D3 1000 IU - Take one tablet daily with food. Duration: 3 months.
+                                    Prescribed by Dr. Michael Johnson.
+                                </div>
+                                <div class="record-tags">
+                                    <span class="tag">Active</span>
+                                    <span class="tag">Supplements</span>
+                                </div>
+                            </div>
+
+                            <div class="medical-record">
+                                <div class="record-header">
+                                    <div class="record-date">
+                                        <i class="fas fa-calendar"></i> Aug 12, 2024
+                                    </div>
+                                </div>
+                                <div class="record-title">Antibiotics Course</div>
+                                <div class="record-description">
+                                    Amoxicillin 500mg - Take one capsule three times daily for 7 days.
+                                    Prescribed by Dr. Emily Williams for bacterial infection.
+                                </div>
+                                <div class="record-tags">
+                                    <span class="tag">Completed</span>
+                                    <span class="tag">Antibiotics</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Settings Tab -->
+                    <div id="settingsTab" class="tab-content">
+                        <div class="settings-section">
+                            <h3 class="settings-title">Notifications</h3>
+                            <div class="setting-item">
+                                <div class="setting-info">
+                                    <h4>Email Notifications</h4>
+                                    <p>Receive appointment reminders via email</p>
+                                </div>
+                                <div class="toggle-switch active" onclick="toggleSetting(this)"></div>
+                            </div>
+                            <div class="setting-item">
+                                <div class="setting-info">
+                                    <h4>SMS Notifications</h4>
+                                    <p>Receive appointment reminders via SMS</p>
+                                </div>
+                                <div class="toggle-switch active" onclick="toggleSetting(this)"></div>
+                            </div>
+                            <div class="setting-item">
+                                <div class="setting-info">
+                                    <h4>Marketing Emails</h4>
+                                    <p>Receive health tips and promotional offers</p>
+                                </div>
+                                <div class="toggle-switch" onclick="toggleSetting(this)"></div>
+                            </div>
+                        </div>
+
+                        <div class="settings-section">
+                            <h3 class="settings-title">Privacy</h3>
+                            <div class="setting-item">
+                                <div class="setting-info">
+                                    <h4>Profile Visibility</h4>
+                                    <p>Make profile visible to healthcare providers</p>
+                                </div>
+                                <div class="toggle-switch active" onclick="toggleSetting(this)"></div>
+                            </div>
+                            <div class="setting-item">
+                                <div class="setting-info">
+                                    <h4>Share Medical History</h4>
+                                    <p>Allow doctors to view your medical history</p>
+                                </div>
+                                <div class="toggle-switch active" onclick="toggleSetting(this)"></div>
+                            </div>
+                        </div>
+
+                        <div class="settings-section">
+                            <h3 class="settings-title">Account</h3>
+                            <button class="btn-profile btn-secondary" onclick="changePassword()">
+                                <i class="fas fa-key"></i>
+                                Change Password
+                            </button>
+                            <button class="btn-profile btn-secondary" style="margin-left: 1rem;" onclick="deleteAccount()">
+                                <i class="fas fa-trash"></i>
+                                Delete Account
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Edit Profile Modal -->
+    <div id="editProfileModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title">Edit Profile</h2>
+                <button class="modal-close" onclick="closeEditModal()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="editProfileForm">
+                    <div class="form-group">
+                        <label class="form-label">Full Name</label>
+                        <input type="text" class="form-input" id="editName" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Email</label>
+                        <input type="email" class="form-input" id="editEmail" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Phone</label>
+                        <input type="tel" class="form-input" id="editPhone" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Date of Birth</label>
+                        <input type="date" class="form-input" id="editDOB" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Gender</label>
+                        <select class="form-input" id="editGender" required>
+                            <option value="Male">Male</option>
+                            <option value="Female">Female</option>
+                            <option value="Other">Other</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Blood Type</label>
+                        <select class="form-input" id="editBloodType" required>
+                            <option value="A+">A+</option>
+                            <option value="A-">A-</option>
+                            <option value="B+">B+</option>
+                            <option value="B-">B-</option>
+                            <option value="AB+">AB+</option>
+                            <option value="AB-">AB-</option>
+                            <option value="O+">O+</option>
+                            <option value="O-">O-</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Address</label>
+                        <textarea class="form-input form-textarea" id="editAddress" required></textarea>
+                    </div>
+                    <button type="submit" class="btn-save">
+                        <i class="fas fa-save"></i> Save Changes
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <div id="footerPlaceholder"></div>
+
+    <!-- Scripts -->
+    <script src="js/ui.js"></script>
+    <script>
+        // Profile data (In production, fetch from backend)
+        let profileData = {
+            name: 'John Doe',
+            email: 'john.doe@example.com',
+            phone: '+1 (555) 123-4567',
+            location: 'New York, USA',
+            dob: '1990-01-15',
+            gender: 'Male',
+            bloodType: 'A+',
+            address: '123 Main St, New York, NY 10001',
+            joinDate: 'Jan 2024',
+            emergency: {
+                name: 'Jane Doe',
+                relation: 'Spouse',
+                phone: '+1 (555) 987-6543'
+            },
+            avatar: null
+        };
+
+        // Load profile data from localStorage if exists
+        function loadProfileData() {
+            const saved = localStorage.getItem('healify-profile-data');
+            if (saved) {
+                profileData = JSON.parse(saved);
+            }
+            
+            // Update UI with profile data
+            updateProfileUI();
+            updateStats();
+        }
+
+        // Update profile UI
+        function updateProfileUI() {
+            // Header
+            document.getElementById('profileName').textContent = profileData.name;
+            document.getElementById('profileEmail').textContent = profileData.email;
+            document.getElementById('profilePhone').textContent = profileData.phone;
+            document.getElementById('profileLocation').textContent = profileData.location;
+            document.getElementById('profileJoinDate').textContent = `Member since ${profileData.joinDate}`;
+
+            // Sidebar
+            document.getElementById('sidebarName').textContent = profileData.name;
+            document.getElementById('sidebarEmail').textContent = profileData.email;
+            document.getElementById('sidebarPhone').textContent = profileData.phone;
+            document.getElementById('sidebarDOB').textContent = formatDate(profileData.dob);
+            document.getElementById('sidebarGender').textContent = profileData.gender;
+            document.getElementById('sidebarBloodType').textContent = profileData.bloodType;
+            document.getElementById('sidebarAddress').textContent = profileData.address;
+
+            // Emergency contact
+            document.getElementById('emergencyName').textContent = profileData.emergency.name;
+            document.getElementById('emergencyRelation').textContent = profileData.emergency.relation;
+            document.getElementById('emergencyPhone').textContent = profileData.emergency.phone;
+
+            // Avatar
+            if (profileData.avatar) {
+                document.getElementById('avatarImage').src = profileData.avatar;
+                document.getElementById('avatarImage').style.display = 'block';
+                document.getElementById('avatarInitials').style.display = 'none';
+            } else {
+                const initials = profileData.name.split(' ').map(n => n[0]).join('');
+                document.getElementById('avatarInitials').textContent = initials;
+            }
+        }
+
+        // Update stats
+        function updateStats() {
+            // In production, fetch from backend
+            const stats = {
+                total: 12,
+                upcoming: 2,
+                completed: 10,
+                records: 8
+            };
+
+            document.getElementById('totalAppointments').textContent = stats.total;
+            document.getElementById('upcomingAppointments').textContent = stats.upcoming;
+            document.getElementById('completedAppointments').textContent = stats.completed;
+            document.getElementById('medicalRecords').textContent = stats.records;
+        }
+
+        // Format date
+        function formatDate(dateString) {
+            const date = new Date(dateString);
+            return date.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+        }
+
+        // Switch tabs
+        function switchTab(tabName, element) {
+            // Update tab buttons
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            
+            // If element is passed, use it; otherwise find by event
+            const activeBtn = element || window.event.target;
+            if (activeBtn) {
+                activeBtn.classList.add('active');
+            }
+
+            // Update tab content
+            document.querySelectorAll('.tab-content').forEach(content => {
+                content.classList.remove('active');
+            });
+            document.getElementById(`${tabName}Tab`).classList.add('active');
+        }
+
+        // Toggle setting
+        function toggleSetting(element) {
+            element.classList.toggle('active');
+        }
+
+        // Edit profile
+        function editProfile() {
+            try {
+                console.log('Edit profile clicked', profileData);
+                
+                // Get all form elements
+                const editName = document.getElementById('editName');
+                const editEmail = document.getElementById('editEmail');
+                const editPhone = document.getElementById('editPhone');
+                const editDOB = document.getElementById('editDOB');
+                const editGender = document.getElementById('editGender');
+                const editBloodType = document.getElementById('editBloodType');
+                const editAddress = document.getElementById('editAddress');
+                const modal = document.getElementById('editProfileModal');
+
+                // Check if elements exist
+                if (!editName || !editEmail || !modal) {
+                    console.error('Form elements not found!');
+                    showNotification('Error opening edit form', 'error');
+                    return;
+                }
+
+                // Populate form
+                editName.value = profileData.name || '';
+                editEmail.value = profileData.email || '';
+                editPhone.value = profileData.phone || '';
+                editDOB.value = profileData.dob || '';
+                editGender.value = profileData.gender || 'Male';
+                editBloodType.value = profileData.bloodType || 'A+';
+                editAddress.value = profileData.address || '';
+
+                console.log('Form populated successfully');
+
+                // Show modal
+                modal.classList.add('show');
+                console.log('Modal displayed');
+            } catch (error) {
+                console.error('Error in editProfile:', error);
+                showNotification('Error opening edit form', 'error');
+            }
+        }
+
+        // Close edit modal
+        function closeEditModal() {
+            const modal = document.getElementById('editProfileModal');
+            if (modal) {
+                modal.classList.remove('show');
+            }
+        }
+
+        // Handle form submission
+        function handleFormSubmit(e) {
+            e.preventDefault();
+
+            try {
+                // Update profile data
+                profileData.name = document.getElementById('editName').value.trim();
+                profileData.email = document.getElementById('editEmail').value.trim();
+                profileData.phone = document.getElementById('editPhone').value.trim();
+                profileData.dob = document.getElementById('editDOB').value;
+                profileData.gender = document.getElementById('editGender').value;
+                profileData.bloodType = document.getElementById('editBloodType').value;
+                profileData.address = document.getElementById('editAddress').value.trim();
+
+                // Extract location from address (first city found)
+                const addressParts = profileData.address.split(',');
+                if (addressParts.length >= 2) {
+                    profileData.location = addressParts.slice(-2).join(',').trim();
+                }
+
+                // Save to localStorage
+                localStorage.setItem('healify-profile-data', JSON.stringify(profileData));
+
+                // Update UI
+                updateProfileUI();
+
+                // Close modal
+                closeEditModal();
+
+                // Show success message with better styling
+                showNotification('Profile updated successfully!', 'success');
+            } catch (error) {
+                console.error('Error updating profile:', error);
+                showNotification('Error updating profile. Please try again.', 'error');
+            }
+        }
+
+        // Show notification function
+        function showNotification(message, type = 'success') {
+            // Create notification element
+            const notification = document.createElement('div');
+            notification.style.cssText = `
+                position: fixed;
+                top: 100px;
+                right: 20px;
+                background: ${type === 'success' ? '#10b981' : '#ef4444'};
+                color: white;
+                padding: 1rem 1.5rem;
+                border-radius: 12px;
+                box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+                z-index: 10001;
+                animation: slideInRight 0.3s ease-out;
+                font-weight: 600;
+                display: flex;
+                align-items: center;
+                gap: 0.5rem;
+            `;
+            notification.innerHTML = `
+                <i class="fas fa-${type === 'success' ? 'check-circle' : 'exclamation-circle'}"></i>
+                ${message}
+            `;
+
+            document.body.appendChild(notification);
+
+            // Remove after 3 seconds
+            setTimeout(() => {
+                notification.style.animation = 'slideOutRight 0.3s ease-out';
+                setTimeout(() => {
+                    document.body.removeChild(notification);
+                }, 300);
+            }, 3000);
+        }
+
+        // Handle avatar upload
+        function handleAvatarUpload(e) {
+            const file = e.target.files[0];
+            if (file) {
+                // Check file size (max 5MB)
+                if (file.size > 5 * 1024 * 1024) {
+                    showNotification('Image size must be less than 5MB', 'error');
+                    return;
+                }
+
+                // Check file type
+                if (!file.type.startsWith('image/')) {
+                    showNotification('Please upload an image file', 'error');
+                    return;
+                }
+
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    profileData.avatar = e.target.result;
+                    localStorage.setItem('healify-profile-data', JSON.stringify(profileData));
+                    updateProfileUI();
+                    showNotification('Profile picture updated!', 'success');
+                };
+                reader.onerror = function() {
+                    showNotification('Error uploading image', 'error');
+                };
+                reader.readAsDataURL(file);
+            }
+        }
+
+        // Change password
+        function changePassword() {
+            showNotification('Password reset link will be sent to your email', 'success');
+        }
+
+        // Delete account
+        function deleteAccount() {
+            if (confirm('Are you sure you want to delete your account? This action cannot be undone.')) {
+                // In production, call API to delete account
+                showNotification('Account deletion requested. Check your email for confirmation.', 'success');
+            }
+        }
+
+        // Initialize on page load
+        window.addEventListener('DOMContentLoaded', function() {
+            // Load header and footer
+            loadComponent('headerPlaceholder', 'components/header.html');
+            loadComponent('footerPlaceholder', 'components/footer.html');
+
+            // Check authentication
+            checkAuth();
+
+            // Load profile data
+            loadProfileData();
+            
+            console.log('Profile page loaded successfully');
+        });
+
+        // Make sure form submission is set up after DOM loads
+        document.addEventListener('DOMContentLoaded', function() {
+            const editForm = document.getElementById('editProfileForm');
+            if (editForm) {
+                editForm.addEventListener('submit', handleFormSubmit);
+            }
+
+            const avatarInput = document.getElementById('avatarInput');
+            if (avatarInput) {
+                avatarInput.addEventListener('change', handleAvatarUpload);
+            }
+
+            const modal = document.getElementById('editProfileModal');
+            if (modal) {
+                modal.addEventListener('click', function(e) {
+                    if (e.target === modal) {
+                        closeEditModal();
+                    }
+                });
+            }
+
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape') {
+                    const modal = document.getElementById('editProfileModal');
+                    if (modal && modal.classList.contains('show')) {
+                        closeEditModal();
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+</html>

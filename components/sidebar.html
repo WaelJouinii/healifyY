@@ -1,0 +1,138 @@
+<!-- Sidebar Component -->
+<aside class="sidebar" id="sidebar">
+    <div class="sidebar-header">
+        <div class="sidebar-logo">
+            <i class="fas fa-heartbeat"></i>
+            <span>Healify</span>
+        </div>
+        <button class="sidebar-close" id="sidebarClose">
+            <i class="fas fa-times"></i>
+        </button>
+    </div>
+
+    <nav class="sidebar-nav">
+        <ul class="sidebar-menu">
+            <li class="sidebar-item">
+                <a href="../index.html" class="sidebar-link">
+                    <i class="fas fa-home"></i>
+                    <span>Home</span>
+                </a>
+            </li>
+            <li class="sidebar-item">
+                <a href="../about.html" class="sidebar-link">
+                    <i class="fas fa-info-circle"></i>
+                    <span>About Us</span>
+                </a>
+            </li>
+            <li class="sidebar-item">
+                <a href="../doctors.html" class="sidebar-link">
+                    <i class="fas fa-user-md"></i>
+                    <span>Find Doctors</span>
+                </a>
+            </li>
+            <li class="sidebar-item">
+                <a href="../consultation.html" class="sidebar-link">
+                    <i class="fas fa-video"></i>
+                    <span>Consultations</span>
+                </a>
+            </li>
+            <li class="sidebar-item auth-required">
+                <a href="../reservation.html" class="sidebar-link">
+                    <i class="fas fa-calendar-check"></i>
+                    <span>My Reservations</span>
+                </a>
+            </li>
+            <li class="sidebar-item auth-required">
+                <a href="../dashboard-clien.html" class="sidebar-link">
+                    <i class="fas fa-chart-line"></i>
+                    <span>Dashboard</span>
+                </a>
+            </li>
+            <li class="sidebar-item">
+                <a href="../contact.html" class="sidebar-link">
+                    <i class="fas fa-envelope"></i>
+                    <span>Contact</span>
+                </a>
+            </li>
+        </ul>
+
+        <div class="sidebar-divider"></div>
+
+        <ul class="sidebar-menu">
+            <li class="sidebar-item auth-not-required">
+                <a href="../login.html" class="sidebar-link">
+                    <i class="fas fa-sign-in-alt"></i>
+                    <span>Login</span>
+                </a>
+            </li>
+            <li class="sidebar-item auth-not-required">
+                <a href="../register.html" class="sidebar-link">
+                    <i class="fas fa-user-plus"></i>
+                    <span>Register</span>
+                </a>
+            </li>
+            <li class="sidebar-item auth-required">
+                <a href="../profil.html" class="sidebar-link">
+                    <i class="fas fa-user-circle"></i>
+                    <span>Profile</span>
+                </a>
+            </li>
+            <li class="sidebar-item auth-required">
+                <a href="#" class="sidebar-link" id="logoutBtn">
+                    <i class="fas fa-sign-out-alt"></i>
+                    <span>Logout</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</aside>
+
+<!-- Sidebar Overlay -->
+<div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+<script>
+// Sidebar functionality
+document.addEventListener('DOMContentLoaded', function() {
+    const sidebarClose = document.getElementById('sidebarClose');
+    const sidebarOverlay = document.getElementById('sidebarOverlay');
+    const logoutBtn = document.getElementById('logoutBtn');
+    
+    if (sidebarClose) {
+        sidebarClose.addEventListener('click', toggleSidebar);
+    }
+    
+    if (sidebarOverlay) {
+        sidebarOverlay.addEventListener('click', toggleSidebar);
+    }
+    
+    if (logoutBtn) {
+        logoutBtn.addEventListener('click', handleLogout);
+    }
+    
+    // Update sidebar based on auth status
+    updateSidebarAuth();
+});
+
+function updateSidebarAuth() {
+    const isLoggedIn = localStorage.getItem('healify-user-token');
+    const body = document.body;
+    
+    if (isLoggedIn) {
+        body.classList.add('logged-in');
+    } else {
+        body.classList.remove('logged-in');
+    }
+}
+
+function handleLogout(e) {
+    e.preventDefault();
+    
+    if (confirm('Are you sure you want to logout?')) {
+        localStorage.removeItem('healify-user-token');
+        localStorage.removeItem('healify-user-role');
+        localStorage.removeItem('healify-user-data');
+        
+        window.location.href = '../index.html';
+    }
+}
+</script>
