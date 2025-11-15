@@ -1,0 +1,863 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Health Tips & Articles - Healify</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        main {
+            margin-top: 72px;
+            min-height: calc(100vh - 72px);
+        }
+
+        .page-header {
+            background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+            color: white;
+            padding: 80px 24px 60px;
+            text-align: center;
+        }
+
+        .page-header h1 {
+            font-size: 48px;
+            font-weight: 800;
+            margin-bottom: 16px;
+        }
+
+        .page-header p {
+            font-size: 18px;
+            opacity: 0.95;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .articles-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 60px 24px;
+        }
+
+        .filters-section {
+            margin-bottom: 40px;
+            display: flex;
+            gap: 16px;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .filter-btn {
+            padding: 12px 24px;
+            background: var(--header-bg);
+            border: 2px solid var(--border-color);
+            border-radius: 25px;
+            color: var(--text-color);
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .filter-btn:hover,
+        .filter-btn.active {
+            background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+            color: white;
+            border-color: var(--primary-color);
+            transform: translateY(-2px);
+        }
+
+        .search-bar {
+            display: flex;
+            gap: 12px;
+            max-width: 600px;
+            margin: 0 auto 40px;
+        }
+
+        .search-bar input {
+            flex: 1;
+            padding: 14px 20px;
+            background: var(--header-bg);
+            border: 2px solid var(--border-color);
+            border-radius: 12px;
+            color: var(--text-color);
+            font-size: 15px;
+        }
+
+        .search-bar input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+        }
+
+        .search-bar button {
+            padding: 14px 28px;
+            background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .search-bar button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(102, 126, 234, 0.4);
+        }
+
+        .articles-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 32px;
+        }
+
+        .article-card {
+            background: var(--header-bg);
+            border-radius: 20px;
+            overflow: hidden;
+            border: 2px solid var(--border-color);
+            transition: var(--transition);
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .article-card:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-xl);
+            border-color: var(--primary-color);
+        }
+
+        .article-image {
+            height: 220px;
+            background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .article-image::before {
+            content: '';
+            position: absolute;
+            width: 200px;
+            height: 200px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            top: -100px;
+            right: -50px;
+        }
+
+        .article-image i {
+            font-size: 90px;
+            color: rgba(255, 255, 255, 0.3);
+            position: relative;
+            z-index: 1;
+        }
+
+        .article-content {
+            padding: 28px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .article-meta-top {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 16px;
+        }
+
+        .article-category {
+            display: inline-block;
+            padding: 6px 14px;
+            background: rgba(102, 126, 234, 0.1);
+            color: var(--primary-color);
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+
+        .article-featured {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 6px 14px;
+            background: rgba(251, 191, 36, 0.1);
+            color: #fbbf24;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 700;
+        }
+
+        .article-title {
+            font-size: 22px;
+            font-weight: 700;
+            color: var(--text-color);
+            margin-bottom: 12px;
+            line-height: 1.4;
+            flex: 1;
+        }
+
+        .article-excerpt {
+            font-size: 14px;
+            color: var(--text-color);
+            opacity: 0.8;
+            line-height: 1.7;
+            margin-bottom: 20px;
+        }
+
+        .article-meta-bottom {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 20px;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .article-author {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .author-avatar {
+            width: 36px;
+            height: 36px;
+            background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 700;
+            font-size: 14px;
+        }
+
+        .author-info {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .author-name {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--text-color);
+        }
+
+        .article-date {
+            font-size: 12px;
+            color: var(--text-color);
+            opacity: 0.7;
+        }
+
+        .article-stats {
+            display: flex;
+            gap: 16px;
+            font-size: 13px;
+            color: var(--text-color);
+            opacity: 0.7;
+        }
+
+        .article-stats i {
+            margin-right: 4px;
+        }
+
+        .article-tags {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            margin-bottom: 16px;
+        }
+
+        .article-tag {
+            padding: 4px 10px;
+            background: rgba(118, 75, 162, 0.1);
+            color: var(--accent-color);
+            border-radius: 12px;
+            font-size: 11px;
+            font-weight: 600;
+        }
+
+        .read-more-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 20px;
+            background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+            color: white;
+            border-radius: 10px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 14px;
+            transition: var(--transition);
+            align-self: flex-start;
+        }
+
+        .read-more-btn:hover {
+            transform: translateX(5px);
+            box-shadow: 0 4px 16px rgba(102, 126, 234, 0.4);
+        }
+
+        .pagination {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 12px;
+            margin-top: 60px;
+        }
+
+        .pagination button {
+            padding: 12px 20px;
+            background: var(--header-bg);
+            border: 2px solid var(--border-color);
+            border-radius: 10px;
+            color: var(--text-color);
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .pagination button:hover:not(:disabled) {
+            background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+            color: white;
+            border-color: var(--primary-color);
+        }
+
+        .pagination button:disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+        }
+
+        .pagination .page-number {
+            padding: 12px 20px;
+            background: var(--header-bg);
+            border: 2px solid var(--border-color);
+            border-radius: 10px;
+            color: var(--text-color);
+            font-weight: 600;
+        }
+
+        .pagination .page-number.active {
+            background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+            color: white;
+            border-color: var(--primary-color);
+        }
+
+        .newsletter-cta {
+            max-width: 900px;
+            margin: 60px auto 0;
+            padding: 40px;
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.1), rgba(118, 75, 162, 0.1));
+            border-radius: 20px;
+            text-align: center;
+        }
+
+        .newsletter-cta h3 {
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--text-color);
+            margin-bottom: 12px;
+        }
+
+        .newsletter-cta p {
+            font-size: 15px;
+            color: var(--text-color);
+            opacity: 0.8;
+            margin-bottom: 24px;
+        }
+
+        .newsletter-cta .newsletter-form {
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        .no-results {
+            text-align: center;
+            padding: 60px 20px;
+        }
+
+        .no-results i {
+            font-size: 80px;
+            color: var(--primary-color);
+            opacity: 0.3;
+            margin-bottom: 20px;
+        }
+
+        .no-results h3 {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--text-color);
+            margin-bottom: 12px;
+        }
+
+        .no-results p {
+            font-size: 15px;
+            color: var(--text-color);
+            opacity: 0.7;
+        }
+
+        @media (max-width: 768px) {
+            .page-header h1 {
+                font-size: 36px;
+            }
+
+            .page-header p {
+                font-size: 16px;
+            }
+
+            .articles-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .filters-section {
+                flex-direction: column;
+            }
+
+            .filter-btn {
+                width: 100%;
+                text-align: center;
+            }
+
+            .search-bar {
+                flex-direction: column;
+            }
+
+            .search-bar button {
+                width: 100%;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .page-header {
+                padding: 60px 20px 40px;
+            }
+
+            .page-header h1 {
+                font-size: 28px;
+            }
+
+            .articles-container {
+                padding: 40px 16px;
+            }
+
+            .article-title {
+                font-size: 18px;
+            }
+
+            .newsletter-cta {
+                padding: 28px 20px;
+            }
+
+            .newsletter-cta h3 {
+                font-size: 22px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="header-placeholder"></div>
+
+    <main>
+        <div class="page-header">
+            <h1><i class="fas fa-newspaper"></i> Health Tips & Articles</h1>
+            <p>Explore expert health advice, wellness tips, and the latest medical insights to help you live a healthier life</p>
+        </div>
+
+        <div class="articles-container">
+            <div class="search-bar">
+                <input type="text" id="searchInput" placeholder="Search articles by title, category, or tags...">
+                <button onclick="searchArticles()"><i class="fas fa-search"></i> Search</button>
+            </div>
+
+            <div class="filters-section">
+                <button class="filter-btn active" data-category="all" onclick="filterArticles('all')">
+                    <i class="fas fa-th"></i> All Articles
+                </button>
+                <button class="filter-btn" data-category="wellness" onclick="filterArticles('wellness')">
+                    <i class="fas fa-heart"></i> Wellness
+                </button>
+                <button class="filter-btn" data-category="nutrition" onclick="filterArticles('nutrition')">
+                    <i class="fas fa-utensils"></i> Nutrition
+                </button>
+                <button class="filter-btn" data-category="mental-health" onclick="filterArticles('mental-health')">
+                    <i class="fas fa-brain"></i> Mental Health
+                </button>
+                <button class="filter-btn" data-category="fitness" onclick="filterArticles('fitness')">
+                    <i class="fas fa-dumbbell"></i> Fitness
+                </button>
+                <button class="filter-btn" data-category="prevention" onclick="filterArticles('prevention')">
+                    <i class="fas fa-shield-alt"></i> Prevention
+                </button>
+            </div>
+
+            <div class="articles-grid" id="articlesGrid">
+                <!-- Articles will be dynamically loaded here -->
+            </div>
+
+            <div class="no-results" id="noResults" style="display: none;">
+                <i class="fas fa-search"></i>
+                <h3>No Articles Found</h3>
+                <p>Try adjusting your search or filter criteria</p>
+            </div>
+
+            <div class="pagination" id="pagination">
+                <button id="prevBtn" onclick="changePage(-1)">
+                    <i class="fas fa-chevron-left"></i> Previous
+                </button>
+                <span class="page-number active" id="currentPage">1</span>
+                <button id="nextBtn" onclick="changePage(1)">
+                    Next <i class="fas fa-chevron-right"></i>
+                </button>
+            </div>
+
+            <div class="newsletter-cta">
+                <h3><i class="fas fa-envelope"></i> Never Miss an Update</h3>
+                <p>Subscribe to our newsletter for weekly health tips and exclusive wellness content</p>
+                <form class="newsletter-form" onsubmit="subscribeNewsletter(event)">
+                    <div class="form-group-inline">
+                        <input type="email" id="newsletterEmail" placeholder="Enter your email address" required>
+                        <button type="submit">Subscribe</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </main>
+
+    <div id="footer-placeholder"></div>
+
+    <script src="js/ui.js"></script>
+    <script src="js/mais.js"></script>
+    <script>
+        // Health articles database
+        const articles = [
+            {
+                id: 1,
+                title: "10 Tips for a Healthy Heart",
+                excerpt: "Discover essential lifestyle changes and habits that can significantly improve your cardiovascular health and reduce the risk of heart disease.",
+                category: "wellness",
+                tags: ["heart health", "prevention", "lifestyle"],
+                author: "Dr. Sarah Johnson",
+                date: "December 10, 2024",
+                readTime: "5 min read",
+                views: "2.5k",
+                featured: true,
+                icon: "fa-heart-pulse"
+            },
+            {
+                id: 2,
+                title: "Managing Diabetes in Daily Life",
+                excerpt: "Practical strategies and tips for effectively managing diabetes through diet, exercise, and medication while maintaining a high quality of life.",
+                category: "wellness",
+                tags: ["diabetes", "chronic disease", "diet"],
+                author: "Dr. Michael Chen",
+                date: "December 8, 2024",
+                readTime: "7 min read",
+                views: "3.2k",
+                featured: true,
+                icon: "fa-syringe"
+            },
+            {
+                id: 3,
+                title: "Mental Health Matters: Breaking the Stigma",
+                excerpt: "Understanding mental health challenges and why seeking help is a sign of strength. Learn about common conditions and treatment options.",
+                category: "mental-health",
+                tags: ["mental health", "awareness", "therapy"],
+                author: "Dr. Emily Williams",
+                date: "December 5, 2024",
+                readTime: "6 min read",
+                views: "4.1k",
+                featured: true,
+                icon: "fa-brain"
+            },
+            {
+                id: 4,
+                title: "The Complete Guide to Balanced Nutrition",
+                excerpt: "Everything you need to know about macronutrients, micronutrients, and creating a balanced diet that fuels your body and mind.",
+                category: "nutrition",
+                tags: ["nutrition", "diet", "health"],
+                author: "Dr. Jennifer Lee",
+                date: "December 3, 2024",
+                readTime: "8 min read",
+                views: "3.8k",
+                featured: false,
+                icon: "fa-apple-whole"
+            },
+            {
+                id: 5,
+                title: "Building a Sustainable Fitness Routine",
+                excerpt: "Learn how to create a workout plan that fits your lifestyle, goals, and fitness level while avoiding burnout and injury.",
+                category: "fitness",
+                tags: ["fitness", "exercise", "workout"],
+                author: "Dr. David Brown",
+                date: "December 1, 2024",
+                readTime: "6 min read",
+                views: "2.9k",
+                featured: false,
+                icon: "fa-dumbbell"
+            },
+            {
+                id: 6,
+                title: "Understanding Sleep Disorders and Solutions",
+                excerpt: "Explore common sleep disorders, their causes, and evidence-based solutions to improve your sleep quality and overall health.",
+                category: "wellness",
+                tags: ["sleep", "insomnia", "health"],
+                author: "Dr. Sarah Johnson",
+                date: "November 28, 2024",
+                readTime: "7 min read",
+                views: "3.5k",
+                featured: false,
+                icon: "fa-bed"
+            },
+            {
+                id: 7,
+                title: "Stress Management Techniques That Work",
+                excerpt: "Practical, science-backed methods for managing stress in your daily life, from mindfulness to physical activity.",
+                category: "mental-health",
+                tags: ["stress", "mindfulness", "relaxation"],
+                author: "Dr. Emily Williams",
+                date: "November 25, 2024",
+                readTime: "5 min read",
+                views: "4.3k",
+                featured: false,
+                icon: "fa-spa"
+            },
+            {
+                id: 8,
+                title: "Boosting Your Immune System Naturally",
+                excerpt: "Discover natural ways to strengthen your immune system through diet, lifestyle choices, and preventive care.",
+                category: "prevention",
+                tags: ["immunity", "prevention", "vitamins"],
+                author: "Dr. Michael Chen",
+                date: "November 22, 2024",
+                readTime: "6 min read",
+                views: "5.2k",
+                featured: false,
+                icon: "fa-shield-virus"
+            },
+            {
+                id: 9,
+                title: "The Truth About Superfoods",
+                excerpt: "Separating fact from fiction about so-called superfoods and understanding which foods truly deserve a place in your diet.",
+                category: "nutrition",
+                tags: ["superfoods", "nutrition", "diet"],
+                author: "Dr. Jennifer Lee",
+                date: "November 20, 2024",
+                readTime: "6 min read",
+                views: "3.7k",
+                featured: false,
+                icon: "fa-leaf"
+            },
+            {
+                id: 10,
+                title: "Preventing Common Seasonal Illnesses",
+                excerpt: "Learn how to protect yourself from flu, colds, and other seasonal illnesses with effective prevention strategies.",
+                category: "prevention",
+                tags: ["flu", "prevention", "vaccines"],
+                author: "Dr. David Brown",
+                date: "November 18, 2024",
+                readTime: "5 min read",
+                views: "2.8k",
+                featured: false,
+                icon: "fa-virus-slash"
+            },
+            {
+                id: 11,
+                title: "Yoga for Beginners: Getting Started",
+                excerpt: "A comprehensive guide to starting your yoga journey, including basic poses, breathing techniques, and finding the right style for you.",
+                category: "fitness",
+                tags: ["yoga", "flexibility", "beginner"],
+                author: "Dr. Sarah Johnson",
+                date: "November 15, 2024",
+                readTime: "7 min read",
+                views: "3.1k",
+                featured: false,
+                icon: "fa-person-praying"
+            },
+            {
+                id: 12,
+                title: "Understanding Anxiety: Symptoms and Treatment",
+                excerpt: "Recognize the signs of anxiety disorders and explore effective treatment options including therapy, medication, and self-care.",
+                category: "mental-health",
+                tags: ["anxiety", "treatment", "mental health"],
+                author: "Dr. Emily Williams",
+                date: "November 12, 2024",
+                readTime: "8 min read",
+                views: "4.8k",
+                featured: false,
+                icon: "fa-head-side-virus"
+            }
+        ];
+
+        let currentFilter = 'all';
+        let currentPage = 1;
+        const articlesPerPage = 6;
+
+        // Initialize page
+        document.addEventListener('DOMContentLoaded', function() {
+            renderArticles();
+        });
+
+        // Filter articles by category
+        function filterArticles(category) {
+            currentFilter = category;
+            currentPage = 1;
+            
+            // Update active button
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            document.querySelector(`[data-category="${category}"]`).classList.add('active');
+            
+            renderArticles();
+        }
+
+        // Search articles
+        function searchArticles() {
+            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+            currentPage = 1;
+            renderArticles(searchTerm);
+        }
+
+        // Render articles
+        function renderArticles(searchTerm = '') {
+            let filteredArticles = articles;
+            
+            // Apply category filter
+            if (currentFilter !== 'all') {
+                filteredArticles = filteredArticles.filter(article => 
+                    article.category === currentFilter
+                );
+            }
+            
+            // Apply search filter
+            if (searchTerm) {
+                filteredArticles = filteredArticles.filter(article => 
+                    article.title.toLowerCase().includes(searchTerm) ||
+                    article.excerpt.toLowerCase().includes(searchTerm) ||
+                    article.category.toLowerCase().includes(searchTerm) ||
+                    article.tags.some(tag => tag.toLowerCase().includes(searchTerm))
+                );
+            }
+            
+            // Pagination
+            const startIndex = (currentPage - 1) * articlesPerPage;
+            const endIndex = startIndex + articlesPerPage;
+            const paginatedArticles = filteredArticles.slice(startIndex, endIndex);
+            
+            const articlesGrid = document.getElementById('articlesGrid');
+            const noResults = document.getElementById('noResults');
+            
+            if (paginatedArticles.length === 0) {
+                articlesGrid.style.display = 'none';
+                noResults.style.display = 'block';
+                document.getElementById('pagination').style.display = 'none';
+            } else {
+                articlesGrid.style.display = 'grid';
+                noResults.style.display = 'none';
+                document.getElementById('pagination').style.display = 'flex';
+                
+                articlesGrid.innerHTML = paginatedArticles.map(article => `
+                    <div class="article-card">
+                        <div class="article-image">
+                            <i class="fas ${article.icon}"></i>
+                        </div>
+                        <div class="article-content">
+                            <div class="article-meta-top">
+                                <span class="article-category">${article.category.replace('-', ' ')}</span>
+                                ${article.featured ? '<span class="article-featured"><i class="fas fa-star"></i> Featured</span>' : ''}
+                            </div>
+                            <h3 class="article-title">${article.title}</h3>
+                            <p class="article-excerpt">${article.excerpt}</p>
+                            <div class="article-tags">
+                                ${article.tags.map(tag => `<span class="article-tag">${tag}</span>`).join('')}
+                            </div>
+                            <a href="#" class="read-more-btn" onclick="openArticle(${article.id}); return false;">
+                                Read Full Article <i class="fas fa-arrow-right"></i>
+                            </a>
+                            <div class="article-meta-bottom">
+                                <div class="article-author">
+                                    <div class="author-avatar">${article.author.split(' ')[1][0]}</div>
+                                    <div class="author-info">
+                                        <div class="author-name">${article.author}</div>
+                                        <div class="article-date">${article.date}</div>
+                                    </div>
+                                </div>
+                                <div class="article-stats">
+                                    <span><i class="fas fa-clock"></i> ${article.readTime}</span>
+                                    <span><i class="fas fa-eye"></i> ${article.views}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `).join('');
+            }
+            
+            // Update pagination
+            updatePagination(filteredArticles.length);
+        }
+
+        // Update pagination
+        function updatePagination(totalArticles) {
+            const totalPages = Math.ceil(totalArticles / articlesPerPage);
+            document.getElementById('currentPage').textContent = `${currentPage} / ${totalPages}`;
+            document.getElementById('prevBtn').disabled = currentPage === 1;
+            document.getElementById('nextBtn').disabled = currentPage === totalPages || totalPages === 0;
+        }
+
+        // Change page
+        function changePage(direction) {
+            currentPage += direction;
+            renderArticles();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Open article (placeholder)
+        function openArticle(articleId) {
+            const article = articles.find(a => a.id === articleId);
+            showNotification(`Opening article: "${article.title}"`, 'info');
+            // In a real application, this would navigate to a detailed article page
+        }
+
+        // Subscribe to newsletter
+        function subscribeNewsletter(event) {
+            event.preventDefault();
+            const emailInput = document.getElementById('newsletterEmail');
+            const email = emailInput.value.trim();
+            
+            // Email validation
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(email)) {
+                showNotification('Please enter a valid email address', 'error');
+                return;
+            }
+            
+            // Get existing subscribers
+            let subscribers = JSON.parse(localStorage.getItem('healify-subscribers') || '[]');
+            
+            // Check if already subscribed
+            if (subscribers.includes(email)) {
+                showNotification('You are already subscribed!', 'info');
+                return;
+            }
+            
+            // Add subscriber
+            subscribers.push(email);
+            localStorage.setItem('healify-subscribers', JSON.stringify(subscribers));
+            
+            showNotification('Successfully subscribed to our newsletter!', 'success');
+            emailInput.value = '';
+        }
+
+        // Allow search on Enter key
+        document.addEventListener('DOMContentLoaded', function() {
+            document.getElementById('searchInput').addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    searchArticles();
+                }
+            });
+        });
+    </script>
+</body>
+</html>
