@@ -454,6 +454,263 @@
                 font-size: 22px;
             }
         }
+
+        /* Article Modal Styles */
+        .article-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 10000;
+            overflow-y: auto;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .article-modal.active {
+            display: flex;
+            align-items: flex-start;
+            justify-content: center;
+            padding: 40px 20px;
+        }
+
+        .article-modal-content {
+            background: var(--header-bg);
+            border-radius: 24px;
+            max-width: 900px;
+            width: 100%;
+            position: relative;
+            animation: slideUp 0.3s ease;
+            margin: 20px;
+        }
+
+        .article-modal-header {
+            background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+            padding: 40px;
+            border-radius: 24px 24px 0 0;
+            position: relative;
+        }
+
+        .article-modal-close {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            border-radius: 50%;
+            color: white;
+            font-size: 20px;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .article-modal-close:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: rotate(90deg);
+        }
+
+        .article-modal-header .article-icon {
+            width: 80px;
+            height: 80px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+        }
+
+        .article-modal-header .article-icon i {
+            font-size: 40px;
+            color: white;
+        }
+
+        .article-modal-header h2 {
+            color: white;
+            font-size: 32px;
+            font-weight: 800;
+            margin-bottom: 16px;
+            line-height: 1.3;
+        }
+
+        .article-modal-meta {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+            color: white;
+            opacity: 0.9;
+            font-size: 14px;
+        }
+
+        .article-modal-meta span {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .article-modal-body {
+            padding: 40px;
+        }
+
+        .article-full-content {
+            color: var(--text-color);
+            line-height: 1.8;
+            font-size: 16px;
+        }
+
+        .article-full-content h3 {
+            font-size: 24px;
+            font-weight: 700;
+            margin: 32px 0 16px;
+            color: var(--text-color);
+        }
+
+        .article-full-content h4 {
+            font-size: 20px;
+            font-weight: 600;
+            margin: 24px 0 12px;
+            color: var(--primary-color);
+        }
+
+        .article-full-content p {
+            margin-bottom: 20px;
+        }
+
+        .article-full-content ul, .article-full-content ol {
+            margin: 20px 0;
+            padding-left: 28px;
+        }
+
+        .article-full-content li {
+            margin-bottom: 12px;
+        }
+
+        .article-full-content blockquote {
+            margin: 24px 0;
+            padding: 20px 24px;
+            background: rgba(102, 126, 234, 0.1);
+            border-left: 4px solid var(--primary-color);
+            border-radius: 8px;
+            font-style: italic;
+        }
+
+        .article-full-content strong {
+            color: var(--primary-color);
+            font-weight: 600;
+        }
+
+        .article-modal-footer {
+            padding: 32px 40px;
+            border-top: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .article-share {
+            display: flex;
+            gap: 12px;
+        }
+
+        .share-btn {
+            width: 40px;
+            height: 40px;
+            background: var(--header-bg);
+            border: 2px solid var(--border-color);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-color);
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .share-btn:hover {
+            background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+            color: white;
+            border-color: var(--primary-color);
+            transform: translateY(-2px);
+        }
+
+        .article-actions {
+            display: flex;
+            gap: 12px;
+        }
+
+        .action-btn {
+            padding: 12px 24px;
+            background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .action-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(102, 126, 234, 0.4);
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .article-modal-content {
+                margin: 0;
+                border-radius: 0;
+            }
+
+            .article-modal-header {
+                padding: 28px 20px;
+                border-radius: 0;
+            }
+
+            .article-modal-header h2 {
+                font-size: 24px;
+            }
+
+            .article-modal-body {
+                padding: 24px 20px;
+            }
+
+            .article-modal-footer {
+                padding: 20px;
+                flex-direction: column;
+            }
+
+            .article-share, .article-actions {
+                width: 100%;
+                justify-content: center;
+            }
+        }
     </style>
 </head>
 <body>
@@ -527,6 +784,53 @@
 
     <div id="footer-placeholder"></div>
 
+    <!-- Article Modal -->
+    <div class="article-modal" id="articleModal">
+        <div class="article-modal-content">
+            <div class="article-modal-header">
+                <button class="article-modal-close" onclick="closeArticleModal()">
+                    <i class="fas fa-times"></i>
+                </button>
+                <div class="article-icon">
+                    <i class="fas fa-heart-pulse" id="modalIcon"></i>
+                </div>
+                <h2 id="modalTitle">Article Title</h2>
+                <div class="article-modal-meta">
+                    <span><i class="fas fa-user"></i> <span id="modalAuthor">Author</span></span>
+                    <span><i class="fas fa-calendar"></i> <span id="modalDate">Date</span></span>
+                    <span><i class="fas fa-clock"></i> <span id="modalReadTime">Read Time</span></span>
+                    <span><i class="fas fa-eye"></i> <span id="modalViews">Views</span></span>
+                </div>
+            </div>
+            <div class="article-modal-body">
+                <div class="article-full-content" id="modalContent">
+                    <!-- Full article content will be loaded here -->
+                </div>
+            </div>
+            <div class="article-modal-footer">
+                <div class="article-share">
+                    <button class="share-btn" onclick="shareArticle('facebook')" title="Share on Facebook">
+                        <i class="fab fa-facebook-f"></i>
+                    </button>
+                    <button class="share-btn" onclick="shareArticle('twitter')" title="Share on Twitter">
+                        <i class="fab fa-twitter"></i>
+                    </button>
+                    <button class="share-btn" onclick="shareArticle('linkedin')" title="Share on LinkedIn">
+                        <i class="fab fa-linkedin-in"></i>
+                    </button>
+                    <button class="share-btn" onclick="shareArticle('email')" title="Share via Email">
+                        <i class="fas fa-envelope"></i>
+                    </button>
+                </div>
+                <div class="article-actions">
+                    <button class="action-btn" onclick="bookmarkArticle()">
+                        <i class="fas fa-bookmark"></i> Bookmark
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <script src="js/ui.js"></script>
     <script src="js/mais.js"></script>
     <script>
@@ -543,7 +847,47 @@
                 readTime: "5 min read",
                 views: "2.5k",
                 featured: true,
-                icon: "fa-heart-pulse"
+                icon: "fa-heart-pulse",
+                fullContent: `
+                    <p>Heart disease remains one of the leading causes of death worldwide, but the good news is that many heart conditions can be prevented or managed through simple lifestyle changes. Here are ten evidence-based tips to keep your heart healthy and strong.</p>
+                    
+                    <h3>1. Eat a Heart-Healthy Diet</h3>
+                    <p>Focus on whole foods including fruits, vegetables, whole grains, lean proteins, and healthy fats. Limit saturated fats, trans fats, sodium, and added sugars. The Mediterranean diet has been shown to significantly reduce the risk of heart disease.</p>
+                    
+                    <h3>2. Exercise Regularly</h3>
+                    <p>Aim for at least 150 minutes of moderate-intensity aerobic activity or 75 minutes of vigorous-intensity activity per week. Regular exercise strengthens your heart muscle, improves circulation, and helps maintain a healthy weight.</p>
+                    
+                    <h3>3. Maintain a Healthy Weight</h3>
+                    <p>Being overweight or obese increases your risk of heart disease. Calculate your BMI and work with your healthcare provider to achieve and maintain a healthy weight through diet and exercise.</p>
+                    
+                    <h3>4. Quit Smoking</h3>
+                    <p>Smoking is one of the most significant risk factors for heart disease. Quitting smoking can rapidly improve your heart health, with benefits starting within hours of your last cigarette.</p>
+                    
+                    <h3>5. Limit Alcohol Consumption</h3>
+                    <p>If you drink alcohol, do so in moderation. That means up to one drink per day for women and up to two drinks per day for men. Excessive alcohol consumption can lead to high blood pressure and heart failure.</p>
+                    
+                    <h3>6. Manage Stress</h3>
+                    <p>Chronic stress can contribute to heart disease. Practice stress-reduction techniques such as meditation, deep breathing, yoga, or spending time in nature. Find healthy outlets for stress rather than turning to unhealthy coping mechanisms.</p>
+                    
+                    <h3>7. Get Quality Sleep</h3>
+                    <p>Aim for 7-9 hours of quality sleep per night. Poor sleep is associated with high blood pressure, obesity, and diabetes, all of which increase heart disease risk. Maintain a regular sleep schedule and create a restful sleep environment.</p>
+                    
+                    <h3>8. Monitor Your Blood Pressure</h3>
+                    <p>High blood pressure is a major risk factor for heart disease and stroke. Have your blood pressure checked regularly and follow your doctor's recommendations for keeping it in a healthy range.</p>
+                    
+                    <h3>9. Control Cholesterol and Diabetes</h3>
+                    <p>High cholesterol and diabetes can damage your blood vessels and heart. Get regular screenings and work with your healthcare provider to manage these conditions through lifestyle changes and medication if necessary.</p>
+                    
+                    <h3>10. Stay Socially Connected</h3>
+                    <p>Social isolation and loneliness are linked to increased heart disease risk. Maintain strong social connections, engage in community activities, and don't hesitate to seek support when needed.</p>
+                    
+                    <blockquote>
+                        "Taking care of your heart doesn't require drastic changes. Small, consistent improvements in your daily habits can lead to significant long-term benefits for your cardiovascular health." - Dr. Sarah Johnson
+                    </blockquote>
+                    
+                    <h3>Conclusion</h3>
+                    <p>Remember, it's never too early or too late to start taking care of your heart. Implement these tips gradually, and consult with your healthcare provider before making significant changes to your diet or exercise routine. Your heart will thank you!</p>
+                `
             },
             {
                 id: 2,
@@ -556,7 +900,63 @@
                 readTime: "7 min read",
                 views: "3.2k",
                 featured: true,
-                icon: "fa-syringe"
+                icon: "fa-syringe",
+                fullContent: `
+                    <p>Living with diabetes doesn't mean giving up the things you love. With the right knowledge, tools, and support, you can effectively manage your condition and enjoy a full, active life. Here's your comprehensive guide to daily diabetes management.</p>
+                    
+                    <h3>Understanding Your Diabetes</h3>
+                    <p>Whether you have Type 1, Type 2, or gestational diabetes, understanding your specific condition is the first step. Work closely with your healthcare team to understand your target blood sugar levels, medication requirements, and personalized management plan.</p>
+                    
+                    <h3>Blood Sugar Monitoring</h3>
+                    <h4>Check Regularly</h4>
+                    <ul>
+                        <li>Monitor your blood glucose as recommended by your doctor</li>
+                        <li>Keep a log of your readings to identify patterns</li>
+                        <li>Consider continuous glucose monitoring (CGM) systems for real-time data</li>
+                        <li>Understand what factors affect your blood sugar levels</li>
+                    </ul>
+                    
+                    <h3>Nutrition and Meal Planning</h3>
+                    <h4>Carbohydrate Counting</h4>
+                    <p>Learn to count carbohydrates and understand how they affect your blood sugar. Work with a registered dietitian to create a meal plan that works for your lifestyle.</p>
+                    
+                    <h4>Healthy Eating Tips</h4>
+                    <ul>
+                        <li>Choose complex carbohydrates over simple sugars</li>
+                        <li>Include plenty of non-starchy vegetables</li>
+                        <li>Opt for lean proteins and healthy fats</li>
+                        <li>Control portion sizes</li>
+                        <li>Eat at regular times throughout the day</li>
+                    </ul>
+                    
+                    <h3>Exercise and Physical Activity</h3>
+                    <p>Regular exercise helps your body use insulin more effectively and can lower blood sugar levels. Aim for at least 150 minutes of moderate-intensity exercise per week, but always check your blood sugar before and after exercise.</p>
+                    
+                    <h3>Medication Management</h3>
+                    <p>Take your medications exactly as prescribed. If you're on insulin, learn the proper injection techniques and storage methods. Never skip doses or adjust medications without consulting your healthcare provider.</p>
+                    
+                    <h3>Stress Management</h3>
+                    <p>Stress can significantly impact blood sugar levels. Practice stress-reduction techniques such as meditation, deep breathing, or engaging in hobbies you enjoy.</p>
+                    
+                    <blockquote>
+                        "Diabetes management is not about perfection—it's about making consistent, healthy choices and working with your healthcare team to adjust your plan as needed." - Dr. Michael Chen
+                    </blockquote>
+                    
+                    <h3>Preventing Complications</h3>
+                    <ul>
+                        <li>Schedule regular check-ups with your healthcare team</li>
+                        <li>Get annual eye exams to check for diabetic retinopathy</li>
+                        <li>Monitor your feet daily for cuts, blisters, or changes</li>
+                        <li>Keep up with dental care to prevent gum disease</li>
+                        <li>Monitor kidney function through regular blood tests</li>
+                    </ul>
+                    
+                    <h3>Building Your Support System</h3>
+                    <p>Connect with others who have diabetes through support groups, online communities, or diabetes education classes. Share experiences, learn from others, and don't hesitate to ask for help when you need it.</p>
+                    
+                    <h3>Conclusion</h3>
+                    <p>Managing diabetes requires daily attention, but it becomes easier with time and practice. Stay informed, communicate openly with your healthcare team, and remember that every small step towards better management is a victory worth celebrating.</p>
+                `
             },
             {
                 id: 3,
@@ -569,7 +969,92 @@
                 readTime: "6 min read",
                 views: "4.1k",
                 featured: true,
-                icon: "fa-brain"
+                icon: "fa-brain",
+                fullContent: `
+                    <p>Mental health is just as important as physical health, yet it's often overlooked or stigmatized. It's time to change the conversation and recognize that seeking help for mental health issues is a sign of strength, not weakness.</p>
+                    
+                    <h3>Understanding Mental Health</h3>
+                    <p>Mental health encompasses our emotional, psychological, and social well-being. It affects how we think, feel, and act. It also helps determine how we handle stress, relate to others, and make choices.</p>
+                    
+                    <h3>Common Mental Health Conditions</h3>
+                    <h4>Depression</h4>
+                    <p>More than just feeling sad, depression is a serious medical condition that affects your mood, thoughts, and daily functioning. Symptoms include persistent sadness, loss of interest in activities, changes in appetite or sleep, and feelings of worthlessness.</p>
+                    
+                    <h4>Anxiety Disorders</h4>
+                    <p>Anxiety disorders involve excessive worry or fear that interferes with daily activities. Types include generalized anxiety disorder, panic disorder, social anxiety disorder, and specific phobias.</p>
+                    
+                    <h4>Bipolar Disorder</h4>
+                    <p>Characterized by extreme mood swings that include emotional highs (mania or hypomania) and lows (depression).</p>
+                    
+                    <h3>Breaking the Stigma</h3>
+                    <p>Mental health stigma creates barriers to seeking help. Many people fear judgment, discrimination, or being labeled as "weak." Here's the truth:</p>
+                    
+                    <ul>
+                        <li><strong>Mental illness is not a character flaw</strong> - It's a medical condition like any other</li>
+                        <li><strong>You're not alone</strong> - 1 in 5 adults experiences mental illness each year</li>
+                        <li><strong>Treatment works</strong> - Most people with mental health conditions can recover with proper treatment</li>
+                        <li><strong>Seeking help is brave</strong> - It takes courage to acknowledge you need support</li>
+                    </ul>
+                    
+                    <h3>Treatment Options</h3>
+                    <h4>Psychotherapy (Talk Therapy)</h4>
+                    <p>Various types of therapy can help, including:</p>
+                    <ul>
+                        <li>Cognitive Behavioral Therapy (CBT)</li>
+                        <li>Dialectical Behavior Therapy (DBT)</li>
+                        <li>Interpersonal Therapy</li>
+                        <li>Group Therapy</li>
+                    </ul>
+                    
+                    <h4>Medication</h4>
+                    <p>Psychiatric medications can help manage symptoms. Common types include antidepressants, anti-anxiety medications, mood stabilizers, and antipsychotics. Always work closely with a psychiatrist to find the right medication and dosage.</p>
+                    
+                    <h4>Lifestyle Changes</h4>
+                    <ul>
+                        <li>Regular exercise</li>
+                        <li>Adequate sleep</li>
+                        <li>Healthy nutrition</li>
+                        <li>Stress management techniques</li>
+                        <li>Social connections</li>
+                        <li>Mindfulness and meditation</li>
+                    </ul>
+                    
+                    <blockquote>
+                        "Your mental health is a priority, not a luxury. Taking care of your mind is just as important as taking care of your body." - Dr. Emily Williams
+                    </blockquote>
+                    
+                    <h3>When to Seek Help</h3>
+                    <p>Consider reaching out to a mental health professional if you:</p>
+                    <ul>
+                        <li>Feel overwhelmed by emotions that interfere with daily life</li>
+                        <li>Have thoughts of self-harm or suicide</li>
+                        <li>Notice significant changes in sleep or eating patterns</li>
+                        <li>Withdraw from relationships or activities you once enjoyed</li>
+                        <li>Experience substance abuse issues</li>
+                        <li>Feel persistently anxious or depressed</li>
+                    </ul>
+                    
+                    <h3>Supporting Others</h3>
+                    <p>If someone you know is struggling:</p>
+                    <ul>
+                        <li>Listen without judgment</li>
+                        <li>Offer support and encouragement</li>
+                        <li>Help them find professional resources</li>
+                        <li>Be patient - recovery takes time</li>
+                        <li>Take care of your own mental health too</li>
+                    </ul>
+                    
+                    <h3>Crisis Resources</h3>
+                    <p>If you're in crisis, help is available:</p>
+                    <ul>
+                        <li><strong>National Suicide Prevention Lifeline:</strong> 988</li>
+                        <li><strong>Crisis Text Line:</strong> Text HOME to 741741</li>
+                        <li><strong>Emergency:</strong> Call 911 or go to your nearest emergency room</li>
+                    </ul>
+                    
+                    <h3>Conclusion</h3>
+                    <p>Mental health is health. By opening up conversations, reducing stigma, and encouraging treatment, we can create a society where everyone feels comfortable seeking the help they need and deserve. Remember, there is no shame in taking care of your mental health.</p>
+                `
             },
             {
                 id: 4,
@@ -813,11 +1298,112 @@
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
-        // Open article (placeholder)
+        // Open article in modal
         function openArticle(articleId) {
             const article = articles.find(a => a.id === articleId);
-            showNotification(`Opening article: "${article.title}"`, 'info');
-            // In a real application, this would navigate to a detailed article page
+            if (!article) return;
+            
+            // Populate modal with article data
+            document.getElementById('modalIcon').className = `fas ${article.icon}`;
+            document.getElementById('modalTitle').textContent = article.title;
+            document.getElementById('modalAuthor').textContent = article.author;
+            document.getElementById('modalDate').textContent = article.date;
+            document.getElementById('modalReadTime').textContent = article.readTime;
+            document.getElementById('modalViews').textContent = article.views;
+            
+            // Set full content or fallback to excerpt
+            const fullContent = article.fullContent || `
+                <p>${article.excerpt}</p>
+                <p><em>Full article content coming soon...</em></p>
+            `;
+            document.getElementById('modalContent').innerHTML = fullContent;
+            
+            // Show modal
+            document.getElementById('articleModal').classList.add('active');
+            document.body.style.overflow = 'hidden';
+            
+            // Update view count (simulated)
+            const currentViews = parseFloat(article.views);
+            article.views = (currentViews + 0.1).toFixed(1) + 'k';
+        }
+
+        // Close article modal
+        function closeArticleModal() {
+            document.getElementById('articleModal').classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+
+        // Close modal when clicking outside content
+        document.addEventListener('click', function(e) {
+            const modal = document.getElementById('articleModal');
+            if (e.target === modal) {
+                closeArticleModal();
+            }
+        });
+
+        // Close modal with Escape key
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                closeArticleModal();
+            }
+        });
+
+        // Share article function
+        function shareArticle(platform) {
+            const article = articles.find(a => 
+                document.getElementById('modalTitle').textContent === a.title
+            );
+            
+            if (!article) return;
+            
+            const url = window.location.href;
+            const text = `Check out this article: ${article.title}`;
+            
+            switch(platform) {
+                case 'facebook':
+                    window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`, '_blank');
+                    break;
+                case 'twitter':
+                    window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(url)}`, '_blank');
+                    break;
+                case 'linkedin':
+                    window.open(`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(url)}`, '_blank');
+                    break;
+                case 'email':
+                    window.location.href = `mailto:?subject=${encodeURIComponent(article.title)}&body=${encodeURIComponent(text + ' ' + url)}`;
+                    break;
+            }
+            
+            showNotification('Opening share dialog...', 'info');
+        }
+
+        // Bookmark article function
+        function bookmarkArticle() {
+            const article = articles.find(a => 
+                document.getElementById('modalTitle').textContent === a.title
+            );
+            
+            if (!article) return;
+            
+            // Get existing bookmarks
+            let bookmarks = JSON.parse(localStorage.getItem('healify-bookmarks') || '[]');
+            
+            // Check if already bookmarked
+            if (bookmarks.some(b => b.id === article.id)) {
+                showNotification('Article already bookmarked!', 'info');
+                return;
+            }
+            
+            // Add bookmark
+            bookmarks.push({
+                id: article.id,
+                title: article.title,
+                category: article.category,
+                date: new Date().toISOString()
+            });
+            
+            localStorage.setItem('healify-bookmarks', JSON.stringify(bookmarks));
+            showNotification('Article bookmarked successfully!', 'success');
         }
 
         // Subscribe to newsletter
