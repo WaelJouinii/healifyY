@@ -1,231 +1,249 @@
-// Doctors data with specialties
+// Doctors data with specialties (Tunisian Version)
 const doctorsData = [
     // Cardiology
     {
         id: 1,
-        name: "Dr. Sarah Johnson",
+        name: "Dr. Amina Ben Salah",
         specialty: "Cardiology",
         experience: "15 years",
         rating: 4.9,
         reviews: 324,
-        languages: "English, Spanish",
+        languages: "Arabic, French",
         available: true,
-        consultationFee: "$150",
-        avatar: "SJ"
+        consultationFee: "150 TND",
+        phone: "+216 20 345 678",
+        avatar: "AB"
     },
     {
         id: 2,
-        name: "Dr. Michael Chen",
+        name: "Dr. Ahmed Gharsalli",
         specialty: "Cardiology",
         experience: "12 years",
         rating: 4.8,
         reviews: 256,
-        languages: "English, Mandarin",
+        languages: "Arabic, French",
         available: true,
-        consultationFee: "$140",
-        avatar: "MC"
+        consultationFee: "140 TND",
+        phone: "+216 29 112 233",
+        avatar: "AG"
     },
     {
         id: 3,
-        name: "Dr. Emily Roberts",
+        name: "Dr. Meriem Jlassi",
         specialty: "Cardiology",
         experience: "10 years",
         rating: 4.7,
         reviews: 189,
-        languages: "English",
+        languages: "Arabic",
         available: false,
-        consultationFee: "$135",
-        avatar: "ER"
+        consultationFee: "135 TND",
+        phone: "+216 52 889 440",
+        avatar: "MJ"
     },
-    
+
     // Dermatology
     {
         id: 4,
-        name: "Dr. James Wilson",
+        name: "Dr. Mohamed Ayedi",
         specialty: "Dermatology",
         experience: "18 years",
         rating: 5.0,
         reviews: 412,
-        languages: "English, French",
+        languages: "Arabic, French",
         available: true,
-        consultationFee: "$160",
-        avatar: "JW"
+        consultationFee: "160 TND",
+        phone: "+216 50 778 990",
+        avatar: "MA"
     },
     {
         id: 5,
-        name: "Dr. Lisa Anderson",
+        name: "Dr. Salma Ben Youssef",
         specialty: "Dermatology",
         experience: "14 years",
         rating: 4.9,
         reviews: 367,
-        languages: "English, German",
+        languages: "Arabic, English",
         available: true,
-        consultationFee: "$145",
-        avatar: "LA"
+        consultationFee: "145 TND",
+        phone: "+216 58 443 221",
+        avatar: "SB"
     },
     {
         id: 6,
-        name: "Dr. David Kim",
+        name: "Dr. Yassine Trabelsi",
         specialty: "Dermatology",
         experience: "9 years",
         rating: 4.6,
         reviews: 198,
-        languages: "English, Korean",
+        languages: "Arabic",
         available: true,
-        consultationFee: "$130",
-        avatar: "DK"
+        consultationFee: "130 TND",
+        phone: "+216 25 670 889",
+        avatar: "YT"
     },
-    
+
     // Pediatrics
     {
         id: 7,
-        name: "Dr. Maria Garcia",
+        name: "Dr. Rania Khemiri",
         specialty: "Pediatrics",
         experience: "16 years",
         rating: 4.9,
         reviews: 445,
-        languages: "English, Spanish",
+        languages: "Arabic, French",
         available: true,
-        consultationFee: "$120",
-        avatar: "MG"
+        consultationFee: "120 TND",
+        phone: "+216 23 901 223",
+        avatar: "RK"
     },
     {
         id: 8,
-        name: "Dr. Robert Taylor",
+        name: "Dr. Sami Gharbi",
         specialty: "Pediatrics",
         experience: "13 years",
         rating: 4.8,
         reviews: 312,
-        languages: "English",
+        languages: "Arabic",
         available: true,
-        consultationFee: "$115",
-        avatar: "RT"
+        consultationFee: "115 TND",
+        phone: "+216 27 502 110",
+        avatar: "SG"
     },
     {
         id: 9,
-        name: "Dr. Jennifer Lee",
+        name: "Dr. Nour Chouchene",
         specialty: "Pediatrics",
         experience: "11 years",
         rating: 4.7,
         reviews: 278,
-        languages: "English, Mandarin",
+        languages: "Arabic, French",
         available: false,
-        consultationFee: "$110",
-        avatar: "JL"
+        consultationFee: "110 TND",
+        phone: "+216 53 908 744",
+        avatar: "NC"
     },
-    
+
     // Neurology
     {
         id: 10,
-        name: "Dr. William Brown",
+        name: "Dr. Khaled Ben Amor",
         specialty: "Neurology",
         experience: "20 years",
         rating: 5.0,
         reviews: 389,
-        languages: "English",
+        languages: "Arabic, French",
         available: true,
-        consultationFee: "$180",
-        avatar: "WB"
+        consultationFee: "180 TND",
+        phone: "+216 22 330 551",
+        avatar: "KA"
     },
     {
         id: 11,
-        name: "Dr. Amanda White",
+        name: "Dr. Hiba Marzouk",
         specialty: "Neurology",
         experience: "14 years",
         rating: 4.8,
         reviews: 267,
-        languages: "English, Italian",
+        languages: "Arabic, Italian",
         available: true,
-        consultationFee: "$165",
-        avatar: "AW"
+        consultationFee: "165 TND",
+        phone: "+216 28 778 660",
+        avatar: "HM"
     },
     {
         id: 12,
-        name: "Dr. Christopher Davis",
+        name: "Dr. Mehdi Bouguerra",
         specialty: "Neurology",
         experience: "10 years",
         rating: 4.6,
         reviews: 203,
-        languages: "English",
+        languages: "Arabic",
         available: true,
-        consultationFee: "$155",
-        avatar: "CD"
+        consultationFee: "155 TND",
+        phone: "+216 20 998 112",
+        avatar: "MB"
     },
-    
+
     // Orthopedics
     {
         id: 13,
-        name: "Dr. Patricia Martinez",
+        name: "Dr. Ines Chikhaoui",
         specialty: "Orthopedics",
         experience: "17 years",
         rating: 4.9,
         reviews: 356,
-        languages: "English, Spanish",
+        languages: "Arabic, French",
         available: true,
-        consultationFee: "$170",
-        avatar: "PM"
+        consultationFee: "170 TND",
+        phone: "+216 21 443 550",
+        avatar: "IC"
     },
     {
         id: 14,
-        name: "Dr. Thomas Miller",
+        name: "Dr. Marwen Dabbabi",
         specialty: "Orthopedics",
         experience: "15 years",
         rating: 4.8,
         reviews: 289,
-        languages: "English",
+        languages: "Arabic",
         available: true,
-        consultationFee: "$160",
-        avatar: "TM"
+        consultationFee: "160 TND",
+        phone: "+216 55 234 556",
+        avatar: "MD"
     },
     {
         id: 15,
-        name: "Dr. Karen Thompson",
+        name: "Dr. Wafa Jemaï",
         specialty: "Orthopedics",
         experience: "12 years",
         rating: 4.7,
         reviews: 234,
-        languages: "English, Portuguese",
+        languages: "Arabic, French",
         available: false,
-        consultationFee: "$150",
-        avatar: "KT"
+        consultationFee: "150 TND",
+        phone: "+216 50 900 772",
+        avatar: "WJ"
     },
-    
+
     // Psychiatry
     {
         id: 16,
-        name: "Dr. Daniel Rodriguez",
+        name: "Dr. Houssem Jerbi",
         specialty: "Psychiatry",
         experience: "19 years",
         rating: 5.0,
         reviews: 478,
-        languages: "English, Spanish",
+        languages: "Arabic, French",
         available: true,
-        consultationFee: "$175",
-        avatar: "DR"
+        consultationFee: "175 TND",
+        phone: "+216 26 781 299",
+        avatar: "HJ"
     },
     {
         id: 17,
-        name: "Dr. Michelle Harris",
+        name: "Dr. Ons Ghariani",
         specialty: "Psychiatry",
         experience: "13 years",
         rating: 4.9,
         reviews: 392,
-        languages: "English",
+        languages: "Arabic",
         available: true,
-        consultationFee: "$165",
-        avatar: "MH"
+        consultationFee: "165 TND",
+        phone: "+216 24 899 112",
+        avatar: "OG"
     },
     {
         id: 18,
-        name: "Dr. Kevin Clark",
+        name: "Dr. Wael Hammami",
         specialty: "Psychiatry",
         experience: "10 years",
         rating: 4.7,
         reviews: 256,
-        languages: "English, French",
+        languages: "Arabic, French",
         available: true,
-        consultationFee: "$155",
-        avatar: "KC"
+        consultationFee: "155 TND",
+        phone: "+216 29 605 443",
+        avatar: "WH"
     }
 ];
 
@@ -242,78 +260,64 @@ const specialtyIcons = {
 // Current filter
 let currentFilter = 'all';
 
-// Initialize doctors page
 document.addEventListener('DOMContentLoaded', function() {
     loadDoctors();
     setupSpecialtyFilters();
     setupSearch();
 });
 
-// Load and display doctors
 function loadDoctors(filterSpecialty = 'all') {
     const container = document.getElementById('doctorsContainer');
     currentFilter = filterSpecialty;
-    
-    // Show loading state
+
     container.innerHTML = '<div class="loading-container"><div class="loading-spinner"></div></div>';
-    
-    // Simulate loading delay for smooth transition
+
     setTimeout(() => {
-        // Filter doctors
-        let filteredDoctors = filterSpecialty === 'all' 
-            ? doctorsData 
+        let filteredDoctors = filterSpecialty === 'all'
+            ? doctorsData
             : doctorsData.filter(doc => doc.specialty.toLowerCase() === filterSpecialty.toLowerCase());
-        
-        // Group by specialty
+
         const groupedDoctors = groupDoctorsBySpecialty(filteredDoctors);
-        
-        // Clear container
+
         container.innerHTML = '';
-        
-        // Check if no results
+
         if (filteredDoctors.length === 0) {
             container.innerHTML = `
                 <div class="no-results">
                     <i class="fas fa-user-md"></i>
                     <h3>No Doctors Found</h3>
-                    <p>We couldn't find any doctors matching your criteria. Please try a different specialty.</p>
+                    <p>Try a different specialty.</p>
                 </div>
             `;
             return;
         }
-        
-        // Render grouped doctors
+
         Object.keys(groupedDoctors).forEach(specialty => {
             const section = createSpecialtySection(specialty, groupedDoctors[specialty]);
             container.appendChild(section);
         });
-        
-        // Add smooth scroll animations
+
         animateDoctorCards();
     }, 300);
 }
 
-// Group doctors by specialty
 function groupDoctorsBySpecialty(doctors) {
     return doctors.reduce((groups, doctor) => {
         const specialty = doctor.specialty;
-        if (!groups[specialty]) {
-            groups[specialty] = [];
-        }
+        if (!groups[specialty]) groups[specialty] = [];
         groups[specialty].push(doctor);
         return groups;
     }, {});
 }
 
-// Create specialty section
 function createSpecialtySection(specialty, doctors) {
     const section = document.createElement('div');
     section.className = 'specialty-section';
     section.id = `specialty-${specialty.toLowerCase().replace(/\s+/g, '-')}`;
-    
+
     const icon = specialtyIcons[specialty] || 'fa-stethoscope';
     const doctorCount = doctors.length;
-    
+
     section.innerHTML = `
         <div class="specialty-header">
             <div class="specialty-icon">
@@ -328,15 +332,14 @@ function createSpecialtySection(specialty, doctors) {
             ${doctors.map(doctor => createDoctorCard(doctor)).join('')}
         </div>
     `;
-    
+
     return section;
 }
 
-// Create doctor card
 function createDoctorCard(doctor) {
     const stars = generateStars(doctor.rating);
     const statusClass = doctor.available ? '' : 'offline';
-    
+
     return `
         <div class="doctor-card" data-doctor-id="${doctor.id}">
             <div class="doctor-card-header">
@@ -352,28 +355,32 @@ function createDoctorCard(doctor) {
                     </div>
                 </div>
             </div>
-            
+
             <div class="doctor-details">
                 <div class="doctor-detail-item">
                     <i class="fas fa-briefcase"></i>
-                    <span>${doctor.experience} of experience</span>
+                    <span>${doctor.experience}</span>
                 </div>
                 <div class="doctor-detail-item">
                     <i class="fas fa-language"></i>
                     <span>${doctor.languages}</span>
                 </div>
                 <div class="doctor-detail-item">
+                    <i class="fas fa-phone"></i>
+                    <span>${doctor.phone}</span>
+                </div>
+                <div class="doctor-detail-item">
                     <i class="fas fa-dollar-sign"></i>
-                    <span>${doctor.consultationFee} consultation fee</span>
+                    <span>${doctor.consultationFee}</span>
                 </div>
             </div>
-            
+
             <div class="doctor-rating">
                 <div class="stars">${stars}</div>
                 <span class="rating-value">${doctor.rating}</span>
                 <span class="rating-count">(${doctor.reviews} reviews)</span>
             </div>
-            
+
             <div class="doctor-actions">
                 <button class="btn-view-profile" onclick="viewDoctorProfile(${doctor.id})">
                     <i class="fas fa-eye"></i>
@@ -388,50 +395,38 @@ function createDoctorCard(doctor) {
     `;
 }
 
-// Generate star rating HTML
 function generateStars(rating) {
     const fullStars = Math.floor(rating);
     const hasHalfStar = rating % 1 >= 0.5;
     let starsHTML = '';
-    
-    for (let i = 0; i < fullStars; i++) {
-        starsHTML += '<i class="fas fa-star"></i>';
-    }
-    
-    if (hasHalfStar) {
-        starsHTML += '<i class="fas fa-star-half-alt"></i>';
-    }
-    
+
+    for (let i = 0; i < fullStars; i++) starsHTML += '<i class="fas fa-star"></i>';
+    if (hasHalfStar) starsHTML += '<i class="fas fa-star-half-alt"></i>';
+
     const emptyStars = 5 - Math.ceil(rating);
-    for (let i = 0; i < emptyStars; i++) {
-        starsHTML += '<i class="far fa-star"></i>';
-    }
-    
+    for (let i = 0; i < emptyStars; i++) starsHTML += '<i class="far fa-star"></i>';
+
     return starsHTML;
 }
 
-// Setup specialty filter buttons
 function setupSpecialtyFilters() {
     const buttons = document.querySelectorAll('.specialty-btn');
-    
+
     buttons.forEach(button => {
         button.addEventListener('click', function() {
             const specialty = this.getAttribute('data-specialty');
-            
-            // Update active state
+
             buttons.forEach(btn => btn.classList.remove('active'));
             this.classList.add('active');
-            
-            // Load doctors with filter
+
             loadDoctors(specialty);
-            
-            // Smooth scroll to doctors container
+
             setTimeout(() => {
                 const doctorsContainer = document.getElementById('doctorsContainer');
                 const headerOffset = 150;
                 const elementPosition = doctorsContainer.getBoundingClientRect().top;
                 const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
-                
+
                 window.scrollTo({
                     top: offsetPosition,
                     behavior: 'smooth'
@@ -441,28 +436,25 @@ function setupSpecialtyFilters() {
     });
 }
 
-// Setup search functionality
 function setupSearch() {
     const searchInput = document.getElementById('searchInput');
     const searchResults = document.getElementById('searchResults');
-    
+
     if (searchInput) {
         searchInput.addEventListener('input', function() {
             const query = this.value.toLowerCase().trim();
-            
+
             if (query.length < 2) {
                 searchResults.innerHTML = '';
                 return;
             }
-            
-            // Search doctors
-            const results = doctorsData.filter(doctor => 
+
+            const results = doctorsData.filter(doctor =>
                 doctor.name.toLowerCase().includes(query) ||
                 doctor.specialty.toLowerCase().includes(query) ||
                 doctor.languages.toLowerCase().includes(query)
             );
-            
-            // Display results
+
             if (results.length > 0) {
                 searchResults.innerHTML = results.slice(0, 5).map(doctor => `
                     <div class="search-result-item" onclick="scrollToDoctor(${doctor.id})">
@@ -484,10 +476,9 @@ function setupSearch() {
     }
 }
 
-// Animate doctor cards on scroll
 function animateDoctorCards() {
     const cards = document.querySelectorAll('.doctor-card');
-    
+
     const observer = new IntersectionObserver((entries) => {
         entries.forEach((entry, index) => {
             if (entry.isIntersecting) {
@@ -502,7 +493,7 @@ function animateDoctorCards() {
         threshold: 0.1,
         rootMargin: '0px 0px -50px 0px'
     });
-    
+
     cards.forEach(card => {
         card.style.opacity = '0';
         card.style.transform = 'translateY(30px)';
@@ -511,52 +502,44 @@ function animateDoctorCards() {
     });
 }
 
-// View doctor profile
 function viewDoctorProfile(doctorId) {
-    // Store doctor ID and redirect to profile viewer
     localStorage.setItem('selected-doctor-id', doctorId);
     window.location.href = 'profil-viewer.html';
 }
 
-// Book appointment
 function bookAppointment(doctorId) {
     const doctor = doctorsData.find(d => d.id === doctorId);
-    
+
     if (!doctor.available) {
-        alert('This doctor is currently unavailable. Please try another doctor or check back later.');
+        alert('This doctor is currently unavailable.');
         return;
     }
-    
-    // Check if user is logged in
+
     const isLoggedIn = localStorage.getItem('healify-user-token');
-    
+
     if (!isLoggedIn) {
-        if (confirm('You need to login to book an appointment. Would you like to login now?')) {
+        if (confirm('You need to login to book an appointment. Continue?')) {
             localStorage.setItem('redirect-after-login', 'reservation.html');
             localStorage.setItem('selected-doctor-id', doctorId);
             window.location.href = 'login.html';
         }
         return;
     }
-    
-    // Store doctor ID and redirect to reservation page
+
     localStorage.setItem('selected-doctor-id', doctorId);
     window.location.href = 'reservation.html';
 }
 
-// Scroll to specific doctor
 function scrollToDoctor(doctorId) {
     const doctor = doctorsData.find(d => d.id === doctorId);
     if (!doctor) return;
-    
-    // Filter by specialty first
+
     const specialty = doctor.specialty.toLowerCase();
     const specialtyBtn = document.querySelector(`[data-specialty="${specialty}"]`);
-    
+
     if (specialtyBtn) {
         specialtyBtn.click();
-        
-        // Wait for doctors to load, then scroll to specific card
+
         setTimeout(() => {
             const doctorCard = document.querySelector(`[data-doctor-id="${doctorId}"]`);
             if (doctorCard) {
@@ -564,15 +547,13 @@ function scrollToDoctor(doctorId) {
                     behavior: 'smooth',
                     block: 'center'
                 });
-                
-                // Highlight the card briefly
+
                 doctorCard.style.boxShadow = '0 0 0 4px rgba(37, 99, 235, 0.4)';
                 setTimeout(() => {
                     doctorCard.style.boxShadow = '';
                 }, 2000);
             }
-            
-            // Close search bar
+
             if (typeof closeSearchBar === 'function') {
                 closeSearchBar();
             }
@@ -580,7 +561,6 @@ function scrollToDoctor(doctorId) {
     }
 }
 
-// Export functions for global use
 window.viewDoctorProfile = viewDoctorProfile;
 window.bookAppointment = bookAppointment;
 window.scrollToDoctor = scrollToDoctor;
